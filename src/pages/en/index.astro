@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Questions from '../../components/sections/Questions.astro';
+import Services from '../../components/sections/Services.astro';
+import Enterprise from '../../components/sections/Enterprise.astro';
+import Funnel from '../../components/sections/Funnel.astro';
+import Process from '../../components/sections/Process.astro';
+import Pricing from '../../components/sections/Pricing.astro';
+import About from '../../components/sections/About.astro';
+import Contact from '../../components/sections/Contact.astro';
+import { contentEn } from '../../data/content.en';
+---
+
+<BaseLayout content={contentEn}>
+  <Header content={contentEn} />
+  <main id="inicio">
+    <Hero content={contentEn} />
+    <Questions content={contentEn} />
+    <Services content={contentEn} />
+    <Enterprise content={contentEn} />
+    <Funnel content={contentEn} />
+    <Process content={contentEn} />
+    <Pricing content={contentEn} />
+    <About content={contentEn} />
+    <Contact content={contentEn} />
+  </main>
+  <Footer content={contentEn} />
+</BaseLayout>
+

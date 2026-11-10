@@ -1,0 +1,67 @@
+---
+import type { SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+const navAriaLabel =
+  content.locale === 'es' ? 'Navegación principal' : 'Primary navigation';
+---
+
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href={content.nav.homeHref}>Signum<b>&amp;</b>Co.</a>
+    <div class="nav-r">
+      <nav class="nav-links" id="nav-menu" aria-label={navAriaLabel}>
+        {
+          content.nav.items.map((item) => (
+            <a href={item.href}>{item.label}</a>
+          ))
+        }
+      </nav>
+      <div class="nav-actions">
+        <a
+          class="lang"
+          id="lang"
+          href={content.alternatePath}
+          hreflang={content.alternateLocale}
+          aria-label={content.nav.langSwitchLabel}
+        >
+          <span aria-current={content.locale === 'es' ? 'page' : undefined}>ES</span>
+          <span>/</span>
+          <span aria-current={content.locale === 'en' ? 'page' : undefined}>EN</span>
+        </a>
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="nav-menu"
+          aria-label={content.nav.mobileMenuOpenLabel}
+          data-open-label={content.nav.mobileMenuOpenLabel}
+          data-close-label={content.nav.mobileMenuCloseLabel}
+        >
+          <svg
+            aria-hidden="true"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import '../../scripts/navigation.ts';
+</script>
+

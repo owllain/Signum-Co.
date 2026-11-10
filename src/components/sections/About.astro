@@ -1,0 +1,48 @@
+---
+import type { SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section class="sec sec-alt" aria-labelledby="h-about">
+  <div class="wrap about">
+    <h2 id="h-about">{content.about.heading}</h2>
+    <div class="body">
+      {content.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      <p>
+        {content.about.latinNotePrefix}<i>{content.about.latinWord}</i>{content.about.latinNoteSuffix}
+      </p>
+
+      <dl class="facts">
+        {
+          content.about.facts.map((fact) => (
+            <div>
+              <dt>{fact.term}</dt>
+              <dd>{fact.description}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <div class="stack">
+        <h3>{content.about.stackHeading}</h3>
+        <dl class="stack-list">
+          {
+            content.about.stack.map((item) => (
+              <div>
+                <dt>{item.category}</dt>
+                <dd>{item.tools}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="certs">{content.about.certifications}</p>
+      </div>
+    </div>
+  </div>
+</section>
+

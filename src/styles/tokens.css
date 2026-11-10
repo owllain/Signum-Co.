@@ -1,0 +1,76 @@
+/*
+ * Signum & Co. — Design Tokens
+ * Colors, typography, spacing scale, and motion tokens extracted from prototype.
+ */
+:root {
+  color-scheme: light;
+
+  /* Brand & semantic palette (Light) */
+  --navy: #0f1f3d;
+  --navy-2: #182c52;
+  --gold: #c9a227;
+  --gold-hover: #dbb43a;
+  --gold-ink: #7a5e0a;
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --fg: #121a2e;
+  --muted: #515b6f;
+  --line: #dbe0e8;
+  --on-navy: #eef1f7;
+  --on-navy-muted: #b0bbd0;
+  --dot: #41557f;
+  --bar: #182c52;
+
+  /* Typography */
+  --f-display: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --f-body: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-code: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  /* Type scale */
+  --t-sm: 0.875rem;
+  --t-base: 1.0625rem;
+  --t-lg: 1.25rem;
+  --t-xl: 1.625rem;
+  --t-2xl: 2.25rem;
+  --t-hero: clamp(2.5rem, 5.6vw, 4.25rem);
+
+  /* Layout */
+  --max-w: 1120px;
+  --nav-h: 64px;
+
+  /* Motion tokens */
+  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-std: cubic-bezier(0.2, 0, 0, 1);
+  --d-fast: 100ms;
+  --d-norm: 200ms;
+  --d-slow: 300ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1222;
+    --surface: #0f1a30;
+    --fg: #e8ecf4;
+    --muted: #a3afc4;
+    --line: #23314d;
+    --gold-ink: #d8b649;
+    --navy: #08101f;
+    --navy-2: #0f1f3d;
+    --bar: #3a5590;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0a1222;
+  --surface: #0f1a30;
+  --fg: #e8ecf4;
+  --muted: #a3afc4;
+  --line: #23314d;
+  --gold-ink: #d8b649;
+  --navy: #08101f;
+  --navy-2: #0f1f3d;
+  --bar: #3a5590;
+  color-scheme: dark;
+}
+

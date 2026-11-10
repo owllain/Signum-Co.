@@ -1,0 +1,28 @@
+---
+import type { SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section class="sec sec-alt" aria-labelledby="h-p">
+  <div class="wrap">
+    <h2 id="h-p">{content.process.heading}</h2>
+    <p class="intro">{content.process.intro}</p>
+    <ol class="steps">
+      {
+        content.process.steps.map((step) => (
+          <li>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+            <span class="when">{step.when}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+

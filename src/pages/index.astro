@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+import { SITE_CONFIG } from '../data/site';
+
+const targetUrl = '/es/';
+const canonicalEs = new URL('/es/', SITE_CONFIG.domain).toString();
+const canonicalEn = new URL('/en/', SITE_CONFIG.domain).toString();
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Signum &amp; Co.</title>
+    <meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
+    <link rel="canonical" href={canonicalEs} />
+    <link rel="alternate" hreflang="es" href={canonicalEs} />
+    <link rel="alternate" hreflang="en" href={canonicalEn} />
+    <link rel="alternate" hreflang="x-default" href={canonicalEs} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      window.location.replace('/es/' + window.location.hash);
+    </script>
+  </head>
+  <body style="background:var(--navy);color:var(--on-navy);min-height:100vh;display:flex;align-items:center;justify-content:center;">
+    <main class="wrap" style="text-align:center;padding-block:64px;">
+      <p style="font-family:var(--f-display);font-size:var(--t-xl);margin-bottom:16px;">
+        Signum <b style="color:var(--gold);">&amp;</b> Co.
+      </p>
+      <p style="color:var(--on-navy-muted);margin-bottom:24px;">
+        Redirigiendo a la versión en español… / Redirecting…
+      </p>
+      <div class="ctas" style="justify-content:center;">
+        <a class="btn btn-gold" href="/es/">Continuar en Español</a>
+        <a class="btn btn-line" href="/en/" lang="en">Continue in English</a>
+      </div>
+    </main>
+  </body>
+</html>
+

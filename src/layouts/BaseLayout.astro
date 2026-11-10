@@ -1,0 +1,115 @@
+---
+import '../styles/global.css';
+import { SITE_CONFIG, type SiteContent } from '../data/site';
+
+interface Props {
+  content: SiteContent;
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+  noindex?: boolean;
+}
+
+const {
+  content,
+  title = content.meta.title,
+  description = content.meta.description,
+  canonicalPath = content.canonicalPath,
+  noindex = false,
+} = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, SITE_CONFIG.domain).toString();
+const esUrl = new URL('/es/', SITE_CONFIG.domain).toString();
+const enUrl = new URL('/en/', SITE_CONFIG.domain).toString();
+const alternateOgLocale = content.locale === 'es' ? 'en_US' : 'es_CR';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: SITE_CONFIG.name,
+  url: SITE_CONFIG.domain,
+  description: content.meta.description,
+  founder: {
+    '@type': 'Person',
+    name: SITE_CONFIG.founder,
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: SITE_CONFIG.location.city,
+    addressCountry: SITE_CONFIG.location.countryCode,
+  },
+  areaServed: [
+    {
+      '@type': 'Country',
+      name: 'Costa Rica',
+    },
+    {
+      '@type': 'Country',
+      name: 'United States',
+    },
+  ],
+  email: SITE_CONFIG.contact.email,
+  telephone: SITE_CONFIG.contact.phoneE164,
+  knowsLanguage: ['es', 'en'],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: SITE_CONFIG.contact.phoneE164,
+    email: SITE_CONFIG.contact.email,
+    contactType: 'customer service',
+    availableLanguage: ['Spanish', 'English'],
+  },
+};
+---
+
+<!doctype html>
+<html lang={content.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    {
+      !noindex && (
+        <>
+          <link rel="alternate" hreflang="es" href={esUrl} />
+          <link rel="alternate" hreflang="en" href={enUrl} />
+          <link rel="alternate" hreflang="x-default" href={esUrl} />
+        </>
+      )
+    }
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_CONFIG.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={content.ogLocale} />
+    <meta property="og:locale:alternate" content={alternateOgLocale} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Structured Data (Organization / ProfessionalService) -->
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#inicio">{content.meta.skipToContent}</a>
+    <slot />
+  </body>
+</html>
+

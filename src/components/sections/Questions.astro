@@ -1,0 +1,26 @@
+---
+import type { SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section class="sec" aria-labelledby="h-q">
+  <div class="wrap">
+    <h2 id="h-q">{content.questions.heading}</h2>
+    <ul class="qs">
+      {
+        content.questions.items.map((item) => (
+          <li>
+            <q>{item.quote}</q>
+            <p>{item.answer}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+

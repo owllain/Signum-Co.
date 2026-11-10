@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/layout/Footer.astro';
+import { contentEs } from '../data/content.es';
+import { SITE_CONFIG, buildWhatsappUrl } from '../data/site';
+
+const waHref = buildWhatsappUrl(contentEs.hero.whatsappDefaultText);
+---
+
+<BaseLayout
+  content={contentEs}
+  title="404 — Página no encontrada | Signum & Co."
+  description="La página que busca no existe o cambió de dirección. Regrese al inicio de Signum & Co. en español o inglés."
+  canonicalPath="/404.html"
+  noindex={true}
+>
+  <header class="nav">
+    <div class="wrap">
+      <a class="mark" href="/es/">Signum<b>&amp;</b>Co.</a>
+      <div class="nav-r">
+        <nav class="nav-links" aria-label="Navegación de recuperación">
+          <a href="/es/#servicios">Servicios</a>
+          <a href="/es/#empresas">Empresas</a>
+          <a href="/es/#precios">Cómo trabajar juntos</a>
+          <a href="/es/#contacto">Contacto</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="lang" href="/en/" hreflang="en" aria-label="Idioma / Language">
+            <span aria-current="page">ES</span> / <span>EN</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero" aria-labelledby="h-404" style="min-height:calc(100vh - 140px);display:flex;align-items:center;">
+      <div class="wrap">
+        <div class="hero-text" style="padding-block:80px;">
+          <p class="code" style="color:var(--gold);margin-bottom:16px;">404 · HTTP Not Found</p>
+          <h1 id="h-404" style="font-size:clamp(2rem,4.5vw,3.5rem);">
+            No encontramos esta página.
+          </h1>
+          <p class="lead">
+            Es posible que el enlace haya cambiado. Puede volver a la página principal en su idioma o escribirnos directamente.
+          </p>
+          <p class="lead" lang="en" style="font-size:1rem;margin-top:12px;">
+            We couldn’t find this page. Choose your language below to return to the main site or reach out directly.
+          </p>
+          <div class="ctas" style="margin-top:36px;">
+            <a class="btn btn-gold" href="/es/">Ir al inicio (Español)</a>
+            <a class="btn btn-line" href="/en/" lang="en">Go to home (English)</a>
+            <a
+              class="btn btn-line"
+              href={waHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp ({SITE_CONFIG.contact.phoneDisplay})
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer content={contentEs} />
+</BaseLayout>
+

@@ -1,0 +1,170 @@
+---
+import {
+  SITE_CONFIG,
+  buildMailtoUrl,
+  buildWhatsappUrl,
+  type SiteContent,
+} from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+const defaultMessage = content.contact.form.msgGreeting;
+const defaultWhatsappHref = buildWhatsappUrl(defaultMessage);
+const defaultMailHref = buildMailtoUrl(
+  content.contact.form.mailSubjectBase,
+  defaultMessage
+);
+---
+
+<section class="contact" id={content.contact.id} aria-labelledby="h-c">
+  <div class="wrap">
+    <div>
+      <h2 id="h-c">{content.contact.heading}</h2>
+      <p class="intro">{content.contact.intro}</p>
+      <dl class="direct">
+        <div>
+          <dt>{content.contact.whatsappLabel}</dt>
+          <dd>
+            <a
+              class="sel"
+              href={defaultWhatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {SITE_CONFIG.contact.phoneDisplay}
+            </a>
+            <button
+              class="copy"
+              type="button"
+              data-copy={SITE_CONFIG.contact.phoneDisplay}
+              data-copied-label={content.contact.copiedButton}
+            >
+              {content.contact.copyButton}
+            </button>
+          </dd>
+        </div>
+        <div>
+          <dt>{content.contact.emailLabel}</dt>
+          <dd>
+            <a class="sel" href={`mailto:${SITE_CONFIG.contact.email}`}>
+              {SITE_CONFIG.contact.email}
+            </a>
+            <button
+              class="copy"
+              type="button"
+              data-copy={SITE_CONFIG.contact.email}
+              data-copied-label={content.contact.copiedButton}
+            >
+              {content.contact.copyButton}
+            </button>
+          </dd>
+        </div>
+      </dl>
+    </div>
+
+    <form
+      class="cform"
+      id="cform"
+      novalidate
+      data-greeting={content.contact.form.msgGreeting}
+      data-name-prefix={content.contact.form.msgNamePrefix}
+      data-biz-prefix={content.contact.form.msgBizPrefix}
+      data-web-prefix={content.contact.form.msgWebPrefix}
+      data-need-prefix={content.contact.form.msgNeedPrefix}
+      data-subject-base={content.contact.form.mailSubjectBase}
+      data-wa-base={SITE_CONFIG.contact.whatsappBaseUrl}
+      data-email={SITE_CONFIG.contact.email}
+    >
+      <div class="field">
+        <label for="c-name">{content.contact.form.nameLabel}</label>
+        <input id="c-name" name="name" type="text" autocomplete="name" />
+      </div>
+
+      <div class="field">
+        <label for="c-biz">{content.contact.form.bizLabel}</label>
+        <input id="c-biz" name="biz" type="text" autocomplete="organization" />
+      </div>
+
+      <div class="field">
+        <label for="c-web">{content.contact.form.webLabel}</label>
+        <input
+          id="c-web"
+          name="web"
+          type="text"
+          inputmode="url"
+          placeholder={content.contact.form.webPlaceholder}
+        />
+      </div>
+
+      <div class="field">
+        <label for="c-need">
+          {content.contact.form.needLabel}{' '}
+          <small>{content.contact.form.optionalLabel}</small>
+        </label>
+        <textarea id="c-need" name="need" rows="3"></textarea>
+      </div>
+
+      <div class="field">
+        <span class="preview-label" id="preview-label">
+          {content.contact.form.previewLabel}
+        </span>
+        <div
+          class="preview"
+          id="preview"
+          role="region"
+          aria-labelledby="preview-label"
+          aria-live="polite"
+        >{defaultMessage}</div>
+      </div>
+
+      <div class="send">
+        <a
+          class="btn btn-gold"
+          id="wa-contact"
+          href={defaultWhatsappHref}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="currentColor"
+          >
+            <path
+              d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.2.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"
+            ></path>
+          </svg>
+          <span>{content.contact.form.sendWhatsapp}</span>
+        </a>
+
+        <a class="btn btn-line" id="mail-contact" href={defaultMailHref}>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="m3 7 9 6 9-6"></path>
+          </svg>
+          <span>{content.contact.form.sendEmail}</span>
+        </a>
+      </div>
+
+      <p class="hint">{content.contact.form.hint}</p>
+    </form>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/contact.ts';
+</script>
+

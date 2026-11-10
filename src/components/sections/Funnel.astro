@@ -1,0 +1,34 @@
+---
+import type { SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section class="sec" aria-labelledby="h-f">
+  <div class="wrap">
+    <h2 id="h-f">{content.funnel.heading}</h2>
+    <p class="intro">{content.funnel.intro}</p>
+    <div class="funnel" role="list" aria-label={content.funnel.ariaLabel}>
+      {
+        content.funnel.steps.map((step) => (
+          <div class:list={['f-row', { last: step.isLast }]} role="listitem">
+            <div class="lbl">
+              {step.label}
+              <span class="code">{step.code}</span>
+            </div>
+            <div class="f-track">
+              <div class="f-bar" style={`width:${step.widthPercent}%`} />
+            </div>
+            <div class="val">{step.value}</div>
+          </div>
+        ))
+      }
+    </div>
+    <p class="f-note">{content.funnel.note}</p>
+  </div>
+</section>
+

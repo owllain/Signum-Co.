@@ -1,0 +1,181 @@
+---
+import { buildWhatsappUrl, type SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+const waHeroHref = buildWhatsappUrl(content.hero.whatsappDefaultText);
+
+// Deterministic pre-computation of the hero chart geometry so the SVG is
+// completely visible in initial HTML even without JavaScript.
+const W = 1080;
+const H = 260;
+const L = 24;
+const R = W - 24;
+const T = 64;
+const B = H - 20;
+const N = 40;
+
+const gridLines: number[] = [];
+for (let g = 0; g < 4; g++) {
+  gridLines.push(T + (g * (B - T)) / 3);
+}
+
+let seed = 11;
+function nextRandom(): number {
+  seed = (seed * 16807) % 2147483647;
+  return seed / 2147483647;
+}
+
+interface ChartDot {
+  cx: string;
+  cy: string;
+  home: number;
+  sig: number;
+  x: number;
+  opacity: string;
+}
+
+const points: Array<[number, number]> = [];
+const dots: ChartDot[] = [];
+
+for (let i = 0; i < N; i++) {
+  const t = i / (N - 1);
+  const x = L + t * (R - L);
+  const yv = B - (0.08 + 0.82 * Math.pow(t, 1.7)) * (B - T);
+  points.push([x, yv]);
+
+  const spread = 150 * (1 - t * 0.75);
+  for (let k = 0; k < 3; k++) {
+    const cx = (x + (nextRandom() - 0.5) * 20).toFixed(1);
+    const home = Math.min(B, Math.max(T, yv + (nextRandom() - 0.5) * spread));
+    const cy = home.toFixed(1);
+    const opacity = (0.45 + nextRandom() * 0.5).toFixed(2);
+    dots.push({
+      cx,
+      cy,
+      home,
+      sig: yv,
+      x,
+      opacity,
+    });
+  }
+}
+
+const pathD =
+  'M' + points.map((p) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' L');
+const endPoint = points[points.length - 1];
+---
+
+<section class="hero" aria-labelledby="h-hero">
+  <div class="wrap">
+    <div class="hero-text">
+      <h1 id="h-hero">{content.hero.headline}</h1>
+      <p class="lead">{content.hero.lead}</p>
+      <div class="ctas">
+        <a
+          class="btn btn-gold"
+          id="wa-hero"
+          href={waHeroHref}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {content.hero.primaryCta}
+        </a>
+        <a class="btn btn-line" href={content.hero.secondaryCtaHref}>
+          {content.hero.secondaryCta}
+        </a>
+      </div>
+    </div>
+
+    <figure class="chart">
+      <svg
+        id="sig"
+        viewBox="0 0 1080 260"
+        role="img"
+        aria-labelledby="sig-t"
+        tabindex="0"
+      >
+        <title id="sig-t">{content.hero.chart.svgTitle}</title>
+        <g id="g-grid">
+          {
+            gridLines.map((y) => (
+              <line
+                x1={L}
+                x2={R}
+                y1={y}
+                y2={y}
+                stroke="rgba(255,255,255,.07)"
+              />
+            ))
+          }
+        </g>
+        <g id="g-dots">
+          {
+            dots.map((dot) => (
+              <circle
+                class="dot"
+                cx={dot.cx}
+                cy={dot.cy}
+                style={`cy:${dot.cy}px`}
+                r="2.4"
+                fill="#41557f"
+                opacity={dot.opacity}
+                data-home={dot.home}
+                data-sig={dot.sig}
+                data-x={dot.x}
+              />
+            ))
+          }
+        </g>
+        <path
+          id="g-line"
+          d={pathD}
+          fill="none"
+          stroke="#c9a227"
+          stroke-width="3"
+          stroke-linecap="round"
+        ></path>
+        <circle
+          id="g-end"
+          cx={endPoint[0]}
+          cy={endPoint[1]}
+          r="6"
+          fill="#c9a227"
+        ></circle>
+        <g font-family="Schibsted Grotesk, system-ui, sans-serif" font-size="15">
+          <text x="24" y="40" fill="#a9b4c8">
+            {content.hero.chart.noiseLabel}
+          </text>
+          <text
+            id="g-lbl"
+            x="1052"
+            y="44"
+            text-anchor="end"
+            fill="#c9a227"
+            font-weight="600"
+          >
+            {content.hero.chart.signalLabel}
+          </text>
+        </g>
+      </svg>
+
+      <div class="legend-m" aria-hidden="true">
+        <span><i></i><span>{content.hero.chart.legendNoise}</span></span>
+        <span class="g"><i></i><span>{content.hero.chart.legendSignal}</span></span>
+      </div>
+
+      <figcaption class="cap">
+        <span class="hint-hero">{content.hero.chart.captionHint}</span>
+        <span class="code">{content.hero.chart.captionCode}</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/hero-chart.ts';
+</script>
+

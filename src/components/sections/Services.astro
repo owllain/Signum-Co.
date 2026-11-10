@@ -1,0 +1,36 @@
+---
+import type { SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section class="sec sec-alt" id={content.services.id} aria-labelledby="h-svc">
+  <div class="wrap">
+    <div class="split">
+      <div class="split-head">
+        <h2 id="h-svc">{content.services.heading}</h2>
+        <p class="intro">{content.services.intro}</p>
+      </div>
+      <div class="svc">
+        {
+          content.services.rows.map((row) => (
+            <div class="svc-row">
+              <h3>{row.title}</h3>
+              <p>{row.description}</p>
+              <ul>
+                {row.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+

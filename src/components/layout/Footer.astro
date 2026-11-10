@@ -1,0 +1,17 @@
+---
+import type { SiteContent } from '../../data/site';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+---
+
+<footer>
+  <div class="wrap">
+    <span>{content.footer.location}</span>
+    <span>{content.footer.copyright}</span>
+  </div>
+</footer>
+

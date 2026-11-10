@@ -1,0 +1,604 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Signum & Co.</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Signum & Co. Consultora costarricense de datos, marketing, tecnología e IA.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  Plan
+  Subject: a Costa Rican consultancy that measures what brings customers to local businesses.
+  The one bold element: the hero chart, a wide band where scattered dots (what owners see today)
+  resolve into one gold trend line (what we measure), labelled directly on the plot.
+  Everything else stays quiet: left-aligned text, sentence case, no card grid, no eyebrows.
+  Type: Libre Caslon (echoes the serif wordmark in the email signature), Schibsted Grotesk for
+  reading, Plex Mono only where the content really is code (event names, UTM strings).
+  Spacing on a 4px scale (Tailwind steps 2,3,4,6,8,12,16,20,24).
+*/
+:root{
+  --navy:#0f1f3d; --navy-2:#182c52; --gold:#c9a227; --gold-ink:#7f630c;
+  --bg:#f5f6f8; --surface:#ffffff; --fg:#121a2e; --muted:#566074; --line:#dbe0e8;
+  --on-navy:#eef1f7; --on-navy-muted:#a9b4c8; --dot:#41557f; --bar:#182c52;
+  --f-display:"Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --f-body:"Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-code:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --t-sm:.875rem; --t-base:1.0625rem; --t-lg:1.25rem; --t-xl:1.625rem; --t-2xl:2.25rem; --t-hero:clamp(2.5rem,5.6vw,4.25rem);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0a1222; --surface:#0f1a30; --fg:#e8ecf4; --muted:#9ba7bd; --line:#23314d;
+  --gold-ink:#d8b649; --navy:#08101f; --navy-2:#0f1f3d; --bar:#3a5590; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0a1222; --surface:#0f1a30; --fg:#e8ecf4; --muted:#9ba7bd; --line:#23314d;
+  --gold-ink:#d8b649; --navy:#08101f; --navy-2:#0f1f3d; --bar:#3a5590; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:var(--t-base);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:400}
+p{margin:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.code{font-family:var(--f-code);font-size:.82em}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--navy);color:var(--on-navy);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.mark{font-family:var(--f-display);font-weight:700;font-size:1.375rem;text-decoration:none}
+.mark b{color:var(--gold);font-weight:700}
+.nav-r{display:flex;align-items:center;gap:24px;font-size:var(--t-sm)}
+.nav-r a{text-decoration:none;color:var(--on-navy-muted)}
+.nav-r a:hover{color:var(--on-navy)}
+.lang{font:500 var(--t-sm)/1 var(--f-body);background:none;border:1px solid rgba(255,255,255,.25);color:var(--on-navy);padding:8px 12px;border-radius:6px;cursor:pointer;min-height:36px}
+.lang [aria-current="true"]{color:var(--gold)}
+@media (max-width:780px){.nav-r a{display:none}}
+
+/* hero */
+.hero{background:var(--navy);color:var(--on-navy)}
+.hero-text{padding-block:64px 32px;max-width:760px}
+.hero h1{font-family:var(--f-display);font-size:var(--t-hero);line-height:1.08;letter-spacing:-.015em}
+.hero .lead{margin-top:24px;color:var(--on-navy-muted);font-size:var(--t-lg);max-width:46ch}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 24px;border-radius:6px;font:600 1rem/1.2 var(--f-body);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background-color .15s ease-out,border-color .15s ease-out}
+.btn-gold{background:var(--gold);color:#17120a}
+.btn-gold:hover{background:#dbb43a}
+.btn-line{border-color:rgba(255,255,255,.3);color:var(--on-navy)}
+.btn-line:hover{border-color:var(--on-navy)}
+.chart{padding-block:8px 48px}
+.chart svg{display:block;width:100%;height:auto;max-width:100%}
+.chart .cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-top:12px;font-size:var(--t-sm);color:var(--on-navy-muted)}
+.chart .cap .code{color:var(--gold)}
+.legend-m{display:none;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:var(--t-sm);color:var(--on-navy-muted)}
+.legend-m span{display:inline-flex;align-items:center;gap:8px}
+.legend-m i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#41557f}
+.legend-m .g i{background:var(--gold);width:18px;height:3px;border-radius:2px}
+.legend-m .g{color:var(--gold)}
+@media (max-width:640px){#sig text{display:none}.legend-m{display:flex}}
+
+/* sections */
+.sec{padding-block:96px}
+.sec-alt{background:var(--surface);border-block:1px solid var(--line)}
+.sec h2{font-family:var(--f-display);font-size:var(--t-2xl);line-height:1.15;max-width:22ch}
+.sec .intro{margin-top:16px;color:var(--muted);max-width:60ch}
+@media (max-width:720px){.sec{padding-block:64px}}
+
+/* questions */
+.qs{list-style:none;margin:48px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.qs li{display:flex;flex-direction:column;gap:12px;min-width:0}
+.qs q{font-family:var(--f-display);font-style:italic;font-size:var(--t-xl);line-height:1.3;quotes:"¿" "?"}
+.qs q::before,.qs q::after{content:none}
+.qs p{color:var(--muted);font-size:1rem}
+@media (max-width:860px){.qs{grid-template-columns:1fr;gap:24px}}
+
+/* services: definition rows, not cards */
+.svc{margin-top:48px;border-top:1px solid var(--line)}
+.svc-row{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:32px;padding-block:32px;border-bottom:1px solid var(--line)}
+.svc-row h3{font-family:var(--f-display);font-size:var(--t-xl);line-height:1.2}
+.svc-row p{color:var(--muted)}
+.svc-row ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:1rem}
+.svc-row li::marker{color:var(--gold-ink)}
+.svc-row > *{min-width:0}
+@media (max-width:860px){.svc-row{grid-template-columns:1fr;gap:12px;padding-block:24px}}
+
+/* funnel: horizontal bars, log scale, direct labels */
+.funnel{margin-top:48px;display:grid;gap:12px;max-width:880px}
+.f-row{display:grid;grid-template-columns:180px 1fr 72px;gap:16px;align-items:center}
+.f-row .lbl{font-size:1rem}
+.f-row .lbl .code{display:block;color:var(--gold-ink);font-size:.75rem}
+.f-track{height:28px;background:transparent}
+.f-bar{height:100%;background:var(--bar);border-radius:0 4px 4px 0}
+.f-row.last .f-bar{background:var(--gold)}
+.f-row .val{font-variant-numeric:tabular-nums;font-weight:600;text-align:right}
+.f-note{margin-top:20px;font-size:var(--t-sm);color:var(--muted);max-width:64ch}
+@media (max-width:600px){.f-row{grid-template-columns:1fr 56px;gap:4px 12px}.f-row .lbl{grid-column:1/-1}.f-track{grid-column:1}}
+
+/* process: real sequence */
+.steps{list-style:none;margin:48px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:step}
+.steps li{counter-increment:step;display:flex;flex-direction:column;gap:8px;padding-top:20px;border-top:2px solid var(--fg);min-width:0}
+.steps li::before{content:counter(step);font-family:var(--f-display);font-size:var(--t-xl);line-height:1;color:var(--gold-ink)}
+.steps h3{font-family:var(--f-body);font-weight:600;font-size:var(--t-lg)}
+.steps p{color:var(--muted);font-size:1rem}
+.steps .when{margin-top:auto;font-size:var(--t-sm);color:var(--muted)}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* pricing */
+.price{margin-top:48px;width:100%;border-collapse:collapse;font-size:1rem}
+.price-wrap{overflow-x:auto}
+.price th,.price td{text-align:left;padding:20px 16px 20px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.price thead th{font-size:var(--t-sm);font-weight:500;color:var(--muted);padding-block:12px}
+.price td:nth-child(2){font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.price td:nth-child(2) s{font-weight:400;color:var(--muted);margin-right:8px}
+.price td:first-child{font-family:var(--f-display);font-size:var(--t-lg);min-width:10rem}
+.price td:last-child{color:var(--muted);min-width:16rem}
+.price-note{margin-top:16px;font-size:var(--t-sm);color:var(--muted)}
+
+/* about */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.about .body{display:grid;gap:16px;color:var(--muted)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+.facts dt{font-family:var(--f-display);font-size:var(--t-xl);color:var(--fg);line-height:1.1}
+.facts dd{margin:4px 0 0;font-size:var(--t-sm)}
+@media (max-width:860px){.about{grid-template-columns:1fr;gap:24px}}
+.stack{margin-top:24px;padding-top:24px;border-top:1px solid var(--line);display:grid;gap:12px}
+.stack h3{font-family:var(--f-body);font-weight:600;font-size:1rem;color:var(--fg)}
+.stack-list{margin:0;display:grid;gap:10px}
+.stack-list div{display:grid;grid-template-columns:10rem 1fr;gap:12px;font-size:var(--t-sm)}
+.stack-list dt{color:var(--fg);font-weight:500}
+.stack-list dd{margin:0;min-width:0}
+.certs{font-size:var(--t-sm)}
+@media (max-width:520px){.stack-list div{grid-template-columns:1fr;gap:2px}}
+
+/* contact */
+.contact{background:var(--navy);color:var(--on-navy)}
+.contact .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;padding-block:80px;align-items:center}
+.contact h2{font-family:var(--f-display);font-size:var(--t-2xl);line-height:1.15}
+.contact .intro{margin-top:16px;color:var(--on-navy-muted);max-width:44ch}
+.contact .wrap{align-items:start}
+.direct{margin:32px 0 0;display:grid;gap:12px;font-size:var(--t-sm)}
+.direct div{display:grid;grid-template-columns:5.5rem 1fr;gap:12px;align-items:center}
+.direct dt{color:var(--on-navy-muted)}
+.direct dd{margin:0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
+.direct .sel{font-size:1rem;color:var(--on-navy);overflow-wrap:anywhere;user-select:all}
+.cform{display:grid;gap:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:24px;min-width:0}
+.field{display:grid;gap:6px}
+.field label{font-size:var(--t-sm);color:var(--on-navy)}
+.field small{color:var(--on-navy-muted);font-size:.8rem}
+.field input,.field textarea{width:100%;font:400 1rem/1.4 var(--f-body);color:var(--on-navy);background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.22);border-radius:6px;padding:12px 14px;min-height:48px}
+.field textarea{resize:vertical}
+.field input::placeholder{color:#7f8aa1}
+.field input:focus,.field textarea:focus{outline:2px solid var(--gold);outline-offset:0;border-color:transparent}
+.send{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.send .btn{width:100%;padding-inline:12px;white-space:nowrap;font-size:.95rem}
+.hint{font-size:.8rem;color:var(--on-navy-muted)}
+@media (max-width:480px){.send{grid-template-columns:1fr}.cform{padding:16px}}
+.copy{flex:none;font:500 var(--t-sm)/1 var(--f-body);background:none;border:1px solid rgba(255,255,255,.3);color:var(--on-navy);padding:8px 12px;border-radius:6px;cursor:pointer;min-height:36px}
+.copy:hover{border-color:var(--gold);color:var(--gold)}
+@media (max-width:860px){.contact .wrap{grid-template-columns:1fr;padding-block:56px}}
+footer{background:var(--navy);color:var(--on-navy-muted);border-top:1px solid rgba(255,255,255,.08);font-size:var(--t-sm)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:24px}
+
+/* ---------- motion layer (v3) ----------
+   One orchestrated load moment (hero), one interactive moment (pointer pulls noise onto the signal),
+   scroll used only for orientation (sticky section titles, active nav) and a subtle funnel fill.
+   Tokens follow standard UI timing: 100 / 200 / 300ms, enter = decelerate. */
+:root{--ease-enter:cubic-bezier(0,0,.2,1);--ease-std:cubic-bezier(.2,0,0,1);--d-fast:100ms;--d-norm:200ms;--d-slow:300ms}
+
+/* sticky split sections */
+.split{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.5fr);gap:64px;align-items:start}
+.split-head{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px)}
+.split .svc{margin-top:0}
+.split > .price-note{grid-column:2}
+@media (max-width:900px){.split{grid-template-columns:1fr;gap:32px}.split-head{position:static}.split > .price-note{grid-column:1}}
+
+/* service rows: quiet hover that points at the row being read */
+.svc-row{position:relative;transition:background-color var(--d-norm) var(--ease-std)}
+.svc-row::before{content:"";position:absolute;left:-16px;top:32px;bottom:32px;width:2px;background:var(--gold);transform:scaleY(0);transform-origin:top;transition:transform var(--d-slow) var(--ease-enter)}
+.svc-row:hover::before{transform:scaleY(1)}
+.split .svc-row{grid-template-columns:1fr 1.3fr}
+.split .svc-row > ul{grid-column:2}
+.split .svc-row > h3{grid-row:span 2}
+@media (max-width:900px){.split .svc-row{grid-template-columns:1fr}.split .svc-row > ul{grid-column:1}.svc-row::before{display:none}}
+
+/* nav: active section + condensed on scroll */
+.nav{transition:background-color var(--d-slow) var(--ease-std),box-shadow var(--d-slow) var(--ease-std)}
+.nav.scrolled{box-shadow:0 1px 0 rgba(201,162,39,.35)}
+.nav-r a{position:relative;padding-block:6px}
+.nav-r a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform var(--d-slow) var(--ease-enter)}
+.nav-r a.on{color:var(--on-navy)}
+.nav-r a.on::after{transform:scaleX(1)}
+
+/* buttons: pressed feedback */
+.btn:active{transform:scale(.98)}
+.btn{transition:background-color var(--d-fast) var(--ease-std),border-color var(--d-fast) var(--ease-std),transform var(--d-fast) var(--ease-std)}
+
+/* hero load sequence: headline, lead, actions, then the line draws */
+@keyframes rise{from{opacity:.15;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero h1,.hero .lead,.hero .ctas{animation:rise 600ms var(--ease-enter) both}
+.hero .lead{animation-delay:90ms}
+.hero .ctas{animation-delay:180ms}
+#sig{cursor:crosshair;touch-action:pan-y}
+#sig circle.dot{transition:cy 380ms var(--ease-std),fill 380ms var(--ease-std)}
+#sig circle.dot.pulled{fill:#c9a227}
+.hint-hero{font-size:var(--t-sm);color:var(--on-navy-muted)}
+
+/* funnel fills as it enters view (starts visible, never empty) */
+@supports (animation-timeline: view()){
+  @keyframes fill{from{transform:scaleX(.55)}to{transform:scaleX(1)}}
+  .f-bar{transform-origin:left;animation:fill linear both;animation-timeline:view();animation-range:entry 0% cover 40%}
+}
+
+/* live message preview in the contact form */
+.preview{border-left:2px solid var(--gold);padding:8px 12px;font-size:var(--t-sm);color:var(--on-navy);background:rgba(255,255,255,.03);white-space:pre-line;min-height:3.2em;transition:background-color var(--d-norm) var(--ease-std)}
+.preview.flash{background:rgba(201,162,39,.12)}
+.preview-label{font-size:.8rem;color:var(--on-navy-muted)}
+
+/* language swap cross-fade */
+main,header .nav-r{transition:opacity var(--d-norm) linear}
+.swapping main{opacity:.4}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
+  .f-bar{transform:none !important}
+}
+
+/* language */
+[data-l]{display:none}
+html[lang="es"] [data-l="es"],html[lang="en"] [data-l="en"]{display:revert}
+</style>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#inicio">Signum<b>&amp;</b>Co.</a>
+    <div class="nav-r">
+      <a href="#servicios"><span data-l="es">Servicios</span><span data-l="en">Services</span></a>
+      <a href="#empresas"><span data-l="es">Empresas</span><span data-l="en">Enterprise</span></a>
+      <a href="#precios"><span data-l="es">Cómo trabajar juntos</span><span data-l="en">Work with us</span></a>
+      <a href="#contacto"><span data-l="es">Contacto</span><span data-l="en">Contact</span></a>
+      <button class="lang" id="lang" type="button" aria-label="Idioma / Language"><span data-k="es">ES</span> / <span data-k="en">EN</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero" aria-labelledby="h-hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <h1 id="h-hero">
+          <span data-l="es">Le decimos qué le trae clientes y qué no.</span>
+          <span data-l="en">We show you what brings you customers, and what doesn’t.</span>
+        </h1>
+        <p class="lead">
+          <span data-l="es">Somos una consultora costarricense de datos, marketing, tecnología e inteligencia artificial. Medimos lo que funciona, hacemos crecer su marketing e implementamos IA que le ahorra horas de trabajo.</span>
+          <span data-l="en">We are a Costa Rican data, marketing, technology and AI consultancy. We measure what works, grow your marketing and implement AI that saves you hours of work.</span>
+        </p>
+        <div class="ctas">
+          <a class="btn btn-gold" id="wa-hero" href="https://wa.me/50660242091" target="_blank" rel="noopener"><span data-l="es">Pedir diagnóstico gratis por WhatsApp</span><span data-l="en">Get a free assessment on WhatsApp</span></a>
+          <a class="btn btn-line" href="#servicios"><span data-l="es">Ver servicios</span><span data-l="en">See services</span></a>
+        </div>
+      </div>
+      <figure class="chart" style="margin:0">
+        <svg id="sig" viewBox="0 0 1080 260" role="img" aria-labelledby="sig-t">
+          <title id="sig-t">Puntos dispersos que se resuelven en una línea de tendencia dorada</title>
+          <g id="g-grid"></g><g id="g-dots"></g>
+          <path id="g-line" fill="none" stroke="#c9a227" stroke-width="3" stroke-linecap="round"></path>
+          <circle id="g-end" r="6" fill="#c9a227"></circle>
+          <g font-family="Schibsted Grotesk, system-ui, sans-serif" font-size="15">
+            <text x="24" y="40" fill="#a9b4c8"><tspan data-l="es">Lo que ve hoy: seguidores, likes, visitas sueltas</tspan><tspan data-l="en">What you see today: followers, likes, scattered visits</tspan></text>
+            <text id="g-lbl" x="1052" y="44" text-anchor="end" fill="#c9a227" font-weight="600"><tspan data-l="es">Lo que medimos: consultas que se vuelven ventas</tspan><tspan data-l="en">What we measure: leads that become sales</tspan></text>
+          </g>
+        </svg>
+        <div class="legend-m" aria-hidden="true">
+          <span><i></i><span data-l="es">Lo que ve hoy</span><span data-l="en">What you see today</span></span>
+          <span class="g"><i></i><span data-l="es">Lo que medimos</span><span data-l="en">What we measure</span></span>
+        </div>
+        <figcaption class="cap">
+          <span class="hint-hero"><span data-l="es">Pase el cursor o el dedo por la gráfica: así ordenamos sus datos. Ilustración.</span><span data-l="en">Move your cursor or finger across the chart: that’s how we organize your data. Illustration.</span></span>
+          <span class="code">utm_source=instagram&amp;utm_medium=organico</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-q">
+    <div class="wrap">
+      <h2 id="h-q"><span data-l="es">Preguntas que la mayoría de negocios no puede responder</span><span data-l="en">Questions most businesses can’t answer</span></h2>
+      <ul class="qs">
+        <li><q><span data-l="es">¿Qué publicación de Instagram nos trajo la última venta?</span><span data-l="en">Which Instagram post brought in our last sale?</span></q><p><span data-l="es">Muchos negocios usan enlaces con UTM, pero su web no tiene dónde registrarlos.</span><span data-l="en">Many businesses tag their links with UTMs, but their website has nowhere to record them.</span></p></li>
+        <li><q><span data-l="es">¿Cuántas llamadas nos llegan desde Google?</span><span data-l="en">How many calls come from Google?</span></q><p><span data-l="es">El perfil de Google cuenta llamadas y rutas, pero casi nadie lo revisa.</span><span data-l="en">Google’s business profile counts calls and directions, but almost nobody checks it.</span></p></li>
+        <li><q><span data-l="es">¿Funciona el correo que publicamos en la web?</span><span data-l="en">Does the email on our website even work?</span></q><p><span data-l="es">En nuestras revisiones encontramos correos de contacto que rebotan y formularios rotos.</span><span data-l="en">In our reviews we find contact emails that bounce and broken forms.</span></p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" id="servicios" aria-labelledby="h-svc">
+    <div class="wrap">
+      <div class="split"><div class="split-head"><h2 id="h-svc"><span data-l="es">Qué hacemos</span><span data-l="en">What we do</span></h2>
+      <p class="intro"><span data-l="es">Trabajamos sobre lo que ya tiene. No le proponemos rehacer su web si no hace falta.</span><span data-l="en">We build on what you already have. We won’t propose rebuilding your website unless it needs it.</span></p></div>
+      <div class="svc">
+        <div class="svc-row">
+          <h3><span data-l="es">Datos y medición</span><span data-l="en">Data and measurement</span></h3>
+          <p><span data-l="es">Instalamos Google Analytics 4 y Tag Manager, y le armamos un tablero en Looker Studio que se actualiza solo.</span><span data-l="en">We set up Google Analytics 4 and Tag Manager, and build you a Looker Studio dashboard that updates itself.</span></p>
+          <ul><li><span data-l="es">Clics a WhatsApp, llamadas y cotizaciones</span><span data-l="en">WhatsApp clicks, calls and quotes</span></li><li><span data-l="es">Campañas y UTMs registradas</span><span data-l="en">Campaigns and UTMs recorded</span></li><li><span data-l="es">Embudo del anuncio a la venta</span><span data-l="en">Funnel from ad to sale</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Marketing digital y redes sociales</span><span data-l="en">Digital marketing and social media</span></h3>
+          <p><span data-l="es">Estrategia, contenido y campañas que se miden por clientes, no por likes.</span><span data-l="en">Strategy, content and campaigns measured by customers, not likes.</span></p>
+          <ul><li><span data-l="es">Estrategia y calendario de contenido para Instagram, Facebook, TikTok y LinkedIn</span><span data-l="en">Content strategy and calendar for Instagram, Facebook, TikTok and LinkedIn</span></li><li><span data-l="es">Campañas pagadas en Meta y Google Ads</span><span data-l="en">Paid campaigns on Meta and Google Ads</span></li><li><span data-l="es">Perfil de Google, reseñas y posicionamiento en buscadores (SEO)</span><span data-l="en">Google profile, reviews and search engine optimization (SEO)</span></li><li><span data-l="es">Email marketing y seguimiento a clientes</span><span data-l="en">Email marketing and customer follow-up</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Tecnología y web</span><span data-l="en">Technology and web</span></h3>
+          <p><span data-l="es">Mejoras puntuales a su sitio, o uno nuevo pensado para generar consultas.</span><span data-l="en">Targeted fixes to your site, or a new one built to generate inquiries.</span></p>
+          <ul><li><span data-l="es">Búsqueda por medida, cotizador o citas en línea</span><span data-l="en">Size search, quote forms or online booking</span></li><li><span data-l="es">Letra legible y botones grandes en celular</span><span data-l="en">Readable text and large buttons on mobile</span></li><li><span data-l="es">Tiendas en línea y pagos</span><span data-l="en">Online stores and payments</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Implementación de IA</span><span data-l="en">AI implementation</span></h3>
+          <p><span data-l="es">Ponemos la inteligencia artificial a trabajar en su negocio: atiende, responde, redacta y organiza, para que su equipo se enfoque en vender.</span><span data-l="en">We put artificial intelligence to work in your business: it answers, replies, writes and organizes, so your team can focus on selling.</span></p>
+          <ul><li><span data-l="es">Asistentes de WhatsApp y chat en su web que responden 24/7</span><span data-l="en">WhatsApp and website assistants that reply 24/7</span></li><li><span data-l="es">Contenido para redes y respuestas a reseñas con IA</span><span data-l="en">AI-assisted social content and review replies</span></li><li><span data-l="es">Automatización de cotizaciones, citas y tareas repetitivas</span><span data-l="en">Automated quotes, bookings and repetitive tasks</span></li><li><span data-l="es">Capacitación a su equipo para usar IA en el día a día</span><span data-l="en">Training your team to use AI every day</span></li></ul>
+        </div>
+      </div>
+</div>
+    </div>
+  </section>
+
+  <section class="sec" id="empresas" aria-labelledby="h-ent">
+    <div class="wrap">
+      <div class="split"><div class="split-head"><h2 id="h-ent"><span data-l="es">Para empresas: el equipo de datos que todavía no tiene</span><span data-l="en">For companies: the data team you don’t have yet</span></h2>
+      <p class="intro"><span data-l="es">Para equipos de ventas, marketing, finanzas y operaciones que necesitan respuestas confiables sin contratar un departamento completo. Trabajamos por proyecto o como su líder de datos por horas.</span><span data-l="en">For sales, marketing, finance and operations teams that need reliable answers without hiring a full department. We work by project or as your part-time head of data.</span></p></div>
+      <div class="svc">
+        <div class="svc-row">
+          <h3><span data-l="es">Inteligencia de ingresos</span><span data-l="en">Revenue intelligence</span></h3>
+          <p><span data-l="es">Visibilidad completa del pipeline: de dónde viene cada oportunidad, qué campaña la generó y cuánto va a cerrar este trimestre.</span><span data-l="en">Full pipeline visibility: where every opportunity comes from, which campaign created it and what will close this quarter.</span></p>
+          <ul><li><span data-l="es">Atribución de marketing multicanal</span><span data-l="en">Multi-channel marketing attribution</span></li><li><span data-l="es">Pronóstico de ventas y salud del pipeline</span><span data-l="en">Sales forecasting and pipeline health</span></li><li><span data-l="es">Métricas de RevOps para dirección</span><span data-l="en">RevOps metrics for leadership</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Ingeniería de datos</span><span data-l="en">Data engineering</span></h3>
+          <p><span data-l="es">Un almacén de datos ordenado donde todas sus fuentes hablan el mismo idioma, listo para reportes y para IA.</span><span data-l="en">A clean data warehouse where every source speaks the same language, ready for reporting and AI.</span></p>
+          <ul><li>Snowflake, BigQuery, Databricks</li><li><span data-l="es">Modelado dimensional y pipelines en SQL y Python</span><span data-l="en">Dimensional modeling and SQL/Python pipelines</span></li><li><span data-l="es">Calidad y gobierno de datos maestros</span><span data-l="en">Master data quality and governance</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Tableros ejecutivos</span><span data-l="en">Executive dashboards</span></h3>
+          <p><span data-l="es">Una sola versión de los números para la reunión de los lunes, actualizada sola y sin hojas de Excel que se contradicen.</span><span data-l="en">One version of the numbers for Monday’s meeting, refreshed automatically, with no conflicting spreadsheets.</span></p>
+          <ul><li>Tableau, Power BI, Looker Studio</li><li><span data-l="es">KPIs definidos con su equipo</span><span data-l="en">KPIs defined with your team</span></li><li><span data-l="es">Alertas cuando un número se sale de rango</span><span data-l="en">Alerts when a number goes out of range</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">IA para empresas</span><span data-l="en">Enterprise AI</span></h3>
+          <p><span data-l="es">Implementamos modelos de lenguaje sobre sus datos y procesos: desde un piloto en semanas hasta flujos de trabajo en producción.</span><span data-l="en">We implement language models on your data and processes: from a pilot in weeks to production workflows.</span></p>
+          <ul><li><span data-l="es">Preguntas en español que se responden con sus números</span><span data-l="en">Plain-language questions answered with your numbers</span></li><li><span data-l="es">Asistentes internos sobre sus documentos y políticas</span><span data-l="en">Internal assistants over your documents and policies</span></li><li><span data-l="es">Clasificación de correos, tickets y reseñas</span><span data-l="en">Classifying emails, tickets and reviews</span></li><li><span data-l="es">Reportes y resúmenes que se escriben solos</span><span data-l="en">Reports and summaries that write themselves</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Procesos, riesgo y cumplimiento</span><span data-l="en">Process, risk and compliance</span></h3>
+          <p><span data-l="es">Documentación de procesos y controles con el nivel que exige la banca internacional.</span><span data-l="en">Process and control documentation to the standard international banking requires.</span></p>
+          <ul><li><span data-l="es">Mapeo de procesos y manuales de control</span><span data-l="en">Process maps and control manuals</span></li><li><span data-l="es">Revisión de código analítico (SQL, SAS, Python)</span><span data-l="en">Analytical code review (SQL, SAS, Python)</span></li><li><span data-l="es">Experiencia en antilavado (AML) y verificación de clientes</span><span data-l="en">AML and customer verification experience</span></li></ul>
+        </div>
+      </div>
+</div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-f">
+    <div class="wrap">
+      <h2 id="h-f"><span data-l="es">De 1.000 visitas, ¿cuántas terminan en venta?</span><span data-l="en">Out of 1,000 visits, how many become a sale?</span></h2>
+      <p class="intro"><span data-l="es">Medimos cada paso entre la visita y la compra, para que sepa en cuál se pierden sus clientes.</span><span data-l="en">We measure every step between a visit and a purchase, so you know where customers drop off.</span></p>
+      <div class="funnel" role="list" aria-label="Embudo de ejemplo">
+        <div class="f-row" role="listitem"><div class="lbl"><span data-l="es">Visitas a la web</span><span data-l="en">Website visits</span><span class="code">page_view</span></div><div class="f-track"><div class="f-bar" style="width:100%"></div></div><div class="val">1.000</div></div>
+        <div class="f-row" role="listitem"><div class="lbl"><span data-l="es">Ven un producto</span><span data-l="en">View a product</span><span class="code">view_item</span></div><div class="f-track"><div class="f-bar" style="width:86%"></div></div><div class="val">380</div></div>
+        <div class="f-row" role="listitem"><div class="lbl"><span data-l="es">Escriben o llaman</span><span data-l="en">Message or call</span><span class="code">click_whatsapp</span></div><div class="f-track"><div class="f-bar" style="width:65%"></div></div><div class="val">90</div></div>
+        <div class="f-row" role="listitem"><div class="lbl"><span data-l="es">Cotizan o agendan</span><span data-l="en">Quote or book</span><span class="code">generate_lead</span></div><div class="f-track"><div class="f-bar" style="width:51%"></div></div><div class="val">35</div></div>
+        <div class="f-row last" role="listitem"><div class="lbl"><span data-l="es">Compran</span><span data-l="en">Buy</span><span class="code">purchase</span></div><div class="f-track"><div class="f-bar" style="width:36%"></div></div><div class="val">12</div></div>
+      </div>
+      <p class="f-note"><span data-l="es">Cifras de ejemplo en escala logarítmica. En su tablero verá las suyas, separadas por canal: Google, Instagram, TikTok o anuncios.</span><span data-l="en">Example figures on a log scale. Your dashboard shows your own, split by channel: Google, Instagram, TikTok or ads.</span></p>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" aria-labelledby="h-p">
+    <div class="wrap">
+      <h2 id="h-p"><span data-l="es">Cómo trabajamos</span><span data-l="en">How we work</span></h2>
+      <p class="intro"><span data-l="es">Cinco semanas hasta su primer tablero con datos reales, con avances cada semana.</span><span data-l="en">Five weeks to your first dashboard with real data, with progress every week.</span></p>
+      <ol class="steps">
+        <li><h3><span data-l="es">Diagnóstico gratis</span><span data-l="en">Free assessment</span></h3><p><span data-l="es">Revisamos su web, redes y perfil de Google, y le decimos qué mediríamos primero.</span><span data-l="en">We review your website, social channels and Google profile, and tell you what we’d measure first.</span></p><span class="when"><span data-l="es">15 minutos</span><span data-l="en">15 minutes</span></span></li>
+        <li><h3><span data-l="es">Propuesta</span><span data-l="en">Proposal</span></h3><p><span data-l="es">Una página con qué haremos, cuánto cuesta y en qué semanas.</span><span data-l="en">One page with the scope, the price and the weekly timeline.</span></p><span class="when"><span data-l="es">En 48 horas</span><span data-l="en">Within 48 hours</span></span></li>
+        <li><h3><span data-l="es">Implementación</span><span data-l="en">Implementation</span></h3><p><span data-l="es">Medición, mejoras a la web y perfil de Google, sin interrumpir su sitio.</span><span data-l="en">Tracking, website fixes and Google profile, without taking your site down.</span></p><span class="when"><span data-l="es">Semanas 1 a 5</span><span data-l="en">Weeks 1 to 5</span></span></li>
+        <li><h3><span data-l="es">Reporte mensual</span><span data-l="en">Monthly report</span></h3><p><span data-l="es">Qué funcionó, qué no y qué ajustar el próximo mes.</span><span data-l="en">What worked, what didn’t, and what to change next month.</span></p><span class="when"><span data-l="es">Cada mes</span><span data-l="en">Every month</span></span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="precios" aria-labelledby="h-price">
+    <div class="wrap">
+      <div class="split"><div class="split-head"><h2 id="h-price"><span data-l="es">Cómo puede trabajar con nosotros</span><span data-l="en">Ways to work with us</span></h2>
+      <p class="intro"><span data-l="es">Cada negocio necesita algo distinto, así que no tenemos paquetes cerrados. Empezamos con un diagnóstico gratis y le enviamos una propuesta con precio fijo en 48 horas.</span><span data-l="en">Every business needs something different, so we don’t sell fixed packages. We start with a free assessment and send you a fixed-price proposal within 48 hours.</span></p></div>
+      <div class="svc">
+        <div class="svc-row">
+          <h3><span data-l="es">Proyecto</span><span data-l="en">Project</span></h3>
+          <p><span data-l="es">Un objetivo claro con fecha de entrega: instalar la medición, construir un almacén de datos, armar un tablero ejecutivo o mejorar su web.</span><span data-l="en">A clear goal with a delivery date: set up tracking, build a data warehouse, create an executive dashboard or improve your website.</span></p>
+          <ul><li><span data-l="es">Precio fijo, acordado antes de empezar</span><span data-l="en">Fixed price, agreed before we start</span></li><li><span data-l="es">Avances cada semana</span><span data-l="en">Weekly progress</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Acompañamiento mensual</span><span data-l="en">Monthly partnership</span></h3>
+          <p><span data-l="es">Después del proyecto, seguimos midiendo, reportando y ajustando con usted cada mes.</span><span data-l="en">After the project, we keep measuring, reporting and adjusting with you every month.</span></p>
+          <ul><li><span data-l="es">Reporte mensual de resultados</span><span data-l="en">Monthly results report</span></li><li><span data-l="es">Sin plazo mínimo</span><span data-l="en">No minimum term</span></li></ul>
+        </div>
+        <div class="svc-row">
+          <h3><span data-l="es">Líder de datos por horas</span><span data-l="en">Part-time head of data</span></h3>
+          <p><span data-l="es">Para empresas que necesitan criterio senior en datos sin contratar a alguien de tiempo completo.</span><span data-l="en">For companies that need senior data leadership without a full-time hire.</span></p>
+          <ul><li><span data-l="es">Bolsa de horas al mes</span><span data-l="en">Monthly block of hours</span></li><li><span data-l="es">Estrategia, equipo y proveedores</span><span data-l="en">Strategy, team and vendors</span></li></ul>
+        </div>
+      </div>
+      <p class="price-note"><span data-l="es">Cotizamos en dólares o colones. Para nuestros primeros clientes tenemos condiciones de cliente fundador.</span><span data-l="en">We quote in US dollars or Costa Rican colones. Founding-client terms are available for our first clients.</span></p>
+</div>
+    </div>
+  </section>
+
+  <section class="sec sec-alt" aria-labelledby="h-about">
+    <div class="wrap about">
+      <h2 id="h-about"><span data-l="es">Rigor de empresa global, para su negocio</span><span data-l="en">Global-company rigor for your business</span></h2>
+      <div class="body">
+        <p><span data-l="es">Signum &amp; Co. fue fundada en Costa Rica por Kevin Arroyo, con más de doce años liderando datos, analítica e inteligencia de ingresos en empresas globales de software, banca, consumo masivo y publicidad.</span><span data-l="en">Signum &amp; Co. was founded in Costa Rica by Kevin Arroyo, who has spent more than twelve years leading data, analytics and revenue intelligence at global software, banking, consumer goods and advertising companies.</span></p>
+        <p><span data-l="es">Ha construido la inteligencia de ingresos de una multinacional de software, documentado controles de cumplimiento para uno de los bancos más grandes del mundo, ordenado datos maestros de cadena de suministro para un líder global de alimentos y liderado analítica de marketing en una de las principales redes de publicidad del mundo.</span><span data-l="en">He has built revenue intelligence for a multinational software company, documented compliance controls for one of the world’s largest banks, organized supply-chain master data for a global food leader and led marketing analytics inside one of the world’s top advertising networks.</span></p>
+        <p><span data-l="es">En Costa Rica, ha trabajado con banca y retail nacional, así que conoce cómo opera el negocio local.</span><span data-l="en">In Costa Rica, he has worked in national banking and retail, so he knows how local businesses operate.</span></p>
+        <p><span data-l="es">El nombre viene del latín: <i>signum</i> es señal o evidencia. Es lo que buscamos en sus datos.</span><span data-l="en">The name is Latin: <i>signum</i> means sign or evidence. That is what we look for in your data.</span></p>
+        <dl class="facts">
+          <div><dt>12+</dt><dd><span data-l="es">años en datos y analítica</span><span data-l="en">years in data and analytics</span></dd></div>
+          <div><dt>5</dt><dd><span data-l="es">industrias: software, banca, alimentos, publicidad y retail</span><span data-l="en">industries: software, banking, food, advertising and retail</span></dd></div>
+          <div><dt><span data-l="es">De punta a punta</span><span data-l="en">End to end</span></dt><dd><span data-l="es">del dato crudo en la nube a la decisión en la junta directiva</span><span data-l="en">from raw cloud data to the boardroom decision</span></dd></div>
+          <div><dt><span data-l="es">ES · EN</span><span data-l="en">EN · ES</span></dt><dd><span data-l="es">trabajo en español e inglés, horario compatible con EE. UU.</span><span data-l="en">work in English and Spanish, US-friendly hours</span></dd></div>
+        </dl>
+        <div class="stack">
+          <h3><span data-l="es">Herramientas con las que trabajamos</span><span data-l="en">Tools we work with</span></h3>
+          <dl class="stack-list">
+            <div><dt><span data-l="es">Nube y datos</span><span data-l="en">Cloud and data</span></dt><dd>Snowflake · BigQuery · Databricks · AWS · SQL · Python</dd></div>
+            <div><dt><span data-l="es">Tableros</span><span data-l="en">Dashboards</span></dt><dd>Tableau · Power BI · Looker Studio</dd></div>
+            <div><dt><span data-l="es">Marketing y medición</span><span data-l="en">Marketing and tracking</span></dt><dd>Google Analytics 4 · Tag Manager · Google Business · Meta</dd></div>
+            <div><dt><span data-l="es">IA y automatización</span><span data-l="en">AI and automation</span></dt><dd><span data-l="es">Modelos de lenguaje (LLM) aplicados a análisis y reportes</span><span data-l="en">Large language models applied to analysis and reporting</span></dd></div>
+            <div><dt><span data-l="es">Gestión</span><span data-l="en">Delivery</span></dt><dd>Scrum · <span data-l="es">modelado dimensional · documentación de procesos y controles</span><span data-l="en">dimensional modeling · process and control documentation</span></dd></div>
+          </dl>
+          <p class="certs"><span data-l="es">Certificado en Databricks Data Engineering, AWS Cloud, Tableau y Scrum Master.</span><span data-l="en">Certified in Databricks Data Engineering, AWS Cloud, Tableau and Scrum Master.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto" aria-labelledby="h-c">
+    <div class="wrap">
+      <div>
+        <h2 id="h-c"><span data-l="es">Empiece con un diagnóstico gratis de 15 minutos</span><span data-l="en">Start with a free 15-minute assessment</span></h2>
+        <p class="intro"><span data-l="es">Cuéntenos de su negocio y elija cómo prefiere escribirnos. El mensaje sale listo; solo tiene que enviarlo. Respondemos el mismo día hábil.</span><span data-l="en">Tell us about your business and choose how you’d like to reach us. The message comes pre-written; you just send it. We reply the same business day.</span></p>
+        <dl class="direct">
+          <div><dt>WhatsApp</dt><dd><span class="sel">+506 6024-2091</span><button class="copy" type="button" data-copy="+506 6024-2091"><span data-l="es">Copiar</span><span data-l="en">Copy</span></button></dd></div>
+          <div><dt><span data-l="es">Correo</span><span data-l="en">Email</span></dt><dd><span class="sel">kevin.arroyo@signumandco.com</span><button class="copy" type="button" data-copy="kevin.arroyo@signumandco.com"><span data-l="es">Copiar</span><span data-l="en">Copy</span></button></dd></div>
+        </dl>
+      </div>
+      <form class="cform" id="cform" novalidate>
+        <div class="field"><label for="c-name"><span data-l="es">Su nombre</span><span data-l="en">Your name</span></label><input id="c-name" name="name" type="text" autocomplete="name"></div>
+        <div class="field"><label for="c-biz"><span data-l="es">Negocio o empresa</span><span data-l="en">Business or company</span></label><input id="c-biz" name="biz" type="text" autocomplete="organization"></div>
+        <div class="field"><label for="c-web"><span data-l="es">Sitio web o Instagram</span><span data-l="en">Website or Instagram</span></label><input id="c-web" name="web" type="text" inputmode="url" placeholder="@sunegocio"></div>
+        <div class="field"><label for="c-need"><span data-l="es">¿Qué le gustaría saber o resolver?</span><span data-l="en">What would you like to know or solve?</span> <small><span data-l="es">(opcional)</span><span data-l="en">(optional)</span></small></label><textarea id="c-need" name="need" rows="3"></textarea></div>
+        <div class="field"><span class="preview-label"><span data-l="es">Así se verá su mensaje</span><span data-l="en">Your message will look like this</span></span><div class="preview" id="preview" aria-live="polite"></div></div>
+        <div class="send">
+          <a class="btn btn-gold" id="wa-contact" href="https://wa.me/50660242091" target="_blank" rel="noopener">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.2.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3Z"/></svg>
+            <span data-l="es">Enviar por WhatsApp</span><span data-l="en">Send on WhatsApp</span></a>
+          <a class="btn btn-line" id="mail-contact" href="mailto:kevin.arroyo@signumandco.com">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span data-l="es">Enviar por correo</span><span data-l="en">Send by email</span></a>
+        </div>
+        <p class="hint"><span data-l="es">Al tocar un botón se abre WhatsApp o su correo con el mensaje escrito. Nada se envía hasta que usted lo confirme.</span><span data-l="en">Each button opens WhatsApp or your email app with the message written. Nothing is sent until you confirm it.</span></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Signum &amp; Co., San José, Costa Rica</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('lang');
+  var msg={es:'Hola, quiero un diagnóstico gratis para mi negocio.',en:'Hi, I’d like a free assessment for my business.'};
+  function setLang(l){
+    root.lang=l;
+    btn.querySelectorAll('[data-k]').forEach(function(s){s.setAttribute('aria-current',s.dataset.k===l?'true':'false')});
+    document.getElementById('wa-hero').href='https://wa.me/50660242091?text='+encodeURIComponent(msg[l]);
+    build();
+    try{localStorage.setItem('sg-lang',l)}catch(e){}
+  }
+  function v(id){return (document.getElementById(id).value||'').trim()}
+  function build(){
+    var es=root.lang!=='en',n=v('c-name'),b=v('c-biz'),w=v('c-web'),q=v('c-need');
+    var lines=[es?'Hola, quiero un diagnóstico gratis.':'Hi, I’d like a free assessment.'];
+    if(n)lines.push((es?'Nombre: ':'Name: ')+n);
+    if(b)lines.push((es?'Negocio: ':'Business: ')+b);
+    if(w)lines.push((es?'Web o Instagram: ':'Website or Instagram: ')+w);
+    if(q)lines.push((es?'Me interesa: ':'I’m interested in: ')+q);
+    var text=lines.join('\n');
+    var pv=document.getElementById('preview');
+    if(pv.textContent!==text){pv.textContent=text;pv.classList.add('flash');clearTimeout(build.t);build.t=setTimeout(function(){pv.classList.remove('flash')},220)}
+    document.getElementById('wa-contact').href='https://wa.me/50660242091?text='+encodeURIComponent(text);
+    var subj=(es?'Diagnóstico gratis':'Free assessment')+(b?' · '+b:'');
+    document.getElementById('mail-contact').href='mailto:kevin.arroyo@signumandco.com?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(text);
+  }
+  ['c-name','c-biz','c-web','c-need'].forEach(function(id){document.getElementById(id).addEventListener('input',build)});
+  document.getElementById('cform').addEventListener('submit',function(e){e.preventDefault()});
+  var saved=null;try{saved=localStorage.getItem('sg-lang')}catch(e){}
+  setLang(saved==='en'?'en':'es');
+  btn.addEventListener('click',function(){
+    root.classList.add('swapping');
+    setTimeout(function(){setLang(root.lang==='es'?'en':'es');root.classList.remove('swapping')},120);
+  });
+
+  // nav: condensed state + active section
+  var nav=document.querySelector('.nav'),links=[].slice.call(document.querySelectorAll('.nav-r a'));
+  addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>8)},{passive:true});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+    links.forEach(function(a){var t=document.querySelector(a.getAttribute('href'));if(t)io.observe(t)});
+  }
+
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var t=b.dataset.copy,orig=b.innerHTML;
+      function ok(){b.textContent=root.lang==='es'?'Copiado':'Copied';setTimeout(function(){b.innerHTML=orig},1500)}
+      function sel(){var s=b.parentNode.querySelector('.sel');var r=document.createRange();r.selectNodeContents(s);var g=getSelection();g.removeAllRanges();g.addRange(r)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,sel)}else sel();
+    });
+  });
+
+  // hero plot: noise resolving into a trend
+  var ns='http://www.w3.org/2000/svg',W=1080,H=260,L=24,R=W-24,T=64,B=H-20,N=40;
+  var grid=document.getElementById('g-grid'),dots=document.getElementById('g-dots'),line=document.getElementById('g-line'),end=document.getElementById('g-end');
+  for(var g=0;g<4;g++){var y=T+g*(B-T)/3,l=document.createElementNS(ns,'line');l.setAttribute('x1',L);l.setAttribute('x2',R);l.setAttribute('y1',y);l.setAttribute('y2',y);l.setAttribute('stroke','rgba(255,255,255,.07)');grid.appendChild(l)}
+  var s=11;function rnd(){s=(s*16807)%2147483647;return s/2147483647}
+  var pts=[];
+  for(var i=0;i<N;i++){
+    var t=i/(N-1),x=L+t*(R-L),yv=B-(0.08+0.82*Math.pow(t,1.7))*(B-T);
+    pts.push([x,yv]);
+    var spread=150*(1-t*.75);
+    for(var k=0;k<3;k++){
+      var c=document.createElementNS(ns,'circle');
+      c.setAttribute('cx',(x+(rnd()-.5)*20).toFixed(1));
+      var home=Math.min(B,Math.max(T,yv+(rnd()-.5)*spread));
+      c.setAttribute('cy',home.toFixed(1));c.style.cy=home.toFixed(1)+'px';
+      c.dataset.home=home;c.dataset.sig=yv;c.dataset.x=x;
+      c.setAttribute('class','dot');
+      c.setAttribute('r',2.4);c.setAttribute('fill','#41557f');c.setAttribute('opacity',(0.45+rnd()*.5).toFixed(2));
+      dots.appendChild(c);
+    }
+  }
+  line.setAttribute('d','M'+pts.map(function(p){return p[0].toFixed(1)+' '+p[1].toFixed(1)}).join(' L'));
+  var e=pts[pts.length-1];end.setAttribute('cx',e[0]);end.setAttribute('cy',e[1]);
+
+  // interaction: the pointer pulls nearby noise onto the signal line
+  var svg=document.getElementById('sig'),allDots=[].slice.call(dots.querySelectorAll('circle'));
+  var calm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function pull(clientX){
+    var r=svg.getBoundingClientRect(),px=(clientX-r.left)/r.width*W,band=110;
+    allDots.forEach(function(d){
+      var near=Math.abs(+d.dataset.x-px)<band;
+      var y=near?+d.dataset.sig:+d.dataset.home;
+      d.style.cy=y+'px';d.setAttribute('cy',y);d.classList.toggle('pulled',near);
+    });
+  }
+  function release(){allDots.forEach(function(d){d.style.cy=d.dataset.home+'px';d.setAttribute('cy',d.dataset.home);d.classList.remove('pulled')})}
+  if(!calm){
+    svg.addEventListener('pointermove',function(ev){pull(ev.clientX)});
+    svg.addEventListener('pointerleave',release);
+    svg.addEventListener('pointerup',function(ev){if(ev.pointerType!=='mouse')setTimeout(release,900)});
+  }
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce&&line.getTotalLength){
+    var len=line.getTotalLength();line.style.strokeDasharray=len;line.style.strokeDashoffset=len;
+    line.getBoundingClientRect();line.style.transition='stroke-dashoffset 1.8s cubic-bezier(.2,.7,.2,1)';
+    requestAnimationFrame(function(){line.style.strokeDashoffset=0});
+  }
+})();
+</script>
+
+</body></html>
