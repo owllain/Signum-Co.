@@ -104,7 +104,7 @@ vercel.json                    # Redirecciones y encabezados HTTP para Vercel
 4. Verificar tras la propagación DNS:
    - Certificado HTTPS activo en `https://signumandco.com/es/` y `https://signumandco.com/en/`.
    - Redirección de `/` hacia `/es/`.
-   - Funcionamiento de enlaces a WhatsApp (`+506 6024-2091`) y correo (`kevin.arroyo@signumandco.com`).
+   - Funcionamiento de enlaces a WhatsApp (`+506 8971-2137`) y correo (`kevin.arroyo@signumandco.com`).
 
 ### Procedimiento de reversión (Rollback)
 - Desde el panel de **Deployments** en Vercel, seleccionar el último despliegue estable verificado y ejecutar **Instant Rollback** (o **Promote to Production**), o bien revertir el commit en Git (`git revert <commit>`) y hacer push a la rama principal.

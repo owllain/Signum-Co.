@@ -16,7 +16,7 @@ export function initContact(): void {
     const webPrefix = form.dataset.webPrefix || 'Web o Instagram: ';
     const needPrefix = form.dataset.needPrefix || 'Me interesa: ';
     const subjectBase = form.dataset.subjectBase || 'Diagnóstico gratis';
-    const waBase = form.dataset.waBase || 'https://wa.me/50660242091';
+    const waBase = form.dataset.waBase || 'https://wa.me/50689712137';
     const email = form.dataset.email || 'kevin.arroyo@signumandco.com';
 
     const nameInput = document.getElementById('c-name') as HTMLInputElement | null;
