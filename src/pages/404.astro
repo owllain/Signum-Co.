@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { contentEs } from '../data/content.es';
-import { SITE_CONFIG, buildWhatsappUrl } from '../data/site';
+import { routes } from '../data/experience';
 
-const waHref = buildWhatsappUrl(contentEs.hero.whatsappDefaultText);
+const rEs = routes.es;
+const rEn = routes.en;
 ---
 
 <BaseLayout
@@ -14,51 +16,77 @@ const waHref = buildWhatsappUrl(contentEs.hero.whatsappDefaultText);
   canonicalPath="/404.html"
   noindex={true}
 >
-  <header class="nav">
-    <div class="wrap">
-      <a class="mark" href="/es/">Signum<b>&amp;</b>Co.</a>
-      <div class="nav-r">
-        <nav class="nav-links" aria-label="Navegación de recuperación">
-          <a href="/es/#servicios">Servicios</a>
-          <a href="/es/#empresas">Empresas</a>
-          <a href="/es/#precios">Cómo trabajar juntos</a>
-          <a href="/es/#contacto">Contacto</a>
-        </nav>
-        <div class="nav-actions">
-          <a class="lang" href="/en/" hreflang="en" aria-label="Idioma / Language">
-            <span aria-current="page">ES</span> / <span>EN</span>
+  <Header content={contentEs} />
+
+  <main id="inicio" class="site-main notfound-main">
+    <section class="notfound-section" aria-labelledby="h-404">
+      <div class="wrap notfound-inner">
+        <div class="notfound-icon-box" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            width="26"
+            height="26"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+        </div>
+
+        <span class="notfound-code">ERROR 404 · PAGE NOT FOUND</span>
+
+        <h1 id="h-404" class="notfound-title">
+          Página no encontrada / Page not found
+        </h1>
+
+        <p class="notfound-subtitle">
+          La página que busca no existe o cambió de dirección. Aquí tiene enlaces directos para continuar:
+          <br />
+          <span lang="en">
+            The page you are looking for doesn’t exist. Here are some helpful links:
+          </span>
+        </p>
+
+        <div class="notfound-actions">
+          <button
+            type="button"
+            class="btn notfound-btn-back"
+            onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/es/'; }"
+          >
+            <span aria-hidden="true">←</span>
+            <span>Volver atrás / Go back</span>
+          </button>
+
+          <a class="btn btn-gold" href={rEs.home}>
+            Ir al inicio (ES)
+          </a>
+
+          <a class="btn notfound-btn-en" href={rEn.home} lang="en">
+            Take me home (EN)
           </a>
         </div>
-      </div>
-    </div>
-  </header>
 
-  <main id="inicio">
-    <section class="hero" aria-labelledby="h-404" style="min-height:calc(100vh - 140px);display:flex;align-items:center;">
-      <div class="wrap">
-        <div class="hero-text" style="padding-block:80px;">
-          <p class="code" style="color:var(--gold);margin-bottom:16px;">404 · HTTP Not Found</p>
-          <h1 id="h-404" style="font-size:clamp(2rem,4.5vw,3.5rem);">
-            No encontramos esta página.
-          </h1>
-          <p class="lead">
-            Es posible que el enlace haya cambiado. Puede volver a la página principal en su idioma o escribirnos directamente.
-          </p>
-          <p class="lead" lang="en" style="font-size:1rem;margin-top:12px;">
-            We couldn’t find this page. Choose your language below to return to the main site or reach out directly.
-          </p>
-          <div class="ctas" style="margin-top:36px;">
-            <a class="btn btn-gold" href="/es/">Ir al inicio (Español)</a>
-            <a class="btn btn-line" href="/en/" lang="en">Go to home (English)</a>
-            <a
-              class="btn btn-line"
-              href={waHref}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp ({SITE_CONFIG.contact.phoneDisplay})
-            </a>
-          </div>
+        <div class="notfound-helpful-grid">
+          <a href={rEs.services} class="notfound-helpful-card">
+            <strong>Servicios &amp; Soluciones</strong>
+            <span>Sitios web, Apps .NET, Microsoft 365 y Dashboards Power BI →</span>
+          </a>
+          <a href={rEs.method} class="notfound-helpful-card">
+            <strong>Metodología &amp; Modalidades</strong>
+            <span>Etapas de trabajo, validación técnica y alcances →</span>
+          </a>
+          <a href={rEs.faq} class="notfound-helpful-card">
+            <strong>Preguntas Frecuentes (FAQ)</strong>
+            <span>Respuestas sobre tiempos, código y licenciamiento →</span>
+          </a>
+          <a href={rEs.contact} class="notfound-helpful-card">
+            <strong>Contacto Directo</strong>
+            <span>Agendar diagnóstico inicial de 15 minutos →</span>
+          </a>
         </div>
       </div>
     </section>
@@ -67,3 +95,132 @@ const waHref = buildWhatsappUrl(contentEs.hero.whatsappDefaultText);
   <Footer content={contentEs} />
 </BaseLayout>
 
+<style>
+  .notfound-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .notfound-section {
+    width: 100%;
+    padding: clamp(4rem, 9vw, 7rem) 0;
+  }
+
+  .notfound-inner {
+    max-width: 680px;
+    margin-inline: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .notfound-icon-box {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 8px 24px rgba(12, 25, 49, 0.08);
+    display: grid;
+    place-items: center;
+    color: var(--fg);
+    margin-bottom: 1.25rem;
+  }
+
+  .notfound-code {
+    font-family: var(--f-code);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    color: var(--gold-ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .notfound-title {
+    font-family: var(--f-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.12;
+    color: var(--fg);
+  }
+
+  .notfound-subtitle {
+    margin-top: 1rem;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 54ch;
+  }
+
+  .notfound-actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .notfound-btn-back,
+  .notfound-btn-en {
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    color: var(--fg);
+  }
+
+  .notfound-btn-back:hover,
+  .notfound-btn-en:hover {
+    border-color: var(--gold);
+  }
+
+  .notfound-helpful-grid {
+    margin-top: 2.75rem;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+    text-align: left;
+  }
+
+  .notfound-helpful-card {
+    padding: 1rem 1.15rem;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition:
+      border-color 160ms ease,
+      transform 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .notfound-helpful-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+  }
+
+  .notfound-helpful-card strong {
+    font-size: 0.92rem;
+    color: var(--fg);
+  }
+
+  .notfound-helpful-card span {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    .notfound-helpful-grid {
+      grid-template-columns: 1fr;
+    }
+    .notfound-actions {
+      width: 100%;
+    }
+    .notfound-actions .btn {
+      flex: 1 1 100%;
+    }
+  }
+</style>
