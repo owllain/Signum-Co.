@@ -12,6 +12,7 @@
     "start": "node ./node_modules/astro/astro.js dev",
     "build": "node ./node_modules/astro/astro.js check && node ./node_modules/astro/astro.js build",
     "preview": "node ./node_modules/astro/astro.js preview",
+    "verify:build": "node scripts/verify-build.mjs",
     "check": "node ./node_modules/astro/astro.js check",
     "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit"
   },

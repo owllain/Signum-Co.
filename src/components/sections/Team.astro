@@ -1,0 +1,286 @@
+---
+import type { SiteContent } from '../../data/site';
+import { team } from '../../data/services';
+import { routes } from '../../data/experience';
+import {
+  Avatar,
+  Timeline,
+  TimelineItem,
+  TimelinePoint,
+  TimelineContent,
+  TimelineTime,
+  TimelineTitle,
+  TimelineBody,
+  TimelineButton,
+  FounderQuote,
+} from '../interactive/FlowbitePrimitives';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+const es = content.locale === 'es';
+const r = routes[content.locale];
+
+const members = [
+  {
+    ...team.kevin,
+    avatar: '/images/avatar-kevin.webp',
+    role: es
+      ? 'Socio Fundador · Datos, Analítica e Inteligencia de Ingresos'
+      : 'Founding Partner · Data, Analytics & Revenue Intelligence',
+    joinedMeta: es
+      ? '+12 años de trayectoria global · Databricks, AWS, Tableau & Power BI'
+      : '12+ years global track record · Databricks, AWS, Tableau & Power BI',
+    bio: es
+      ? 'Lidera la arquitectura de datos, analítica comercial, modelos en Dataverse / Power BI y gobernanza de indicadores tras más de una década en corporaciones multinacionales de software, banca internacional, consumo masivo y redes publicitarias.'
+      : 'Leads data architecture, commercial analytics, Dataverse / Power BI semantic models and KPI governance after over a decade across multinational software, international banking, CPG and global ad networks.',
+    timeline: es
+      ? [
+          {
+            time: 'Etapa 01 · Operaciones Globales & CPG',
+            title: 'Gobierno de Datos Maestros & Cadena de Suministro',
+            body: 'Estandarización de indicadores operativos, inventarios y almacenes analíticos en la nube (Snowflake, BigQuery, Databricks, SQL) para operaciones regionales y globales.',
+            ctaLabel: 'Explorar Ingeniería de Datos',
+            topic: 'enterprise-1',
+          },
+          {
+            time: 'Etapa 02 · Banca Internacional & AML',
+            title: 'Trazabilidad Regulatoria & Controles Analíticos',
+            body: 'Validación de código analítico (SQL, SAS, Python), documentación de reglas de cumplimiento y auditoría reproducible de flujos de información financiera.',
+            ctaLabel: 'Ver Gobernanza & Calidad',
+            topic: 'enterprise-0',
+          },
+          {
+            time: 'Etapa 03 · Software Multinacional & Signum & Co.',
+            title: 'Inteligencia de Ingresos (RevOps), BI & IA Aplicada',
+            body: 'Arquitectura de atribución multicanal, pronóstico de pipeline ejecutivo, dashboards empresariales en Power BI / Tableau / Dataverse y dirección en Signum & Co.',
+            ctaLabel: 'Consultar Dashboards & BI',
+            topic: 'enterprise-2',
+          },
+        ]
+      : [
+          {
+            time: 'Stage 01 · Global Operations & CPG',
+            title: 'Master Data Governance & Supply Chain Analytics',
+            body: 'Standardization of operational KPIs, inventory visibility and cloud data warehouses (Snowflake, BigQuery, Databricks, SQL) across regional and global operations.',
+            ctaLabel: 'Explore Data Engineering',
+            topic: 'enterprise-1',
+          },
+          {
+            time: 'Stage 02 · International Banking & AML',
+            title: 'Regulatory Traceability & Analytical Controls',
+            body: 'Validation of analytical code (SQL, SAS, Python), compliance control documentation and reproducible auditing of financial data pipelines.',
+            ctaLabel: 'See Governance & Quality',
+            topic: 'enterprise-0',
+          },
+          {
+            time: 'Stage 03 · Global Software & Signum & Co.',
+            title: 'Revenue Intelligence (RevOps), BI & Applied AI',
+            body: 'Multi-touch attribution architecture, executive pipeline forecasting, enterprise dashboards in Power BI / Tableau / Dataverse and leadership at Signum & Co.',
+            ctaLabel: 'Discuss Dashboards & BI',
+            topic: 'enterprise-2',
+          },
+        ],
+    certifications: es
+      ? 'Certificado en Databricks Data Engineering · AWS Cloud · Tableau · Scrum Master'
+      : 'Certified in Databricks Data Engineering · AWS Cloud · Tableau · Scrum Master',
+    skills: [
+      'Power BI / Dataverse / Tableau',
+      'Snowflake / BigQuery / Databricks',
+      'RevOps & Attribution',
+      'SQL / Python / ML',
+    ],
+  },
+  {
+    ...team.enrique,
+    avatar: '/images/avatar-enrique.webp',
+    role: es
+      ? 'Líder de Ingeniería · Desarrollo .NET, Web & Microsoft 365'
+      : 'Engineering Lead · .NET Development, Web & Microsoft 365',
+    joinedMeta: es
+      ? 'Ingeniero en Informática · .NET, React, Power Platform & SharePoint SPFx'
+      : 'B.S. in Computer Engineering · .NET, React, Power Platform & SharePoint SPFx',
+    bio: es
+      ? 'Especialista en el diseño y construcción de aplicaciones empresariales a medida (.NET, C#, React, SQL Server), automatización de procesos con Power Automate / RPA Desktop, Power Apps y portales documentales en SharePoint SPFx.'
+      : 'Specialist in designing and building custom enterprise applications (.NET, C#, React, SQL Server), workflow automation with Power Automate / Desktop RPA, Power Apps and SharePoint SPFx portals.',
+    timeline: es
+      ? [
+          {
+            time: 'Especialidad 01 · Desarrollo Full-Stack & .NET',
+            title: 'Aplicaciones Empresariales en .NET, C#, React y SQL',
+            body: 'Construcción de portales internos, expedientes digitales y módulos transaccionales con permisos por rol, APIs RESTful documentadas y bases de datos relacionales.',
+            ctaLabel: 'Explorar Desarrollo de Apps',
+            topic: 'applications',
+          },
+          {
+            time: 'Especialidad 02 · Ecosistema Microsoft 365',
+            title: 'Power Automate, RPA Desktop, Power Apps & SharePoint SPFx',
+            body: 'Automatización de solicitudes, aprobaciones multinivel, bots de escritorio (Power Automate Desktop) y componentes corporativos a medida sobre SharePoint Framework (SPFx).',
+            ctaLabel: 'Automatizar con Microsoft 365',
+            topic: 'automation',
+          },
+          {
+            time: 'Especialidad 03 · Integraciones & Revisión QA',
+            title: 'Puentes entre Sistemas & Auditoría Técnica de Procesos',
+            body: 'Sincronización segura entre sistemas dispersos, modernización gradual sin detener la operación y revisión técnica con hallazgos verificables.',
+            ctaLabel: 'Solicitar Revisión Técnica',
+            topic: 'technical-review',
+          },
+        ]
+      : [
+          {
+            time: 'Track 01 · Full-Stack & .NET Engineering',
+            title: 'Enterprise Applications in .NET, C#, React & SQL',
+            body: 'Delivery of internal portals, digital case files and transactional modules with role-based access control, documented REST APIs and relational databases.',
+            ctaLabel: 'Explore App Development',
+            topic: 'applications',
+          },
+          {
+            time: 'Track 02 · Microsoft 365 Ecosystem',
+            title: 'Power Automate, Desktop RPA, Power Apps & SharePoint SPFx',
+            body: 'Multi-stage approval workflows, desktop automation bots (Power Automate Desktop) and custom enterprise web parts built with SharePoint Framework (SPFx).',
+            ctaLabel: 'Automate with Microsoft 365',
+            topic: 'automation',
+          },
+          {
+            time: 'Track 03 · System Integrations & QA Review',
+            title: 'System Bridges & Technical Process Auditing',
+            body: 'Reliable synchronization across scattered platforms, staged legacy modernization without operational downtime and technical reviews backed by traceable evidence.',
+            ctaLabel: 'Request Technical Review',
+            topic: 'technical-review',
+          },
+        ],
+    certifications: es
+      ? 'Ingeniería en Informática · Especialista en .NET, React, SQL Server, Power Platform y SharePoint SPFx'
+      : 'B.S. in Computer Engineering · Specialist in .NET, React, SQL Server, Power Platform & SharePoint SPFx',
+    skills: [
+      '.NET / C# / ASP.NET Core',
+      'React / Astro / TypeScript',
+      'Power Automate & RPA Desktop',
+      'Power Apps & SharePoint SPFx',
+    ],
+  },
+];
+---
+
+<section class="sec" id="equipo" aria-labelledby="team-title">
+  <div class="wrap">
+    <div class="section-heading">
+      <div>
+        <span class="section-label">
+          {es ? 'Liderazgo Técnico y Ejecutivo' : 'Technical & Executive Leadership'}
+        </span>
+        <h2 id="team-title">
+          {es ? 'Las personas detrás del trabajo.' : 'The people behind the work.'}
+        </h2>
+      </div>
+      <p class="intro">
+        {
+          es
+            ? 'Dos especialidades complementarias con responsabilidad directa sobre la arquitectura, construcción y entrega de cada proyecto.'
+            : 'Two complementary disciplines with direct ownership over the architecture, engineering and delivery of every engagement.'
+        }
+      </p>
+    </div>
+
+    <div class="team-stack-vertical">
+      {
+        members.map((member) => (
+          <article class="member-card-pro member-card-wide">
+            <div class="member-header-flowbite">
+              <Avatar
+                img={member.avatar}
+                alt={member.name}
+                rounded
+                size="lg"
+              >
+                <div class="fb-member-identity">
+                  <span class="member-role-badge">{member.role}</span>
+                  <h3>{member.name}</h3>
+                  <p class="fb-member-joined">{member.joinedMeta}</p>
+                </div>
+              </Avatar>
+
+              <a
+                class="member-linkedin-btn"
+                href={member.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`LinkedIn — ${member.name}`}
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="currentColor"
+                >
+                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77Z" />
+                </svg>
+                <span>LinkedIn</span>
+              </a>
+            </div>
+
+            <p class="member-bio">{member.bio}</p>
+
+            <div class="member-timeline-box">
+              <span class="member-exp-heading">
+                {es
+                  ? `Trayectoria profesional y especialidades — ${member.name}`
+                  : `Professional trajectory & specialties — ${member.name}`}
+              </span>
+
+              <Timeline horizontal>
+                {member.timeline.map((step) => (
+                  <TimelineItem>
+                    <TimelinePoint />
+                    <TimelineContent>
+                      <TimelineTime>{step.time}</TimelineTime>
+                      <TimelineTitle>{step.title}</TimelineTitle>
+                      <TimelineBody>{step.body}</TimelineBody>
+                      <TimelineButton
+                        href={`${r.contact}?topic=${step.topic}#contacto`}
+                        topic={step.topic}
+                      >
+                        {step.ctaLabel}
+                      </TimelineButton>
+                    </TimelineContent>
+                  </TimelineItem>
+                ))}
+              </Timeline>
+            </div>
+
+            <div class="member-footer-block">
+              <p class="member-certs">{member.certifications}</p>
+              <ul class="capability-tags">
+                {member.skills.map((skill) => (
+                  <li>{skill}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- Flowbite Blockquote + Avatar Founder Quote -->
+    <div class="team-founder-quote-wrap">
+      <FounderQuote
+        quote={
+          es
+            ? 'Cada sistema que entregamos —ya sea un modelo ejecutivo en Dataverse y Power BI, una aplicación en .NET o una automatización en Microsoft 365— se diseña para que su equipo tenga control total, código limpio y cero dependencia oculta.'
+            : 'Every system we deliver —whether an executive model in Dataverse and Power BI, a .NET application, or a Microsoft 365 automation— is engineered so your team retains full control, clean code, and zero hidden lock-in.'
+        }
+        authorName="Kevin Arroyo & Enrique Cascante"
+        authorRole={
+          es
+            ? 'Socios Directores en Signum & Co.'
+            : 'Managing Partners at Signum & Co.'
+        }
+        avatarImg="/images/avatar-kevin.webp"
+      />
+    </div>
+  </div>
+</section>

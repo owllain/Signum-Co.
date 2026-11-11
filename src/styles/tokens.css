@@ -1,76 +1,101 @@
 /*
  * Signum & Co. — Design Tokens
- * Colors, typography, spacing scale, and motion tokens extracted from prototype.
+ * Editorial Tech System: Deep Navy, Precision Gold, Architectural Surfaces
  */
 :root {
   color-scheme: light;
 
   /* Brand & semantic palette (Light) */
-  --navy: #0f1f3d;
-  --navy-2: #182c52;
+  --navy: #0c1931;
+  --navy-2: #14274a;
+  --navy-glass: rgba(12, 25, 49, 0.92);
   --gold: #c9a227;
-  --gold-hover: #dbb43a;
-  --gold-ink: #7a5e0a;
-  --bg: #f5f6f8;
+  --gold-hover: #ddb63b;
+  --gold-ink: #7d5f08;
+  --gold-soft: rgba(201, 162, 39, 0.12);
+  --bg: #f4f6fa;
   --surface: #ffffff;
-  --fg: #121a2e;
-  --muted: #515b6f;
-  --line: #dbe0e8;
-  --on-navy: #eef1f7;
-  --on-navy-muted: #b0bbd0;
+  --surface-elevated: #f9fafc;
+  --fg: #0f1829;
+  --muted: #4b566b;
+  --line: #dce2ec;
+  --line-strong: #c5cedd;
+  --on-navy: #f0f3f9;
+  --on-navy-muted: #a9b6cc;
   --dot: #41557f;
   --bar: #182c52;
+
+  /* Subtle architectural grid pattern */
+  --grid-color: rgba(15, 24, 41, 0.038);
+  --grid-dot: rgba(201, 162, 39, 0.14);
+  --card-shadow: 0 2px 6px rgba(12, 25, 49, 0.04), 0 10px 24px rgba(12, 25, 49, 0.04);
+  --card-shadow-hover: 0 12px 32px rgba(12, 25, 49, 0.1), 0 2px 8px rgba(201, 162, 39, 0.12);
 
   /* Typography */
   --f-display: "Libre Caslon Text", Georgia, "Times New Roman", serif;
   --f-body: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-code: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 
-  /* Type scale */
+  /* Type scale (refined & balanced) */
   --t-sm: 0.875rem;
-  --t-base: 1.0625rem;
-  --t-lg: 1.25rem;
-  --t-xl: 1.625rem;
-  --t-2xl: 2.25rem;
-  --t-hero: clamp(2.5rem, 5.6vw, 4.25rem);
+  --t-base: 1rem;
+  --t-lg: 1.15rem;
+  --t-xl: 1.375rem;
+  --t-2xl: clamp(1.75rem, 3vw, 2.35rem);
+  --t-hero: clamp(2.35rem, 4.4vw, 3.65rem);
 
   /* Layout */
-  --max-w: 1120px;
-  --nav-h: 64px;
+  --max-w: 1180px;
+  --nav-h: 68px;
 
   /* Motion tokens */
-  --ease-enter: cubic-bezier(0, 0, 0.2, 1);
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-std: cubic-bezier(0.2, 0, 0, 1);
-  --d-fast: 100ms;
-  --d-norm: 200ms;
-  --d-slow: 300ms;
+  --d-fast: 120ms;
+  --d-norm: 220ms;
+  --d-slow: 320ms;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0a1222;
-    --surface: #0f1a30;
-    --fg: #e8ecf4;
-    --muted: #a3afc4;
-    --line: #23314d;
-    --gold-ink: #d8b649;
-    --navy: #08101f;
-    --navy-2: #0f1f3d;
+    --bg: #08101f;
+    --surface: #0e192d;
+    --surface-elevated: #13223c;
+    --fg: #ebf0f8;
+    --muted: #9cacbf;
+    --line: #1e2e4a;
+    --line-strong: #2c4166;
+    --gold-ink: #e0bd48;
+    --gold-soft: rgba(201, 162, 39, 0.16);
+    --navy: #060c18;
+    --navy-2: #0d1a31;
+    --navy-glass: rgba(6, 12, 24, 0.9);
     --bar: #3a5590;
+    --grid-color: rgba(255, 255, 255, 0.032);
+    --grid-dot: rgba(201, 162, 39, 0.18);
+    --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+    --card-shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(201, 162, 39, 0.35);
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #0a1222;
-  --surface: #0f1a30;
-  --fg: #e8ecf4;
-  --muted: #a3afc4;
-  --line: #23314d;
-  --gold-ink: #d8b649;
-  --navy: #08101f;
-  --navy-2: #0f1f3d;
+  --bg: #08101f;
+  --surface: #0e192d;
+  --surface-elevated: #13223c;
+  --fg: #ebf0f8;
+  --muted: #9cacbf;
+  --line: #1e2e4a;
+  --line-strong: #2c4166;
+  --gold-ink: #e0bd48;
+  --gold-soft: rgba(201, 162, 39, 0.16);
+  --navy: #060c18;
+  --navy-2: #0d1a31;
+  --navy-glass: rgba(6, 12, 24, 0.9);
   --bar: #3a5590;
+  --grid-color: rgba(255, 255, 255, 0.032);
+  --grid-dot: rgba(201, 162, 39, 0.18);
+  --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  --card-shadow-hover: 0 14px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(201, 162, 39, 0.35);
   color-scheme: dark;
 }
-

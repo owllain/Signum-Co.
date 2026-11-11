@@ -1,17 +1,93 @@
 ---
-import type { SiteContent } from '../../data/site';
+import { SITE_CONFIG, type SiteContent } from '../../data/site';
+import { experience, routes } from '../../data/experience';
+import BrandImage from '../ui/BrandImage.astro';
 
 interface Props {
   content: SiteContent;
 }
 
 const { content } = Astro.props;
+const text = experience[content.locale];
+const r = routes[content.locale];
+const es = content.locale === 'es';
+const mainNavPages = [
+  'home',
+  'services',
+  'enterprise',
+  'development',
+  'method',
+  'about',
+  'contact',
+] as const;
+const legalPages = ['faq', 'terms', 'privacy'] as const;
 ---
 
 <footer>
-  <div class="wrap">
-    <span>{content.footer.location}</span>
-    <span>{content.footer.copyright}</span>
+  <div class="wrap footer-main">
+    <div class="footer-brand-col">
+      <div class="footer-brand-row">
+        <div class="footer-mascot-badge">
+          <BrandImage
+            kind="sig"
+            locale={content.locale}
+            alt={
+              es
+                ? 'Sig, mascota oficial de Signum & Co.'
+                : 'Sig, official mascot of Signum & Co.'
+            }
+            sizes="72px"
+          />
+        </div>
+        <div>
+          <a class="mark" href={r.home}>
+            Signum<b>&amp;</b>Co.
+          </a>
+          <p class="footer-tagline">{text.eyebrow}</p>
+        </div>
+      </div>
+      <p class="footer-mission">
+        {
+          es
+            ? 'Del ruido a la señal: conectamos ingeniería de datos, desarrollo de aplicaciones y automatización para decisiones con evidencia.'
+            : 'From noise to signal: connecting data engineering, application development and automation for evidence-based decisions.'
+        }
+      </p>
+    </div>
+
+    <div class="footer-links-col">
+      <nav
+        class="footer-nav"
+        aria-label={es ? 'Navegación del pie de página' : 'Footer navigation'}
+      >
+        {mainNavPages.map((page) => <a href={r[page]}>{text.nav[page]}</a>)}
+      </nav>
+      <div class="footer-direct-row">
+        <a
+          href={SITE_CONFIG.contact.whatsappBaseUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WhatsApp: {SITE_CONFIG.contact.phoneDisplay}
+        </a>
+        <span aria-hidden="true">·</span>
+        <a href={`mailto:${SITE_CONFIG.contact.email}`}>
+          {SITE_CONFIG.contact.email}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <div class="footer-copy-group">
+      <span>{content.footer.location}</span>
+      <span>·</span>
+      <span>{content.footer.copyright}</span>
+    </div>
+    <nav
+      class="footer-legal-nav"
+      aria-label={es ? 'Enlaces legales y soporte' : 'Legal and support links'}
+    >
+      {legalPages.map((page) => <a href={r[page]}>{text.nav[page]}</a>)}
+    </nav>
   </div>
 </footer>
-

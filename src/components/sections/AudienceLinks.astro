@@ -1,0 +1,12 @@
+---
+import type { SiteContent } from '../../data/site';
+import { experience, routes } from '../../data/experience';
+import Arrow from '../ui/Arrow.astro';
+interface Props { content: SiteContent }
+const { content } = Astro.props;
+const text = experience[content.locale];
+---
+<section class="audience-section" aria-labelledby="audience-title"><div class="wrap">
+  <h2 class="section-label" id="audience-title">{text.audienceTitle}</h2>
+  <div class="audience-grid">{text.audiences.map((item, index) => <a class="audience-link" href={index === 0 ? '#servicios' : routes[content.locale].enterprise}><span class="index-number">0{index + 1}</span><div><h3>{item.title}</h3><p>{item.description}</p><span class="text-link">{item.cta} <Arrow /></span></div></a>)}</div>
+</div></section>

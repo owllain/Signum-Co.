@@ -1,12 +1,13 @@
 ---
-import { buildWhatsappUrl, type SiteContent } from '../../data/site';
+import { experience } from '../../data/experience';
+import { type SiteContent } from '../../data/site';
 
 interface Props {
   content: SiteContent;
 }
 
 const { content } = Astro.props;
-const waHeroHref = buildWhatsappUrl(content.hero.whatsappDefaultText);
+
 
 // Deterministic pre-computation of the hero chart geometry so the SVG is
 // completely visible in initial HTML even without JavaScript.
@@ -72,15 +73,14 @@ const endPoint = points[points.length - 1];
 <section class="hero" aria-labelledby="h-hero">
   <div class="wrap">
     <div class="hero-text">
+      <p class="section-label hero-label">{experience[content.locale].eyebrow}</p>
       <h1 id="h-hero">{content.hero.headline}</h1>
       <p class="lead">{content.hero.lead}</p>
       <div class="ctas">
         <a
           class="btn btn-gold"
           id="wa-hero"
-          href={waHeroHref}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#contacto"
         >
           {content.hero.primaryCta}
         </a>

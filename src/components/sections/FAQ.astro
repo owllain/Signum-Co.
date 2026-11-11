@@ -1,0 +1,66 @@
+---
+import type { SiteContent } from '../../data/site';
+import { experience, routes } from '../../data/experience';
+import Arrow from '../ui/Arrow.astro';
+
+interface Props {
+  content: SiteContent;
+  showMoreLink?: boolean;
+}
+
+const { content, showMoreLink = true } = Astro.props;
+const text = experience[content.locale];
+const es = content.locale === 'es';
+---
+
+<section class="sec sec-alt" id="preguntas" aria-labelledby="faq-title">
+  <div class="wrap split">
+    <div>
+      <span class="section-label">FAQ · Signum &amp; Co.</span>
+      <h2 id="faq-title">{text.faqTitle}</h2>
+      <p class="intro">
+        {
+          es
+            ? 'Respuestas claras sobre alcance, tiempos, herramientas, propiedad del código y modalidades de trabajo.'
+            : 'Clear answers regarding scope, timelines, tooling, code ownership and engagement models.'
+        }
+      </p>
+      {
+        showMoreLink && (
+          <a class="text-link section-link" href={routes[content.locale].faq}>
+            {es
+              ? 'Ver centro completo de preguntas frecuentes'
+              : 'View full FAQ center'}{' '}
+            <Arrow />
+          </a>
+        )
+      }
+    </div>
+    <div class="faq-list">
+      {
+        text.faq.map((item, idx) => (
+          <details open={idx === 0}>
+            <summary>
+              <span class="faq-q-text">{item.question}</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </span>
+            </summary>
+            <p>{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

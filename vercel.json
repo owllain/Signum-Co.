@@ -5,6 +5,21 @@
       "source": "/",
       "destination": "/es/",
       "permanent": false
+    },
+    {
+      "source": "/es/consultora/",
+      "destination": "/es/nosotros/",
+      "permanent": true
+    },
+    {
+      "source": "/es/empresas/",
+      "destination": "/es/datos/",
+      "permanent": true
+    },
+    {
+      "source": "/en/enterprise/",
+      "destination": "/en/data-analytics/",
+      "permanent": true
     }
   ],
   "headers": [
@@ -19,4 +34,3 @@
     }
   ]
 }
-

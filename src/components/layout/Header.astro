@@ -1,27 +1,146 @@
 ---
-import type { SiteContent } from '../../data/site';
+import { experience, routes } from '../../data/experience';
+import { SITE_CONFIG, type SiteContent } from '../../data/site';
+import { team } from '../../data/services';
+import StaggeredMenu from '../interactive/StaggeredMenu';
 
 interface Props {
   content: SiteContent;
 }
 
 const { content } = Astro.props;
-const navAriaLabel =
-  content.locale === 'es' ? 'Navegación principal' : 'Primary navigation';
+const es = content.locale === 'es';
+const r = routes[content.locale];
+const t = experience[content.locale];
+
+const serviceActive = ['services', 'enterprise', 'development'].some(
+  (key) =>
+    r[key as 'services' | 'enterprise' | 'development'] ===
+    content.canonicalPath
+);
+const navAriaLabel = es ? 'Navegación principal' : 'Primary navigation';
+
+const staggeredItems = [
+  {
+    label: t.nav.home,
+    sublabel: es ? 'Visión ejecutiva y ecosistema' : 'Executive overview & ecosystem',
+    link: r.home,
+  },
+  {
+    label: t.nav.services,
+    sublabel: es ? 'Catálogo interactivo de 13 soluciones' : 'Interactive catalog of 13 solutions',
+    link: r.services,
+  },
+  {
+    label: t.nav.enterprise,
+    sublabel: es ? 'Kevin Arroyo · Ingeniería, BI y RevOps' : 'Kevin Arroyo · Engineering, BI & RevOps',
+    link: r.enterprise,
+  },
+  {
+    label: t.nav.development,
+    sublabel: es ? 'Enrique Cascante · Apps, Flujos y APIs' : 'Enrique Cascante · Apps, Workflows & APIs',
+    link: r.development,
+  },
+  {
+    label: t.nav.method,
+    sublabel: es ? 'Etapas, validación y modalidades' : 'Stages, validation & engagements',
+    link: r.method,
+  },
+  {
+    label: t.nav.about,
+    sublabel: es ? 'Liderazgo, trayectoria y herramientas' : 'Leadership, background & stack',
+    link: r.about,
+  },
+  {
+    label: t.nav.faq,
+    sublabel: es ? 'Respuestas sobre alcance y entregas' : 'Answers on scope & deliverables',
+    link: r.faq,
+  },
+  {
+    label: t.nav.contact,
+    sublabel: es ? 'Diagnóstico gratis de 15 minutos' : 'Free 15-minute assessment',
+    link: r.contact,
+  },
+];
+
+const socialItems = [
+  { label: 'LinkedIn · Kevin Arroyo', link: team.kevin.linkedin },
+  { label: 'LinkedIn · Enrique Cascante', link: team.enrique.linkedin },
+  { label: 'WhatsApp Directo', link: SITE_CONFIG.contact.whatsappBaseUrl },
+  { label: es ? 'Términos' : 'Terms', link: r.terms },
+  { label: es ? 'Privacidad' : 'Privacy', link: r.privacy },
+];
 ---
 
 <header class="nav">
   <div class="wrap">
-    <a class="mark" href={content.nav.homeHref}>Signum<b>&amp;</b>Co.</a>
+    <a class="mark" href={content.nav.homeHref}>
+      <span class="mark-emblem-lg" aria-hidden="true">
+        <img
+          src="/images/sig-128.webp"
+          width="36"
+          height="36"
+          alt=""
+          decoding="async"
+        />
+      </span>
+      <span class="mark-text">
+        Signum<b>&amp;</b>Co.
+        <small class="mark-sub">{es ? 'Datos · Apps · IA' : 'Data · Apps · AI'}</small>
+      </span>
+    </a>
+
     <div class="nav-r">
       <nav class="nav-links" id="nav-menu" aria-label={navAriaLabel}>
         {
           content.nav.items.map((item) => (
-            <a href={item.href}>{item.label}</a>
+            <a
+              class:list={{
+                on:
+                  item.href === content.canonicalPath ||
+                  (item.id === 'services' && serviceActive),
+                'nav-contact': item.id === 'contact',
+              }}
+              aria-current={
+                item.href === content.canonicalPath
+                  ? 'page'
+                  : item.id === 'services' && serviceActive
+                    ? 'true'
+                    : undefined
+              }
+              href={item.href}
+            >
+              {item.label}
+            </a>
           ))
         }
       </nav>
+
       <div class="nav-actions">
+        <button
+          hidden
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label={t.theme}
+          aria-pressed="false"
+        >
+          <svg
+            aria-hidden="true"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+          >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path
+              d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+            ></path>
+          </svg>
+        </button>
+
         <a
           class="lang"
           id="lang"
@@ -29,33 +148,36 @@ const navAriaLabel =
           hreflang={content.alternateLocale}
           aria-label={content.nav.langSwitchLabel}
         >
-          <span aria-current={content.locale === 'es' ? 'page' : undefined}>ES</span>
-          <span>/</span>
-          <span aria-current={content.locale === 'en' ? 'page' : undefined}>EN</span>
-        </a>
-        <button
-          class="nav-toggle"
-          id="nav-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="nav-menu"
-          aria-label={content.nav.mobileMenuOpenLabel}
-          data-open-label={content.nav.mobileMenuOpenLabel}
-          data-close-label={content.nav.mobileMenuCloseLabel}
-        >
           <svg
             aria-hidden="true"
-            width="20"
-            height="20"
             viewBox="0 0 24 24"
+            width="15"
+            height="15"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
+            stroke-width="1.6"
           >
-            <path d="M4 7h16M4 12h16M4 17h16" />
+            <circle cx="12" cy="12" r="9"></circle>
+            <ellipse cx="12" cy="12" rx="4" ry="9"></ellipse>
+            <path d="M3 12h18"></path>
           </svg>
-        </button>
+          <span>{content.alternateLocale.toUpperCase()}</span>
+        </a>
+
+        <StaggeredMenu
+          client:load
+          position="right"
+          items={staggeredItems}
+          socialItems={socialItems}
+          displaySocials
+          displayItemNumbering
+          colors={['#c9a227', '#162d57']}
+          accentColor="#c9a227"
+          currentPath={content.canonicalPath}
+          menuLabel={es ? 'Explorar' : 'Explore'}
+          closeLabel={es ? 'Cerrar' : 'Close'}
+          socialsTitle={es ? 'Canales & Legal' : 'Channels & Legal'}
+        />
       </div>
     </div>
   </div>
@@ -64,4 +186,3 @@ const navAriaLabel =
 <script>
   import '../../scripts/navigation.ts';
 </script>
-

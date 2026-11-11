@@ -1,0 +1,53 @@
+---
+import type { SiteContent } from '../../data/site';
+import { experience } from '../../data/experience';
+import BrandImage from '../ui/BrandImage.astro';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+const text = experience[content.locale];
+const es = content.locale === 'es';
+---
+
+<section class="sec" aria-labelledby="validation-title">
+  <div class="wrap validation-showcase">
+    <div class="validation-lead-col">
+      <span class="section-label">
+        Signum / {es ? 'Criterio y evidencia' : 'Standards & evidence'}
+      </span>
+      <h2 id="validation-title">{text.validationTitle}</h2>
+      <p class="intro">
+        {
+          es
+            ? 'Cada entrega incluye criterios verificables, conciliación de datos y documentación operativa para que su equipo conserve el control.'
+            : 'Every delivery includes verifiable criteria, data reconciliation and operational documentation so your team stays in control.'
+        }
+      </p>
+      <div class="validation-visual">
+        <BrandImage
+          kind="technical-review"
+          locale={content.locale}
+          showBadge
+          sizes="(max-width: 760px) 100vw, 460px"
+        />
+      </div>
+    </div>
+
+    <div class="validation-list">
+      {
+        text.validations.map((item, index) => (
+          <article class="validation-card">
+            <span class="bento-code">V-0{index + 1}</span>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

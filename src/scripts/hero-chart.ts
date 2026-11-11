@@ -189,4 +189,5 @@ export function initHeroChart(): void {
 }
 
 initHeroChart();
+document.addEventListener('astro:page-load', initHeroChart);
 

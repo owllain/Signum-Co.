@@ -162,3 +162,4 @@ Aunque el sitio ya cuenta con reglas base para pantallas pequeñas, una experien
   - Plantilla estandarizada para publicar casos de éxito reales y medibles sin romper la estética editorial.
 - [ ] **3.3. Isla interactiva en React (Diagnóstico rápido / Calculadora de embudo):**
   - Primer componente con estado en `src/components/interactive/` donde el visitante ingresa sus visitas mensuales aproximadas y obtiene una estimación visual de su embudo.
+

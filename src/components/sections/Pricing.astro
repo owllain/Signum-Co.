@@ -1,4 +1,6 @@
 ---
+import { experience, routes } from '../../data/experience';
+import Arrow from '../ui/Arrow.astro';
 import type { SiteContent } from '../../data/site';
 
 interface Props {
@@ -6,32 +8,71 @@ interface Props {
 }
 
 const { content } = Astro.props;
+const es = content.locale === 'es';
+const badges = es
+  ? ['Alcance y fecha cerrados', 'Evolución continua', 'Dirección senior fractional']
+  : ['Fixed scope & timeline', 'Continuous evolution', 'Fractional senior leadership'];
 ---
 
 <section class="sec" id={content.pricing.id} aria-labelledby="h-price">
   <div class="wrap">
-    <div class="split">
-      <div class="split-head">
+    <div class="section-heading">
+      <div>
+        <span class="section-label">
+          {es ? 'Modalidades de trabajo' : 'Engagement models'}
+        </span>
         <h2 id="h-price">{content.pricing.heading}</h2>
-        <p class="intro">{content.pricing.intro}</p>
       </div>
-      <div class="svc">
-        {
-          content.pricing.rows.map((row) => (
-            <div class="svc-row">
+      <p class="intro">{content.pricing.intro}</p>
+    </div>
+
+    <div class="bento-catalog-grid">
+      {
+        content.pricing.rows.map((row, index) => (
+          <article class="bento-service-card" id={`engagement-${index}`}>
+            <div class="bento-card-body">
+              <div class="bento-card-meta">
+                <span class="bento-code">M-0{index + 1}</span>
+                <span class="bento-tech-tag">{badges[index]}</span>
+              </div>
               <h3>{row.title}</h3>
-              <p>{row.description}</p>
-              <ul>
+              <p class="bento-desc">{row.description}</p>
+              <ul class="bento-deliverables">
                 {row.bullets.map((bullet) => (
-                  <li>{bullet}</li>
+                  <li>
+                    <svg
+                      aria-hidden="true"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                    >
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                    <span>{bullet}</span>
+                  </li>
                 ))}
               </ul>
+              <div class="bento-card-footer">
+                <span class="bento-owner">Signum &amp; Co.</span>
+                <a
+                  class="bento-cta"
+                  data-contact-topic={`engagement-${index}`}
+                  href={`${routes[content.locale].contact}?topic=engagement-${index}#contacto`}
+                >
+                  <span>{experience[content.locale].discuss}</span>
+                  <Arrow />
+                </a>
+              </div>
             </div>
-          ))
-        }
-      </div>
-      <p class="price-note">{content.pricing.note}</p>
+          </article>
+        ))
+      }
     </div>
+    <p class="price-note">
+      {content.pricing.note} {experience[content.locale].scopeNote}
+    </p>
   </div>
 </section>
-

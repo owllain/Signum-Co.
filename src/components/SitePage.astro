@@ -1,0 +1,266 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './layout/Header.astro';
+import Footer from './layout/Footer.astro';
+import HeroCentered from './sections/HeroCentered.astro';
+import CapabilitiesStrip from './sections/CapabilitiesStrip.astro';
+import ServiceDeepDive from './sections/ServiceDeepDive.astro';
+import Services from './sections/Services.astro';
+import Enterprise from './sections/Enterprise.astro';
+import Pricing from './sections/Pricing.astro';
+import About from './sections/About.astro';
+import Contact from './sections/Contact.astro';
+import Method from './sections/Method.astro';
+import Validation from './sections/Validation.astro';
+import FAQ from './sections/FAQ.astro';
+import DataFlow from './sections/DataFlow.astro';
+import SignalChart from './sections/SignalChart.astro';
+import Funnel from './sections/Funnel.astro';
+import Questions from './sections/Questions.astro';
+import Process from './sections/Process.astro';
+import VisualGalleryShowcase from './sections/VisualGalleryShowcase.astro';
+import LegalContent from './sections/LegalContent.astro';
+import Arrow from './ui/Arrow.astro';
+import { experience, pageContent, routes, type PageId } from '../data/experience';
+import type { SiteContent } from '../data/site';
+import ServiceTracks from './sections/ServiceTracks.astro';
+import Development from './sections/Development.astro';
+import Team from './sections/Team.astro';
+import type { BrandImageKind } from '../data/brand-images';
+
+interface Props {
+  base: SiteContent;
+  page?: PageId;
+}
+
+const { base, page = 'home' } = Astro.props;
+const content = pageContent(base, page);
+const text = experience[content.locale];
+const es = content.locale === 'es';
+const servicePage = ['services', 'enterprise', 'development'].includes(page);
+
+const headerImageMap: Record<PageId, BrandImageKind> = {
+  home: 'signal',
+  services: 'systems',
+  enterprise: 'data',
+  development: 'applications',
+  method: 'technical-review',
+  about: 'data',
+  faq: 'signal',
+  terms: 'technical-review',
+  privacy: 'systems',
+  contact: 'signal',
+};
+const detailImage = headerImageMap[page];
+
+const homeMetrics = [
+  {
+    value: es ? '12+ años' : '12+ yrs',
+    label: es
+      ? 'Trayectoria global en datos y software'
+      : 'Global data & software track record',
+  },
+  {
+    value: '100%',
+    label: es
+      ? 'Evidencia trazable y código propio'
+      : 'Traceable evidence & owned code',
+  },
+  {
+    value: 'ES · EN',
+    label: es
+      ? 'Operación en Costa Rica y EE. UU.'
+      : 'Operating in Costa Rica & US',
+  },
+];
+---
+
+<BaseLayout content={content}>
+  <Header content={content} />
+  <main id="inicio" class="site-main" tabindex="-1">
+    {
+      page === 'home' ? (
+        <HeroCentered
+          bg="navy"
+          locale={content.locale}
+          eyebrow={
+            es
+              ? 'Datos · Desarrollo · Automatización · IA'
+              : 'Data · Development · Automation · AI'
+          }
+          title={
+            es
+              ? 'De la información a la acción.'
+              : 'From information to action.'
+          }
+          subtitle={
+            es
+              ? 'Entendemos sus datos. Conectamos sus procesos. Construimos herramientas para que su negocio avance con claridad.'
+              : 'Understand your data. Connect your processes. Build tools that move your business forward with clarity.'
+          }
+          primary={{
+            label: text.contact,
+            href: routes[content.locale].contact,
+          }}
+          secondary={{
+            label: text.explore,
+            href: routes[content.locale].services,
+          }}
+          link={{
+            label: es
+              ? 'Ver metodología y validación'
+              : 'See methodology & validation',
+            href: routes[content.locale].method,
+          }}
+          imageKind="signal"
+          metrics={homeMetrics}
+          showMedia
+        />
+      ) : (
+        <HeroCentered
+          bg="navy"
+          compact
+          locale={content.locale}
+          breadcrumbs={[
+            { label: text.nav.home, href: routes[content.locale].home },
+            { label: text.nav[page] },
+          ]}
+          eyebrow={servicePage ? text.nav.services : 'Signum & Co.'}
+          title={text.page[page].title}
+          subtitle={text.page[page].lead}
+          primary={
+            page !== 'contact'
+              ? {
+                  label: text.contact,
+                  href: routes[content.locale].contact,
+                }
+              : undefined
+          }
+          link={
+            servicePage && page !== 'services'
+              ? {
+                  label: es
+                    ? 'Ver explorador interactivo de servicios'
+                    : 'View interactive service explorer',
+                  href: routes[content.locale].services,
+                }
+              : undefined
+          }
+          imageKind={detailImage}
+          showMedia={!['faq', 'terms', 'privacy', 'contact'].includes(page)}
+        />
+      )
+    }
+
+    {
+      page === 'home' && (
+        <>
+          <CapabilitiesStrip content={content} />
+          <ServiceDeepDive content={content} defaultTabId="dotnet-apps" />
+          <VisualGalleryShowcase
+            content={content}
+            showGallery
+            showStack={false}
+          />
+          <ServiceTracks content={content} compactMode />
+          <SignalChart content={content} />
+          <VisualGalleryShowcase
+            content={content}
+            showGallery={false}
+            showStack
+          />
+          <DataFlow content={content} />
+          <Method content={content} compact />
+        </>
+      )
+    }
+    {
+      page === 'services' && (
+        <>
+          <ServiceDeepDive content={content} defaultTabId="web-dev" />
+          <ServiceTracks content={content} initialTab="all" />
+          <SignalChart content={content} />
+          <VisualGalleryShowcase content={content} showGallery showStack />
+          <Funnel content={content} />
+          <Questions content={content} />
+          <DataFlow content={content} />
+          <Process content={content} />
+        </>
+      )
+    }
+    {
+      page === 'enterprise' && (
+        <>
+          <ServiceDeepDive content={content} defaultTabId="dataverse-bi" />
+          <Enterprise content={content} />
+          <SignalChart content={content} />
+          <DataFlow content={content} />
+          <Services content={content} />
+        </>
+      )
+    }
+    {
+      page === 'development' && (
+        <>
+          <ServiceDeepDive content={content} defaultTabId="m365-power" />
+          <Development content={content} />
+          <VisualGalleryShowcase
+            content={content}
+            showGallery={false}
+            showStack
+          />
+        </>
+      )
+    }
+    {
+      page === 'method' && (
+        <>
+          <Method content={content} />
+          <Validation content={content} />
+          <Pricing content={content} />
+          <Process content={content} />
+          <FAQ content={content} />
+        </>
+      )
+    }
+    {
+      page === 'about' && (
+        <>
+          <Team content={content} />
+          <div id="trayectoria">
+            <About content={content} />
+          </div>
+        </>
+      )
+    }
+    {
+      (page === 'faq' || page === 'terms' || page === 'privacy') && (
+        <LegalContent content={content} kind={page} />
+      )
+    }
+    {
+      page === 'contact' ? (
+        <Contact content={content} />
+      ) : (
+        <section class="closing-cta">
+          <div class="wrap">
+            <div class="closing-cta-copy">
+              <span class="section-label">
+                {es ? 'Su siguiente paso' : 'Your next step'}
+              </span>
+              <h2>
+                {es
+                  ? 'Una buena solución empieza con una conversación.'
+                  : 'A good solution starts with a conversation.'}
+              </h2>
+            </div>
+            <a class="btn btn-gold" href={routes[content.locale].contact}>
+              {text.contact} <Arrow />
+            </a>
+          </div>
+        </section>
+      )
+    }
+  </main>
+  <Footer content={content} />
+</BaseLayout>

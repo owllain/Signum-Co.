@@ -1,5 +1,9 @@
 ---
 import '../styles/global.css';
+import '../styles/experience.css';
+import '../styles/navigation-refresh.css';
+import bodyFont from '@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-400-normal.woff2?url';
+import displayFont from '@fontsource/libre-caslon-text/files/libre-caslon-text-latin-400-normal.woff2?url';
 import { SITE_CONFIG, type SiteContent } from '../data/site';
 
 interface Props {
@@ -19,8 +23,14 @@ const {
 } = Astro.props;
 
 const canonicalUrl = new URL(canonicalPath, SITE_CONFIG.domain).toString();
-const esUrl = new URL('/es/', SITE_CONFIG.domain).toString();
-const enUrl = new URL('/en/', SITE_CONFIG.domain).toString();
+const esUrl = new URL(
+  content.locale === 'es' ? canonicalPath : content.alternatePath,
+  SITE_CONFIG.domain
+).toString();
+const enUrl = new URL(
+  content.locale === 'en' ? canonicalPath : content.alternatePath,
+  SITE_CONFIG.domain
+).toString();
 const alternateOgLocale = content.locale === 'es' ? 'en_US' : 'es_CR';
 
 const organizationSchema = {
@@ -86,6 +96,30 @@ const organizationSchema = {
       )
     }
 
+    <link
+      rel="preload"
+      href={bodyFont}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={displayFont}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta name="theme-color" content="#0c1931" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        const theme = localStorage.getItem('sg-theme');
+        if (theme === 'light' || theme === 'dark') {
+          document.documentElement.dataset.theme = theme;
+        }
+      } catch {}
+    </script>
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE_CONFIG.name} />
@@ -112,4 +146,3 @@ const organizationSchema = {
     <slot />
   </body>
 </html>
-

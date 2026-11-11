@@ -1,0 +1,13 @@
+---
+import type { SiteContent } from '../../data/site';
+import { experience, routes } from '../../data/experience';
+import Arrow from '../ui/Arrow.astro';
+interface Props { content: SiteContent; compact?: boolean }
+const { content, compact = false } = Astro.props;
+const text = experience[content.locale];
+---
+<section class="sec sec-alt" id="metodo" aria-labelledby="method-title"><div class="wrap">
+  <div class="section-heading"><h2 id="method-title">{text.methodTitle}</h2><p class="intro">{text.methodLead}</p></div>
+  <ol class:list={['delivery-steps', { compact }]}>{text.steps.map((step, index) => <li><span class="index-number">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p>{!compact && <div class="delivery-output"><span>{text.deliverable}</span><strong>{step.deliverable}</strong></div>}</li>)}</ol>
+  {compact && <a class="text-link section-link" href={routes[content.locale].method}>{text.nav.method} <Arrow /></a>}
+</div></section>

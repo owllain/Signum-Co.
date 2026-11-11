@@ -1,0 +1,59 @@
+---
+import type { SiteContent } from '../../data/site';
+import { routes } from '../../data/experience';
+import { developmentServices } from '../../data/services';
+import ServiceCatalogExplorer, {
+  type ExplorerTab,
+} from '../interactive/ServiceCatalogExplorer';
+
+interface Props {
+  content: SiteContent;
+  initialTab?: ExplorerTab;
+  compactMode?: boolean;
+}
+
+const { content, initialTab = 'all', compactMode = false } = Astro.props;
+const es = content.locale === 'es';
+---
+
+<section class="sec" id="especialidades" aria-labelledby="tracks-title">
+  <div class="wrap">
+    <div class="section-heading">
+      <div>
+        <span class="section-label">
+          {
+            es
+              ? 'Explorador interactivo de capacidades'
+              : 'Interactive capabilities explorer'
+          }
+        </span>
+        <h2 id="tracks-title">
+          {
+            es
+              ? 'Dos especialidades. Un mismo objetivo.'
+              : 'Two disciplines. One shared goal.'
+          }
+        </h2>
+      </div>
+      <p class="intro">
+        {
+          es
+            ? 'Explore en tiempo real cómo conectamos ingeniería de datos, desarrollo de software, automatización y medición comercial sin recargar la página.'
+            : 'Explore in real time how we connect data engineering, software development, automation and commercial measurement without page reloads.'
+        }
+      </p>
+    </div>
+
+    <ServiceCatalogExplorer
+      client:load
+      locale={content.locale}
+      initialTab={initialTab}
+      enterpriseRows={content.enterprise.rows}
+      growthRows={content.services.rows}
+      developmentRows={developmentServices[content.locale]}
+      contactUrl={routes[content.locale].contact}
+      servicesUrl={routes[content.locale].services}
+      compactMode={compactMode}
+    />
+  </div>
+</section>

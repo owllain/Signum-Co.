@@ -1,0 +1,55 @@
+---
+import type { SiteContent } from '../../data/site';
+import { routes } from '../../data/experience';
+import ServiceDeepDiveTabs from '../interactive/ServiceDeepDiveTabs';
+
+interface Props {
+  content: SiteContent;
+  defaultTabId?: string;
+}
+
+const { content, defaultTabId = 'dotnet-apps' } = Astro.props;
+const es = content.locale === 'es';
+const r = routes[content.locale];
+---
+
+<section
+  class="sec sec-alt"
+  id="especialidades-detalle"
+  aria-labelledby="deepdive-heading"
+>
+  <div class="wrap">
+    <div class="section-heading">
+      <div>
+        <span class="section-label">
+          {
+            es
+              ? 'Especialidades en Detalle · Tabs Interactivos'
+              : 'Specialties in Detail · Interactive Tabs'
+          }
+        </span>
+        <h2 id="deepdive-heading">
+          {
+            es
+              ? 'Desarrollo Web, Apps .NET, Microsoft 365 y Dashboards Empresariales'
+              : 'Web Development, .NET Apps, Microsoft 365 & Enterprise Dashboards'
+          }
+        </h2>
+      </div>
+      <p class="intro">
+        {
+          es
+            ? 'Explore cada línea técnica para conocer las tecnologías exactas (.NET, Power Automate Desktop, Power Apps, SharePoint SPFx, Dataverse, Power BI) y los entregables verificables.'
+            : 'Explore each technical track to inspect the exact stack (.NET, Power Automate Desktop, Power Apps, SharePoint SPFx, Dataverse, Power BI) and verifiable deliverables.'
+        }
+      </p>
+    </div>
+
+    <ServiceDeepDiveTabs
+      client:load
+      locale={content.locale}
+      contactPath={r.contact}
+      defaultTabId={defaultTabId}
+    />
+  </div>
+</section>

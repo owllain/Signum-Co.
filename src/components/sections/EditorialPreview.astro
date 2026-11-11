@@ -1,0 +1,9 @@
+---
+import type { SiteContent } from '../../data/site';
+import { experience, routes } from '../../data/experience';
+import Arrow from '../ui/Arrow.astro';
+interface Props { content: SiteContent; kind: 'enterprise' | 'about' }
+const { content, kind } = Astro.props;
+const text = experience[content.locale];
+---
+<section class:list={['sec', 'editorial-preview', { 'sec-alt': kind === 'about' }]} id={kind === 'enterprise' ? 'empresas' : 'consultora'}><div class="wrap editorial-grid"><div><span class="section-label">{kind === 'enterprise' ? text.nav.enterprise : text.founderLabel}</span><h2>{kind === 'enterprise' ? text.page.enterprise.title : text.aboutTitle}</h2><p class="intro">{kind === 'enterprise' ? text.page.enterprise.lead : text.aboutLead}</p><a class="text-link section-link" href={routes[content.locale][kind]}>{text.nav[kind]} <Arrow /></a></div>{kind === 'enterprise' ? <ul class="expertise-list">{content.enterprise.rows.map((row, index) => <li><a href={`${routes[content.locale].enterprise}#enterprise-${index}`}><span class="index-number">0{index + 1}</span>{row.title}<Arrow /></a></li>)}</ul> : <div class="founder-mark"><span class="founder-initials" aria-hidden="true">KA<span>↗</span></span><p>Kevin Arroyo</p><span>{content.locale === 'es' ? 'Datos, analítica e inteligencia de ingresos' : 'Data, analytics and revenue intelligence'}</span></div>}</div></section>

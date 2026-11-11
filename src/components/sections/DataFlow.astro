@@ -1,0 +1,25 @@
+---
+import type { SiteContent } from '../../data/site';
+import { experience } from '../../data/experience';
+import InteractiveArchitecture from '../interactive/InteractiveArchitecture';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+const text = experience[content.locale].diagram;
+const es = content.locale === 'es';
+---
+
+<section class="sec flow-section" aria-labelledby="flow-title">
+  <div class="wrap">
+    <div class="flow-header">
+      <span class="section-label">
+        {es ? 'Arquitectura Interactiva · Ecosistema Signum' : 'Interactive Architecture · Signum Ecosystem'}
+      </span>
+      <h2 id="flow-title">{text.title}</h2>
+    </div>
+    <InteractiveArchitecture client:visible locale={content.locale} />
+  </div>
+</section>

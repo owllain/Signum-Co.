@@ -1,32 +1,5 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/layout/Header.astro';
-import Footer from '../../components/layout/Footer.astro';
-import Hero from '../../components/sections/Hero.astro';
-import Questions from '../../components/sections/Questions.astro';
-import Services from '../../components/sections/Services.astro';
-import Enterprise from '../../components/sections/Enterprise.astro';
-import Funnel from '../../components/sections/Funnel.astro';
-import Process from '../../components/sections/Process.astro';
-import Pricing from '../../components/sections/Pricing.astro';
-import About from '../../components/sections/About.astro';
-import Contact from '../../components/sections/Contact.astro';
+import SitePage from '../../components/SitePage.astro';
 import { contentEs } from '../../data/content.es';
 ---
-
-<BaseLayout content={contentEs}>
-  <Header content={contentEs} />
-  <main id="inicio">
-    <Hero content={contentEs} />
-    <Questions content={contentEs} />
-    <Services content={contentEs} />
-    <Enterprise content={contentEs} />
-    <Funnel content={contentEs} />
-    <Process content={contentEs} />
-    <Pricing content={contentEs} />
-    <About content={contentEs} />
-    <Contact content={contentEs} />
-  </main>
-  <Footer content={contentEs} />
-</BaseLayout>
-
+<SitePage base={contentEs} />

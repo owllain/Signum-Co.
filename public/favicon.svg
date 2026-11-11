@@ -1,6 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Signum &amp; Co.">
-  <rect width="64" height="64" rx="12" fill="#0f1f3d"/>
-  <text x="14" y="45" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="36" fill="#eef1f7">S</text>
-  <text x="35" y="45" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="28" fill="#c9a227">&amp;</text>
-</svg>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#13264a" />
+      <stop offset="100%" stop-color="#091326" />
+    </linearGradient>
+    <linearGradient id="ribbon-mid" x1="12" y1="26" x2="50" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1b3566" />
+      <stop offset="100%" stop-color="#0f2142" />
+    </linearGradient>
+    <linearGradient id="ribbon-top" x1="12" y1="16" x2="48" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#24447f" />
+      <stop offset="100%" stop-color="#18315e" />
+    </linearGradient>
+    <linearGradient id="gold-flare" x1="36" y1="14" x2="52" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#edd06b" />
+      <stop offset="55%" stop-color="#c9a227" />
+      <stop offset="100%" stop-color="#9e7b12" />
+    </linearGradient>
+  </defs>
+  <!-- Background squircle -->
+  <rect width="64" height="64" rx="14" fill="url(#bg)" />
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#c9a227" stroke-opacity="0.28" stroke-width="1" />
 
+  <!-- Bottom fold of the S-ribbon -->
+  <path d="M16 52 C16 47, 19 44, 24 43 L46 39 C49 38.5, 50 40, 49.5 43 L48 50 C47.5 51.5, 45.5 52, 43 52 Z" fill="#162d57" />
+
+  <!-- Middle diagonal fold -->
+  <path d="M13 33 C13 30, 15 29, 19 30 L47 38 C49.5 38.8, 50 40.5, 47 41.5 L22 45 C17 44, 13 37, 13 33 Z" fill="url(#ribbon-mid)" />
+
+  <!-- Top fold of Sig ribbon -->
+  <path d="M13 33 C13.5 23, 19 19, 29 18.5 L40 18 L36 28.5 L20 31.5 C15.5 32.3, 13.5 34, 13 33 Z" fill="url(#ribbon-top)" />
+
+  <!-- Golden tip flare -->
+  <path d="M40 18 C44 17.5, 47.5 15.5, 50 14.5 C51.5 14, 52.3 15, 51.7 16.8 L48.5 24.5 C47.5 26.8, 45.5 27.6, 42.5 28.1 L36 28.5 Z" fill="url(#gold-flare)" />
+
+  <!-- Sig subtle eyes -->
+  <circle cx="29.5" cy="23.5" r="1.4" fill="#f7f2e4" />
+  <circle cx="34.2" cy="23.1" r="1.4" fill="#f7f2e4" />
+
+  <!-- Floating golden signal dot -->
+  <circle cx="53.5" cy="10.5" r="3.2" fill="url(#gold-flare)" />
+</svg>

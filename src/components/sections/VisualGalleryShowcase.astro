@@ -1,0 +1,192 @@
+---
+import type { SiteContent } from '../../data/site';
+import { routes } from '../../data/experience';
+import AccordionGallery, {
+  type AccordionGalleryItem,
+} from '../interactive/AccordionGallery';
+import { SolutionsScrollStack } from '../interactive/ScrollStack';
+
+interface Props {
+  content: SiteContent;
+  showGallery?: boolean;
+  showStack?: boolean;
+}
+
+const { content, showGallery = true, showStack = true } = Astro.props;
+const es = content.locale === 'es';
+const r = routes[content.locale];
+
+const galleryItems: AccordionGalleryItem[] = es
+  ? [
+      {
+        image: '/images/signal-1200.webp',
+        srcset: '/images/signal-640.webp 640w, /images/signal-1200.webp 1200w',
+        label: 'Del ruido a la señal',
+        subtitle: 'Atribución multicanal, UTMs y embudos comerciales',
+        badge: 'Medición & Crecimiento',
+        link: `${r.services}?tab=growth#service-0`,
+      },
+      {
+        image: '/images/data-1200.webp',
+        srcset: '/images/data-640.webp 640w, /images/data-1200.webp 1200w',
+        label: 'Ingeniería y almacenes de datos',
+        subtitle: 'Snowflake, BigQuery, Databricks y tableros ejecutivos',
+        badge: 'Kevin Arroyo · Datos',
+        link: `${r.enterprise}#enterprise-1`,
+      },
+      {
+        image: '/images/applications-1200.webp',
+        srcset:
+          '/images/applications-640.webp 640w, /images/applications-1200.webp 1200w',
+        label: 'Aplicaciones empresariales',
+        subtitle: 'Portales, expedientes y herramientas internas en .NET y React',
+        badge: 'Enrique Cascante · Apps',
+        link: `${r.development}#applications`,
+      },
+      {
+        image: '/images/automation-1200.webp',
+        srcset:
+          '/images/automation-640.webp 640w, /images/automation-1200.webp 1200w',
+        label: 'Automatización de procesos',
+        subtitle: 'Aprobaciones, control documental y alertas con responsables',
+        badge: 'Enrique Cascante · Flujos',
+        link: `${r.development}#automation`,
+      },
+      {
+        image: '/images/integrations-1200.webp',
+        srcset:
+          '/images/integrations-640.webp 640w, /images/integrations-1200.webp 1200w',
+        label: 'Puentes e integraciones',
+        subtitle: 'Sincronización segura entre sistemas y revisión técnica',
+        badge: 'Arquitectura Conectada',
+        link: `${r.development}#integrations`,
+      },
+    ]
+  : [
+      {
+        image: '/images/signal-1200.webp',
+        srcset: '/images/signal-640.webp 640w, /images/signal-1200.webp 1200w',
+        label: 'From noise to signal',
+        subtitle: 'Multi-channel attribution, UTMs and conversion funnels',
+        badge: 'Measurement & Growth',
+        link: `${r.services}?tab=growth#service-0`,
+      },
+      {
+        image: '/images/data-1200.webp',
+        srcset: '/images/data-640.webp 640w, /images/data-1200.webp 1200w',
+        label: 'Data engineering & warehouses',
+        subtitle: 'Snowflake, BigQuery, Databricks and executive dashboards',
+        badge: 'Kevin Arroyo · Data',
+        link: `${r.enterprise}#enterprise-1`,
+      },
+      {
+        image: '/images/applications-1200.webp',
+        srcset:
+          '/images/applications-640.webp 640w, /images/applications-1200.webp 1200w',
+        label: 'Business applications',
+        subtitle: 'Portals, records and internal tools in .NET and React',
+        badge: 'Enrique Cascante · Apps',
+        link: `${r.development}#applications`,
+      },
+      {
+        image: '/images/automation-1200.webp',
+        srcset:
+          '/images/automation-640.webp 640w, /images/automation-1200.webp 1200w',
+        label: 'Process automation',
+        subtitle: 'Approvals, document workflows and alerts with clear owners',
+        badge: 'Enrique Cascante · Workflows',
+        link: `${r.development}#automation`,
+      },
+      {
+        image: '/images/integrations-1200.webp',
+        srcset:
+          '/images/integrations-640.webp 640w, /images/integrations-1200.webp 1200w',
+        label: 'System bridges & integrations',
+        subtitle: 'Reliable cross-system sync and traceable technical review',
+        badge: 'Connected Architecture',
+        link: `${r.development}#integrations`,
+      },
+    ];
+---
+
+{
+  showGallery && (
+    <section class="sec sec-alt" aria-labelledby="gallery-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <span class="section-label">
+              {es
+                ? 'Galería Interactiva · Ecosistema Visual'
+                : 'Interactive Gallery · Visual Ecosystem'}
+            </span>
+            <h2 id="gallery-title">
+              {es
+                ? 'Cinco frentes técnicos conectados en una sola firma.'
+                : 'Five technical disciplines connected in a single firm.'}
+            </h2>
+          </div>
+          <p class="intro">
+            {es
+              ? 'Pase el cursor por cada pilar para inspeccionar cómo unimos analítica de ingresos, ingeniería en la nube, aplicaciones e integraciones.'
+              : 'Hover over each pillar to inspect how we unite revenue analytics, cloud engineering, applications and integrations.'}
+          </p>
+        </div>
+
+        <AccordionGallery
+          client:visible
+          items={galleryItems}
+          defaultIndex={1}
+          expandRatio={0.52}
+          trigger="hover"
+          accentColor="#c9a227"
+          overlayColor="#060f20"
+          textColor="#ffffff"
+          showLabels
+          duration={0.55}
+          parallax={0.45}
+          tilt={6}
+          height={420}
+          gap={10}
+          radius={16}
+          orientation="horizontal"
+        />
+      </div>
+    </section>
+  )
+}
+
+{
+  showStack && (
+    <section class="sec" aria-labelledby="stack-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <span class="section-label">
+              {es
+                ? 'Scroll Stack · Arquitecturas en Acción'
+                : 'Scroll Stack · Architectures in Action'}
+            </span>
+            <h2 id="stack-title">
+              {es
+                ? 'Soluciones reales diseñadas alrededor de su operación.'
+                : 'Real solutions engineered around your operations.'}
+            </h2>
+          </div>
+          <p class="intro">
+            {es
+              ? 'Explore cómo abordamos los tres cuellos de botella más frecuentes en empresas de Costa Rica y Estados Unidos.'
+              : 'Explore how we solve the three most common operational bottlenecks for companies in Costa Rica and the United States.'}
+          </p>
+        </div>
+
+        <SolutionsScrollStack
+          client:visible
+          locale={content.locale}
+          contactUrl={r.contact}
+        />
+      </div>
+    </section>
+  )
+}
+

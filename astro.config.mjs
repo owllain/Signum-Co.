@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://signumandco.com',
   trailingSlash: 'always',
+  redirects: { '/es/consultora': '/es/nosotros/', '/es/empresas': '/es/datos/', '/en/enterprise': '/en/data-analytics/' },
   integrations: [
     react(),
     sitemap({

@@ -1,0 +1,341 @@
+---
+// CapabilitiesStrip — Adapted from astrosaas-main SectionOne.astro & Flowbite Blockquote + Avatar
+import type { SiteContent } from '../../data/site';
+import { FounderQuote } from '../interactive/FlowbitePrimitives';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+const es = content.locale === 'es';
+
+const pills = es
+  ? [
+      'Desarrollo de Sitios Web (Astro · React)',
+      'Aplicaciones .NET & C#',
+      'Microsoft 365 & Power Automate',
+      'Power Automate Desktop (RPA)',
+      'Power Apps & SharePoint SPFx',
+      'Dashboards Dataverse & Power BI',
+      'Modelado Semántico & SQL',
+      'Integración ERP / CRM / APIs',
+      'Pronóstico & IA en Python',
+      'Auditoría Técnica & Trazabilidad',
+    ]
+  : [
+      'Web Development (Astro · React)',
+      '.NET & C# Applications',
+      'Microsoft 365 & Power Automate',
+      'Power Automate Desktop (RPA)',
+      'Power Apps & SharePoint SPFx',
+      'Dataverse & Power BI Dashboards',
+      'Semantic Modeling & SQL',
+      'ERP / CRM / API Integrations',
+      'Python Forecasting & AI',
+      'Technical Review & Traceability',
+    ];
+
+const features = es
+  ? [
+      {
+        title: 'Sitios web & portales B2B',
+        description:
+          'Plataformas corporativas rápidas en Astro, React y TypeScript con SEO técnico y analítica comercial integrada.',
+      },
+      {
+        title: 'Aplicaciones en .NET & SQL',
+        description:
+          'Sistemas internos, expedientes digitales y portales transaccionales en .NET, C#, React y SQL Server.',
+      },
+      {
+        title: 'Microsoft 365 & RPA',
+        description:
+          'Flujos con Power Automate, bots de Power Automate Desktop, Power Apps y portales SharePoint SPFx.',
+      },
+      {
+        title: 'Dashboards Dataverse & BI',
+        description:
+          'Modelos gobernados en Dataverse, Snowflake o SQL conectados a tableros ejecutivos en Power BI y Tableau.',
+      },
+      {
+        title: 'Fuentes unificadas',
+        description:
+          'Consolidamos ERP, CRM, hojas de cálculo y APIs en una capa limpia sin duplicidades.',
+      },
+      {
+        title: 'Integración entre sistemas',
+        description:
+          'Sincronización bidireccional confiable entre ventas, finanzas, inventario y servicio.',
+      },
+      {
+        title: 'Modelos predictivos',
+        description:
+          'Proyecciones de demanda, rotación y flujo de caja explicables y auditables en Python y SQL.',
+      },
+      {
+        title: 'Transferencia total',
+        description:
+          'Código, diccionarios de datos y manuales quedan 100% en manos de su organización.',
+      },
+    ]
+  : [
+      {
+        title: 'Websites & B2B portals',
+        description:
+          'High-speed corporate web platforms in Astro, React, and TypeScript with technical SEO and commercial analytics.',
+      },
+      {
+        title: '.NET & SQL applications',
+        description:
+          'Internal systems, digital case files, and transactional portals built with .NET, C#, React, and SQL Server.',
+      },
+      {
+        title: 'Microsoft 365 & RPA',
+        description:
+          'Workflows in Power Automate, Power Automate Desktop bots, Power Apps, and SharePoint SPFx portals.',
+      },
+      {
+        title: 'Dataverse & BI dashboards',
+        description:
+          'Governed models in Dataverse, Snowflake, or SQL connected to executive dashboards in Power BI and Tableau.',
+      },
+      {
+        title: 'Unified sources',
+        description:
+          'We consolidate ERP, CRM, spreadsheets, and APIs into a clean layer without duplication.',
+      },
+      {
+        title: 'System integrations',
+        description:
+          'Reliable two-way synchronization across sales, finance, inventory, and service.',
+      },
+      {
+        title: 'Predictive models',
+        description:
+          'Explainable, auditable demand, churn, and cash-flow forecasting models in Python and SQL.',
+      },
+      {
+        title: 'Full handoff',
+        description:
+          'Code, data dictionaries, and runbooks remain 100% owned by your organization.',
+      },
+    ];
+---
+
+<section class="sec saas-cap-section" aria-labelledby="cap-strip-heading">
+  <div class="wrap">
+    <div class="saas-cap-header">
+      <span class="section-label">
+        {es ? 'Arquitectura integral · De extremo a extremo' : 'End-to-end architecture'}
+      </span>
+      <h2 id="cap-strip-heading">
+        {
+          es
+            ? 'Ingeniería de datos, software .NET, Microsoft 365 y automatización bajo un mismo estándar'
+            : 'Data engineering, .NET software, Microsoft 365, and automation under one standard'
+        }
+      </h2>
+    </div>
+
+    <!-- Horizontal Pill Strip with Edge Fade Gradients -->
+    <div class="saas-pill-marquee-wrap" aria-label={es ? 'Capacidades clave' : 'Core capabilities'}>
+      <div class="saas-pill-fade saas-pill-fade--left" aria-hidden="true"></div>
+      <div class="saas-pill-track">
+        {
+          pills.map((pill) => (
+            <span class="saas-pill-chip">
+              <i aria-hidden="true" />
+              {pill}
+            </span>
+          ))
+        }
+      </div>
+      <div class="saas-pill-fade saas-pill-fade--right" aria-hidden="true"></div>
+    </div>
+
+    <!-- 4x2 Crisp SaaS Feature Grid -->
+    <div class="saas-feature-grid">
+      {
+        features.map((feat, idx) => (
+          <article class="saas-feature-item">
+            <div class="saas-feature-head">
+              <span class="saas-feature-num">0{idx + 1}</span>
+              <h3>{feat.title}</h3>
+            </div>
+            <p>{feat.description}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- Flowbite Blockquote + Avatar Founder Quote -->
+    <div class="saas-founder-quote-card">
+      <FounderQuote
+        quote={
+          es
+            ? 'No vendemos horas sueltas ni tableros cosméticos: construimos activos de datos en Dataverse y Power BI, aplicaciones en .NET y automatizaciones en Microsoft 365 que su equipo puede auditar, operar y escalar con total autonomía.'
+            : 'We do not sell disconnected hours or cosmetic dashboards: we build data assets in Dataverse and Power BI, .NET applications, and Microsoft 365 automations that your team can audit, operate, and scale with full autonomy.'
+        }
+        authorName="Kevin Arroyo"
+        authorRole={
+          es
+            ? 'Socio Fundador · Signum & Co.'
+            : 'Founding Partner · Signum & Co.'
+        }
+        avatarImg="/images/avatar-kevin.webp"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .saas-cap-section {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .saas-cap-header {
+    max-width: 740px;
+    margin-inline: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .saas-cap-header h2 {
+    max-width: 30ch;
+  }
+
+  .saas-pill-marquee-wrap {
+    position: relative;
+    margin-top: 2.25rem;
+    padding-block: 0.5rem;
+    overflow: hidden;
+  }
+
+  .saas-pill-track {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.65rem;
+  }
+
+  .saas-pill-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 999px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--line);
+    font-family: var(--f-code);
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--fg);
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(12, 25, 49, 0.04);
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .saas-pill-chip:hover {
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .saas-pill-chip i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .saas-pill-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .saas-pill-fade--left {
+    left: 0;
+    background: linear-gradient(90deg, var(--surface), transparent);
+  }
+
+  .saas-pill-fade--right {
+    right: 0;
+    background: linear-gradient(270deg, var(--surface), transparent);
+  }
+
+  .saas-feature-grid {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .saas-feature-item {
+    padding: 1.35rem 1.4rem;
+    border-radius: 12px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--line);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .saas-feature-item:hover {
+    border-color: var(--gold);
+    box-shadow: var(--card-shadow);
+  }
+
+  .saas-feature-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .saas-feature-num {
+    font-family: var(--f-code);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--gold-ink);
+    background: var(--gold-soft);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .saas-feature-head h3 {
+    font-family: var(--f-display);
+    font-size: 1.12rem;
+    color: var(--fg);
+  }
+
+  .saas-feature-item p {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .saas-founder-quote-card {
+    margin-top: 3.25rem;
+  }
+
+  @media (max-width: 1020px) {
+    .saas-feature-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .saas-feature-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

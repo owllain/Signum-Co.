@@ -1,0 +1,345 @@
+---
+import type { SiteContent } from '../../data/site';
+import { SITE_CONFIG } from '../../data/site';
+import { routes } from '../../data/experience';
+
+interface Props {
+  content: SiteContent;
+  kind: 'faq' | 'terms' | 'privacy';
+}
+
+const { content, kind } = Astro.props;
+const es = content.locale === 'es';
+const r = routes[content.locale];
+
+const faqCategories = es
+  ? [
+      {
+        category: '01 · Diagnóstico, Alcance y Propuestas',
+        items: [
+          {
+            q: '¿Qué incluye la sesión de diagnóstico inicial de 15 minutos?',
+            a: 'Es una conversación ejecutiva sin costo con Kevin Arroyo o Enrique Cascante para comprender el cuello de botella actual de su negocio, revisar qué fuentes o herramientas intervienen y recomendarle con honestidad si conviene iniciar por una revisión puntual, un piloto o un proyecto de implementación.',
+          },
+          {
+            q: '¿Cómo se determinan el precio fijo y el calendario de entrega?',
+            a: 'Tras la conversación inicial, entregamos en un plazo de 48 horas hábiles una propuesta escrita con objetivos medibles, entregables verificables, criterios de aceptación, cronograma semanal e inversión cerrada. No facturamos sorpresas fuera del alcance acordado.',
+          },
+          {
+            q: '¿Necesito reemplazar mi ERP, CRM o infraestructura actual?',
+            a: 'No. Nuestra prioridad es construir sobre las herramientas y licencias que su organización ya posee (Microsoft 365, SharePoint, SQL, Google Workspace, CRM o ERP existente), integrando únicamente las piezas necesarias para eliminar trabajo manual o puntos ciegos.',
+          },
+          {
+            q: '¿Podemos empezar por un alcance acotado antes de un proyecto mayor?',
+            a: 'Sí. Muchos clientes comienzan con un primer tablero ejecutivo, una auditoría de medición GA4/GTM o la automatización de un flujo de aprobación crítico, y escalan a partir de resultados comprobados.',
+          },
+        ],
+      },
+      {
+        category: '02 · Ingeniería de Datos, Analítica e IA',
+        items: [
+          {
+            q: '¿Cómo garantizan que los números del tablero coincidan con finanzas y ventas?',
+            a: 'En la etapa de Validación conciliamos muestras reales, reglas de negocio y períodos históricos junto a su equipo antes de dar por entregado cualquier indicador. Documentamos de qué tabla y campo proviene cada métrica.',
+          },
+          {
+            q: '¿Qué plataformas de datos y visualización soportan?',
+            a: 'Trabajamos con Snowflake, Google BigQuery, Databricks, AWS y SQL Server para almacenamiento y modelado dimensional (SQL/Python), y con Tableau, Power BI y Looker Studio para visualización ejecutiva.',
+          },
+          {
+            q: '¿Cómo implementan Inteligencia Artificial sin exponer datos sensibles?',
+            a: 'Diseñamos flujos y asistentes LLM sobre entornos empresariales controlados, limitando el contexto a documentos o vistas autorizadas y evitando que información confidencial de su negocio se utilice para entrenar modelos públicos.',
+          },
+        ],
+      },
+      {
+        category: '03 · Desarrollo de Aplicaciones, Automatización y Legalidad',
+        items: [
+          {
+            q: '¿Quién es dueño del código, los tableros y la documentación al finalizar?',
+            a: 'Una vez completado el pago acordado en la propuesta, su empresa recibe la titularidad y el control operativo de los tableros, flujos, bases de datos y desarrollos específicos construidos para su operación, junto con su documentación de transferencia.',
+          },
+          {
+            q: '¿En qué consiste el servicio de Revisión Técnica y Control de Procesos?',
+            a: 'Es una inspección técnica independiente liderada por Enrique Cascante y Kevin Arroyo para evaluar aplicaciones, flujos operativos, scripts analíticos (SQL, Python, SAS) y consistencia de datos, entregando una matriz de hallazgos con evidencia trazable y plan de mejora. No constituye auditoría financiera externa, certificación ISO ni peritaje judicial.',
+          },
+          {
+            q: '¿Cómo manejan la confidencialidad y protección de datos (NDA)?',
+            a: 'Firmamos acuerdos de confidencialidad (NDA) antes de acceder a cualquier fuente de datos o repositorio. Aplicamos el principio de mínimo privilegio en accesos y cumplimos con la Ley N.º 8968 de Costa Rica.',
+          },
+        ],
+      },
+    ]
+  : [
+      {
+        category: '01 · Discovery, Scope & Proposals',
+        items: [
+          {
+            q: 'What is included in the free 15-minute initial assessment?',
+            a: 'It is a direct executive conversation with Kevin Arroyo or Enrique Cascante to understand your business bottleneck, review existing tools and data sources, and recommend whether the right next step is a targeted review, a pilot or a full implementation.',
+          },
+          {
+            q: 'How are fixed pricing and delivery timelines determined?',
+            a: 'Within 48 business hours of our initial call, we provide a clear written proposal detailing measurable objectives, verifiable deliverables, acceptance criteria, weekly milestones and a fixed investment.',
+          },
+          {
+            q: 'Do we need to replace our existing ERP, CRM or cloud stack?',
+            a: 'No. We prioritize building on top of the tools and licenses you already own (Microsoft 365, SharePoint, SQL, Google Workspace, existing CRM/ERP), connecting and modernizing only what is needed.',
+          },
+          {
+            q: 'Can we start with a small pilot before a larger engagement?',
+            a: 'Yes. You can start with a single executive dashboard, a GA4/GTM measurement audit or one automated approval workflow, then expand based on proven results.',
+          },
+        ],
+      },
+      {
+        category: '02 · Data Engineering, Analytics & AI',
+        items: [
+          {
+            q: 'How do you ensure dashboard numbers reconcile with finance and sales?',
+            a: 'During our Validation stage, we reconcile real data samples, calculation rules and historical periods alongside your team before sign-off. Every KPI is documented with its source lineage.',
+          },
+          {
+            q: 'Which data warehouses and BI platforms do you support?',
+            a: 'We work across Snowflake, Google BigQuery, Databricks, AWS and SQL Server for data engineering and dimensional modeling (SQL/Python), and Tableau, Power BI and Looker Studio for executive reporting.',
+          },
+          {
+            q: 'How do you implement AI without exposing confidential company data?',
+            a: 'We deploy LLM workflows and internal assistants over controlled enterprise environments, restricting context to authorized views and ensuring your proprietary data is never used to train public models.',
+          },
+        ],
+      },
+      {
+        category: '03 · Application Development, Automation & Governance',
+        items: [
+          {
+            q: 'Who owns the code, dashboards and documentation upon completion?',
+            a: 'Upon full payment of the agreed proposal, your organization retains operational control and ownership of the custom dashboards, workflows, schemas and application modules built for your business, including handover documentation.',
+          },
+          {
+            q: 'What is the scope of a Technical & Process Review?',
+            a: 'It is a structured technical inspection evaluating applications, operational workflows, analytical scripts (SQL, Python, SAS) and data consistency, delivering a findings matrix backed by traceable evidence. It does not constitute statutory financial auditing, ISO certification or judicial expert testimony.',
+          },
+          {
+            q: 'How do you handle NDA and data security?',
+            a: 'We execute Non-Disclosure Agreements (NDAs) prior to accessing any system or dataset, enforce least-privilege access controls and comply with Costa Rican Law No. 8968 and international B2B privacy standards.',
+          },
+        ],
+      },
+    ];
+
+const termsSections = es
+  ? [
+      {
+        title: '1. Identificación y Objeto',
+        body: 'Los presentes Términos de Servicio regulan el acceso y uso del sitio web signumandco.com, así como los lineamientos generales bajo los cuales Signum & Co. (con domicilio en San José, Costa Rica) presta servicios profesionales de consultoría en ingeniería de datos, analítica, desarrollo de software, automatización e inteligencia artificial.',
+      },
+      {
+        title: '2. Delimitación de Alcance y Propuestas Comerciales',
+        body: 'Toda prestación de servicios de consultoría o desarrollo se rige por una Propuesta Técnica y Económica o Contrato de Servicios específico aceptado por escrito entre Signum & Co. y el Cliente. La información publicada en este sitio web tiene carácter informativo e ilustrativo; las etapas, entregables, plazos, criterios de aceptación y precios definitivos se establecen exclusivamente en la propuesta acordada para cada proyecto.',
+      },
+      {
+        title: '3. Propiedad Intelectual y Entregables',
+        body: 'Salvo pacto distinto por escrito: (a) Una vez liquidados los honorarios acordados en la propuesta, el Cliente adquiere los derechos de uso y explotación sobre los entregables específicos desarrollados a medida para su operación (tableros, esquemas de datos, flujos automatizados, código de aplicación y manuales de transferencia). (b) Signum & Co. conserva la titularidad sobre sus metodologías, plantillas base, bibliotecas reutilizables y conocimientos técnicos previos.',
+      },
+      {
+        title: '4. Licencias y Servicios de Terceros',
+        body: 'Los costos de licencias de software, consumo de nube, APIs de inteligencia artificial o plataformas de terceros (tales como Microsoft 365, Power Platform, Azure, AWS, Snowflake, BigQuery, Databricks, Tableau, Power BI, Google Workspace o similares) son contratados y asumidos directamente por el Cliente, salvo que la propuesta especifique expresamente lo contrario.',
+      },
+      {
+        title: '5. Naturaleza de las Revisiones Técnicas y Validaciones',
+        body: 'Los servicios de revisión técnica, control de procesos y validación analítica documentan el funcionamiento técnico, la consistencia de datos y la trazabilidad operativa dentro de un alcance acordado. Dichos servicios no constituyen ni sustituyen una auditoría financiera contable, certificación normativa (como ISO), dictamen legal ni peritaje judicial.',
+      },
+      {
+        title: '6. Confidencialidad y Limitación de Responsabilidad',
+        body: 'Signum & Co. trata toda información técnica, comercial y operativa suministrada por el Cliente bajo estricta reserva profesional. La responsabilidad total de Signum & Co. derivada de cualquier encargo profesional se limitará al monto efectivamente abonado por el Cliente en la etapa o servicio específico que origine la reclamación. Estos términos se rigen por las leyes de la República de Costa Rica.',
+      },
+    ]
+  : [
+      {
+        title: '1. Identification & Purpose',
+        body: 'These Terms of Service govern access to and use of signumandco.com, as well as the general framework under which Signum & Co. (based in San José, Costa Rica) provides professional consulting services in data engineering, analytics, software development, process automation and artificial intelligence.',
+      },
+      {
+        title: '2. Project Scope & Commercial Proposals',
+        body: 'All consulting or development engagements are governed by a specific written Statement of Work (SOW) or Proposal agreed upon between Signum & Co. and the Client. Content on this website is informational; exact deliverables, timelines, acceptance criteria and fixed fees are defined exclusively in the signed project proposal.',
+      },
+      {
+        title: '3. Intellectual Property & Deliverables',
+        body: 'Unless otherwise agreed in writing: (a) Upon full payment of agreed fees, the Client receives usage and operational rights over custom deliverables built specifically for its operations (dashboards, data schemas, automated workflows, application code and handover documentation). (b) Signum & Co. retains ownership of its pre-existing methodologies, foundational templates and reusable engineering know-how.',
+      },
+      {
+        title: '4. Third-Party Licenses & Cloud Infrastructure',
+        body: 'Costs associated with third-party software licenses, cloud compute/storage or AI API consumption (including Microsoft 365, Power Platform, Azure, AWS, Snowflake, BigQuery, Databricks, Tableau, Power BI or similar platforms) are billed directly to and maintained by the Client unless explicitly stated otherwise in the proposal.',
+      },
+      {
+        title: '5. Scope of Technical & Process Reviews',
+        body: 'Technical review, process control and analytical validation services document system behavior, data consistency and operational traceability within an agreed technical scope. They do not constitute statutory financial audits, ISO certification, legal opinions or judicial expert reports.',
+      },
+      {
+        title: '6. Confidentiality & Governing Law',
+        body: 'Signum & Co. treats all technical, commercial and operational information shared by the Client as strictly confidential. Total liability arising from any engagement shall not exceed the fees paid by the Client for the specific deliverable giving rise to the claim. These terms are governed by the laws of the Republic of Costa Rica.',
+      },
+    ];
+
+const privacySections = es
+  ? [
+      {
+        title: '1. Responsable del Tratamiento y Marco Legal',
+        body: `Signum & Co., con domicilio en San José, Costa Rica y correo de contacto ${SITE_CONFIG.contact.email}, actúa en cumplimiento de la Ley de Protección de la Persona frente al Tratamiento de sus Datos Personales de Costa Rica (Ley N.º 8968 y su reglamento), así como de buenas prácticas internacionales de privacidad empresarial.`,
+      },
+      {
+        title: '2. Datos Recopilados en este Sitio Web',
+        body: 'Este sitio web está diseñado bajo el principio de privacidad por defecto: no utiliza cookies de rastreo publicitario invasivo ni vende información a terceros. El formulario de contacto prepara su mensaje localmente en su navegador (mediante sessionStorage temporal) y únicamente se envía cuando usted decide abrir y confirmar el envío en su aplicación de WhatsApp o cliente de correo electrónico.',
+      },
+      {
+        title: '3. Finalidad del Uso de la Información',
+        body: 'Los datos de contacto y contexto empresarial que usted nos comparta voluntariamente por WhatsApp, correo electrónico o reuniones de diagnóstico se utilizan exclusivamente para: (a) responder a su consulta, (b) preparar propuestas técnicas y económicas solicitadas, y (c) ejecutar y dar soporte a los servicios contratados.',
+      },
+      {
+        title: '4. Seguridad en Proyectos de Datos y Desarrollo',
+        body: 'Cuando un proyecto requiere acceso a bases de datos, repositorios o entornos del Cliente: (a) suscribimos acuerdos de confidencialidad (NDA) previos, (b) operamos con credenciales nominativas bajo el principio de mínimo privilegio, (c) priorizamos el procesamiento dentro de la propia infraestructura en la nube del Cliente, y (d) revocamos y documentamos la baja de accesos al concluir la transferencia.',
+      },
+      {
+        title: '5. Derechos de Acceso, Rectificación y Supresión (ARCO)',
+        body: `Usted puede ejercer en cualquier momento sus derechos de acceso, rectificación, actualización o eliminación de sus datos de contacto escribiendo directamente a ${SITE_CONFIG.contact.email}. Atenderemos su solicitud en un plazo máximo de 5 días hábiles.`,
+      },
+    ]
+  : [
+      {
+        title: '1. Data Controller & Legal Framework',
+        body: `Signum & Co., located in San José, Costa Rica (${SITE_CONFIG.contact.email}), operates in compliance with Costa Rica’s Data Protection Act (Law No. 8968) and international B2B data privacy and security standards.`,
+      },
+      {
+        title: '2. Website Privacy by Design',
+        body: 'This website is engineered for privacy by default: we do not deploy invasive third-party advertising trackers or sell visitor data. Our contact configurator drafts your message locally in your browser (using temporary sessionStorage); no personal data is transmitted until you explicitly confirm sending it via WhatsApp or your email client.',
+      },
+      {
+        title: '3. Purpose of Information Processing',
+        body: 'Contact details and business context voluntarily shared with us via WhatsApp, email or discovery calls are used strictly to: (a) respond to your inquiry, (b) prepare requested technical and commercial proposals, and (c) deliver and support contracted services.',
+      },
+      {
+        title: '4. Data Security During Client Engagements',
+        body: 'When an engagement requires access to Client databases, repositories or cloud environments: (a) we sign mutual Non-Disclosure Agreements (NDAs) beforehand, (b) we enforce least-privilege access controls, (c) we process data directly within the Client’s own cloud tenant whenever possible, and (d) we document access revocation upon project handover.',
+      },
+      {
+        title: '5. Access, Correction & Deletion Rights',
+        body: `You may request access to, correction of, or deletion of your contact records at any time by emailing ${SITE_CONFIG.contact.email}. We respond to all privacy requests within 5 business days.`,
+      },
+    ];
+---
+
+{
+  kind === 'faq' && (
+    <section class="sec" aria-labelledby="faq-hub-heading">
+      <div class="wrap">
+        <div class="legal-nav-strip">
+          <a href={r.faq} aria-current="page" class="legal-pill is-active">
+            {es ? 'Preguntas Frecuentes (FAQ)' : 'Frequently Asked Questions'}
+          </a>
+          <a href={r.terms} class="legal-pill">
+            {es ? 'Términos de Servicio' : 'Terms of Service'}
+          </a>
+          <a href={r.privacy} class="legal-pill">
+            {es ? 'Privacidad y Legalidad' : 'Privacy & Legal Notice'}
+          </a>
+        </div>
+
+        <h2 id="faq-hub-heading" class="sr-only">
+          {es ? 'Preguntas frecuentes por categoría' : 'FAQ by category'}
+        </h2>
+
+        <div class="faq-categories-stack">
+          {faqCategories.map((group) => (
+            <div class="faq-category-block">
+              <h3 class="faq-category-title">{group.category}</h3>
+              <div class="faq-list">
+                {group.items.map((item, idx) => (
+                  <details open={idx === 0}>
+                    <summary>
+                      <span class="faq-q-text">{item.q}</span>
+                      <span class="faq-chevron" aria-hidden="true">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="m6 9 6 6 6-6" />
+                        </svg>
+                      </span>
+                    </summary>
+                    <p>{item.a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+{
+  (kind === 'terms' || kind === 'privacy') && (
+    <section class="sec" aria-labelledby="legal-doc-heading">
+      <div class="wrap">
+        <div class="legal-nav-strip">
+          <a href={r.faq} class="legal-pill">
+            {es ? 'Preguntas Frecuentes (FAQ)' : 'Frequently Asked Questions'}
+          </a>
+          <a
+            href={r.terms}
+            aria-current={kind === 'terms' ? 'page' : undefined}
+            class:list={['legal-pill', { 'is-active': kind === 'terms' }]}
+          >
+            {es ? 'Términos de Servicio' : 'Terms of Service'}
+          </a>
+          <a
+            href={r.privacy}
+            aria-current={kind === 'privacy' ? 'page' : undefined}
+            class:list={['legal-pill', { 'is-active': kind === 'privacy' }]}
+          >
+            {es ? 'Privacidad y Legalidad' : 'Privacy & Legal Notice'}
+          </a>
+        </div>
+
+        <div class="legal-document-card">
+          <div class="legal-doc-meta">
+            <span class="bento-code">
+              {es
+                ? 'VIGENCIA: NOVIEMBRE 2026 · SAN JOSÉ, COSTA RICA'
+                : 'EFFECTIVE: NOVEMBER 2026 · SAN JOSÉ, COSTA RICA'}
+            </span>
+            <h2 id="legal-doc-heading">
+              {kind === 'terms'
+                ? es
+                  ? 'Condiciones Generales de Uso y Servicios Profesionales'
+                  : 'General Terms of Use & Professional Services'
+                : es
+                  ? 'Política de Privacidad, Confidencialidad y Protección de Datos'
+                  : 'Privacy, Confidentiality & Data Protection Policy'}
+            </h2>
+          </div>
+
+          <div class="legal-clauses-grid">
+            {(kind === 'terms' ? termsSections : privacySections).map(
+              (clause) => (
+                <article class="legal-clause-box">
+                  <h3>{clause.title}</h3>
+                  <p>{clause.body}</p>
+                </article>
+              )
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+

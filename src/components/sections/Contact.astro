@@ -1,16 +1,29 @@
 ---
+import { experience, contactTopics } from '../../data/experience';
 import {
   SITE_CONFIG,
   buildMailtoUrl,
   buildWhatsappUrl,
   type SiteContent,
 } from '../../data/site';
+import BrandImage from '../ui/BrandImage.astro';
 
 interface Props {
   content: SiteContent;
 }
 
 const { content } = Astro.props;
+const es = content.locale === 'es';
+const text = experience[content.locale];
+const topics = contactTopics(content);
+const quickPills = [
+  { id: 'enterprise-1', label: es ? 'Ingeniería de datos' : 'Data engineering' },
+  { id: 'enterprise-2', label: es ? 'Tableros ejecutivos' : 'Executive dashboards' },
+  { id: 'automation', label: es ? 'Automatización' : 'Automation' },
+  { id: 'applications', label: es ? 'Aplicaciones' : 'Applications' },
+  { id: 'integrations', label: es ? 'Integraciones' : 'Integrations' },
+  { id: 'service-0', label: es ? 'Medición GA4 / GTM' : 'GA4 / GTM Tracking' },
+];
 const defaultMessage = content.contact.form.msgGreeting;
 const defaultWhatsappHref = buildWhatsappUrl(defaultMessage);
 const defaultMailHref = buildMailtoUrl(
@@ -21,9 +34,28 @@ const defaultMailHref = buildMailtoUrl(
 
 <section class="contact" id={content.contact.id} aria-labelledby="h-c">
   <div class="wrap">
-    <div>
-      <h2 id="h-c">{content.contact.heading}</h2>
+    <div class="contact-info-col">
+      <div class="contact-sig-banner">
+        <div class="contact-sig-avatar">
+          <BrandImage
+            kind="sig"
+            locale={content.locale}
+            alt={es ? 'Sig, insignia de Signum & Co., señala el inicio de la conversación' : 'Sig, Signum & Co. emblem, points to the start of the conversation'}
+            sizes="96px"
+          />
+        </div>
+        <div>
+          <span class="section-label">
+            {es ? 'Hablemos de su objetivo' : 'Let’s discuss your goal'}
+          </span>
+          <h2 id="h-c">{text.nextTitle}</h2>
+        </div>
+      </div>
+
       <p class="intro">{content.contact.intro}</p>
+      <ol class="contact-next">
+        {text.nextSteps.map((step) => <li>{step}</li>)}
+      </ol>
       <dl class="direct">
         <div>
           <dt>{content.contact.whatsappLabel}</dt>
@@ -69,6 +101,7 @@ const defaultMailHref = buildMailtoUrl(
       class="cform"
       id="cform"
       novalidate
+      data-topic-prefix={text.interestsLabel}
       data-greeting={content.contact.form.msgGreeting}
       data-name-prefix={content.contact.form.msgNamePrefix}
       data-biz-prefix={content.contact.form.msgBizPrefix}
@@ -79,13 +112,52 @@ const defaultMailHref = buildMailtoUrl(
       data-email={SITE_CONFIG.contact.email}
     >
       <div class="field">
-        <label for="c-name">{content.contact.form.nameLabel}</label>
-        <input id="c-name" name="name" type="text" autocomplete="name" />
+        <span class="quick-topic-label">
+          {es ? 'Selección rápida de necesidad' : 'Quick topic selection'}
+        </span>
+        <div class="quick-topic-pills">
+          {
+            quickPills.map((pill) => (
+              <button
+                type="button"
+                class="quick-topic-pill"
+                data-quick-topic={pill.id}
+                aria-pressed="false"
+              >
+                {pill.label}
+              </button>
+            ))
+          }
+        </div>
       </div>
 
       <div class="field">
-        <label for="c-biz">{content.contact.form.bizLabel}</label>
-        <input id="c-biz" name="biz" type="text" autocomplete="organization" />
+        <label for="c-topic">{text.interestsLabel}</label>
+        <select id="c-topic" name="topic">
+          <option value="">{text.interestsPlaceholder}</option>
+          {
+            topics.map((topic) => (
+              <option value={topic.id}>{topic.label}</option>
+            ))
+          }
+        </select>
+      </div>
+
+      <div class="field-row-2">
+        <div class="field">
+          <label for="c-name">{content.contact.form.nameLabel}</label>
+          <input id="c-name" name="name" type="text" autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="c-biz">{content.contact.form.bizLabel}</label>
+          <input
+            id="c-biz"
+            name="biz"
+            type="text"
+            autocomplete="organization"
+          />
+        </div>
       </div>
 
       <div class="field">
@@ -160,6 +232,15 @@ const defaultMailHref = buildMailtoUrl(
       </div>
 
       <p class="hint">{content.contact.form.hint}</p>
+      <noscript>
+        <p class="hint">
+          {
+            es
+              ? 'Sin JavaScript, use los enlaces directos y escriba su consulta en WhatsApp o correo. Los campos no se adjuntan automáticamente.'
+              : 'Without JavaScript, use the direct links and write your enquiry in WhatsApp or email. Form fields are not attached automatically.'
+          }
+        </p>
+      </noscript>
     </form>
   </div>
 </section>
@@ -167,4 +248,3 @@ const defaultMailHref = buildMailtoUrl(
 <script>
   import '../../scripts/contact.ts';
 </script>
-
