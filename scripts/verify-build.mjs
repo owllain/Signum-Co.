@@ -2,21 +2,22 @@ import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import assert from 'node:assert/strict';
 
 // Check the actual static output, including cross-page anchors, translations, React islands and WebP assets.
-const pairs = [
-  ['/es/', '/en/'],
-  ['/es/datos/', '/en/data-analytics/'],
-  ['/es/metodologia/', '/en/approach/'],
-  ['/es/nosotros/', '/en/about/'],
-  ['/es/servicios/', '/en/services/'],
-  ['/es/desarrollo/', '/en/development/'],
-  ['/es/preguntas-frecuentes/', '/en/faq/'],
-  ['/es/terminos/', '/en/terms/'],
-  ['/es/privacidad/', '/en/privacy/'],
-  ['/es/contacto/', '/en/contact/'],
+const paths = [
+  "/es/",
+  "/es/datos/",
+  "/es/metodologia/",
+  "/es/nosotros/",
+  "/es/servicios/",
+  "/es/desarrollo/",
+  "/es/preguntas-frecuentes/",
+  "/es/terminos/",
+  "/es/privacidad/",
+  "/es/contacto/",
+  "/es/"
 ];
 const origin = 'https://signumandco.com';
 const pages = new Map(
-  pairs.flat().map((path) => [path, readFileSync(`dist${path}index.html`, 'utf8')])
+  paths.map((path) => [path, readFileSync(`dist${path}index.html`, 'utf8')])
 );
 const attributes = (html, name) =>
   [...html.matchAll(new RegExp(`\\s${name}="([^"]*)"`, 'g'))].map(
@@ -35,18 +36,10 @@ for (const [path, html] of pages) {
     new RegExp(`<link[^>]*rel="canonical"[^>]*href="${origin}${path}"`),
     `${path}: canonical`
   );
-  const alternate = pairs
-    .find((pair) => pair.includes(path))
-    .find((candidate) => candidate !== path);
-  assert.ok(
-    html.includes(
-      `hreflang="${alternate.startsWith('/es/') ? 'es' : 'en'}" href="${origin}${alternate}"`
-    ),
-    `${path}: translated route`
-  );
-  const contactHtml = pages.get(
-    path.startsWith('/es/') ? '/es/contacto/' : '/en/contact/'
-  );
+  assert.ok(!html.includes('hreflang='), path + ': no language alternates');
+  assert.ok(!html.includes('id="lang"') && !html.includes('id="theme-toggle"'), path + ': removed controls');
+  assert.ok(!html.includes('href="/en/'), path + ': no English navigation');
+  const contactHtml = pages.get('/es/contacto/');
   const options = [
     ...contactHtml.matchAll(/<option\b[^>]*value="([^"]*)"/g),
   ].map((match) => match[1]);
@@ -78,7 +71,7 @@ for (const [path, html] of pages) {
 }
 
 // Verify React islands are hydrated on key interactive pages
-for (const interactivePath of ['/es/', '/en/', '/es/servicios/', '/en/services/']) {
+for (const interactivePath of ['/es/', '/es/servicios/']) {
   assert.ok(
     pages.get(interactivePath).includes('<astro-island'),
     `${interactivePath}: expected hydrated Astro + React islands`
@@ -92,7 +85,9 @@ assert.ok(
   `dist/images should only contain optimized .webp files, found: ${distImages.join(', ')}`
 );
 
+assert.ok(!existsSync('dist/en/index.html'), 'English homepage removed');
 const sitemap = readFileSync('dist/sitemap-0.xml', 'utf8');
+assert.ok(!sitemap.includes('/en/'), 'Spanish-only sitemap');
 for (const path of pages.keys())
   assert.ok(sitemap.includes(`<loc>${origin}${path}</loc>`), `sitemap: ${path}`);
 

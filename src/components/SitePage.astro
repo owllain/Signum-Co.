@@ -26,7 +26,6 @@ import type { SiteContent } from '../data/site';
 import ServiceTracks from './sections/ServiceTracks.astro';
 import Development from './sections/Development.astro';
 import Team from './sections/Team.astro';
-import type { BrandImageKind } from '../data/brand-images';
 
 interface Props {
   base: SiteContent;
@@ -39,38 +38,24 @@ const text = experience[content.locale];
 const es = content.locale === 'es';
 const servicePage = ['services', 'enterprise', 'development'].includes(page);
 
-const headerImageMap: Record<PageId, BrandImageKind> = {
-  home: 'signal',
-  services: 'systems',
-  enterprise: 'data',
-  development: 'applications',
-  method: 'technical-review',
-  about: 'data',
-  faq: 'signal',
-  terms: 'technical-review',
-  privacy: 'systems',
-  contact: 'signal',
-};
-const detailImage = headerImageMap[page];
-
 const homeMetrics = [
   {
     value: es ? '12+ años' : '12+ yrs',
     label: es
-      ? 'Trayectoria global en datos y software'
-      : 'Global data & software track record',
+      ? 'Experiencia en datos y software'
+      : 'Data & software track record',
   },
   {
     value: '100%',
     label: es
-      ? 'Evidencia trazable y código propio'
-      : 'Traceable evidence & owned code',
+      ? 'Código y modelos propios'
+      : 'Owned code & data models',
   },
   {
-    value: 'ES · EN',
+    value: 'Costa Rica',
     label: es
-      ? 'Operación en Costa Rica y EE. UU.'
-      : 'Operating in Costa Rica & US',
+      ? 'Operación para CR y EE. UU.'
+      : 'Serving Costa Rica & US',
   },
 ];
 ---
@@ -82,12 +67,8 @@ const homeMetrics = [
       page === 'home' ? (
         <HeroCentered
           bg="navy"
+          bgEffect="grid-scan"
           locale={content.locale}
-          eyebrow={
-            es
-              ? 'Datos · Desarrollo · Automatización · IA'
-              : 'Data · Development · Automation · AI'
-          }
           title={
             es
               ? 'De la información a la acción.'
@@ -95,37 +76,29 @@ const homeMetrics = [
           }
           subtitle={
             es
-              ? 'Entendemos sus datos. Conectamos sus procesos. Construimos herramientas para que su negocio avance con claridad.'
-              : 'Understand your data. Connect your processes. Build tools that move your business forward with clarity.'
+              ? 'Unificamos sus datos, automatizamos procesos y creamos software a medida para decidir con claridad.'
+              : 'We unify your data, automate workflows, and build custom software so you can decide with clarity.'
           }
           primary={{
-            label: text.contact,
+            label: es ? 'Conversemos · Diagnóstico 15 min' : 'Let’s talk · 15-min assessment',
             href: routes[content.locale].contact,
           }}
           secondary={{
             label: text.explore,
             href: routes[content.locale].services,
           }}
-          link={{
-            label: es
-              ? 'Ver metodología y validación'
-              : 'See methodology & validation',
-            href: routes[content.locale].method,
-          }}
-          imageKind="signal"
           metrics={homeMetrics}
-          showMedia
         />
       ) : (
         <HeroCentered
           bg="navy"
+          bgEffect="static"
           compact
           locale={content.locale}
           breadcrumbs={[
             { label: text.nav.home, href: routes[content.locale].home },
             { label: text.nav[page] },
           ]}
-          eyebrow={servicePage ? text.nav.services : 'Signum & Co.'}
           title={text.page[page].title}
           subtitle={text.page[page].lead}
           primary={
@@ -136,18 +109,16 @@ const homeMetrics = [
                 }
               : undefined
           }
-          link={
+          secondary={
             servicePage && page !== 'services'
               ? {
                   label: es
-                    ? 'Ver explorador interactivo de servicios'
-                    : 'View interactive service explorer',
+                    ? 'Ver catálogo de servicios'
+                    : 'View service catalog',
                   href: routes[content.locale].services,
                 }
               : undefined
           }
-          imageKind={detailImage}
-          showMedia={!['faq', 'terms', 'privacy', 'contact'].includes(page)}
         />
       )
     }
@@ -156,19 +127,12 @@ const homeMetrics = [
       page === 'home' && (
         <>
           <CapabilitiesStrip content={content} />
-          <ServiceDeepDive content={content} defaultTabId="dotnet-apps" />
-          <VisualGalleryShowcase
-            content={content}
-            showGallery
-            showStack={false}
-          />
-          <ServiceTracks content={content} compactMode />
-          <SignalChart content={content} />
           <VisualGalleryShowcase
             content={content}
             showGallery={false}
             showStack
           />
+          <SignalChart content={content} />
           <DataFlow content={content} />
           <Method content={content} compact />
         </>
@@ -177,13 +141,15 @@ const homeMetrics = [
     {
       page === 'services' && (
         <>
-          <ServiceDeepDive content={content} defaultTabId="web-dev" />
           <ServiceTracks content={content} initialTab="all" />
-          <SignalChart content={content} />
-          <VisualGalleryShowcase content={content} showGallery showStack />
-          <Funnel content={content} />
+          <ServiceDeepDive content={content} defaultTabId="web-dev" />
+          <VisualGalleryShowcase
+            content={content}
+            showGallery
+            showStack={false}
+          />
           <Questions content={content} />
-          <DataFlow content={content} />
+          <Funnel content={content} />
           <Process content={content} />
         </>
       )

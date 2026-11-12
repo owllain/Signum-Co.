@@ -1,6 +1,7 @@
 ---
-// CapabilitiesStrip — Adapted from astrosaas-main SectionOne.astro & Flowbite Blockquote + Avatar
+// CapabilitiesStrip — Chunked Two-Pillar Executive Architecture (Miller's Law + Hick's Law)
 import type { SiteContent } from '../../data/site';
+import { routes } from '../../data/experience';
 import { FounderQuote } from '../interactive/FlowbitePrimitives';
 
 interface Props {
@@ -9,116 +10,115 @@ interface Props {
 
 const { content } = Astro.props;
 const es = content.locale === 'es';
+const r = routes[content.locale];
 
-const pills = es
-  ? [
-      'Desarrollo de Sitios Web (Astro · React)',
-      'Aplicaciones .NET & C#',
-      'Microsoft 365 & Power Automate',
-      'Power Automate Desktop (RPA)',
-      'Power Apps & SharePoint SPFx',
-      'Dashboards Dataverse & Power BI',
-      'Modelado Semántico & SQL',
-      'Integración ERP / CRM / APIs',
-      'Pronóstico & IA en Python',
-      'Auditoría Técnica & Trazabilidad',
-    ]
-  : [
-      'Web Development (Astro · React)',
-      '.NET & C# Applications',
-      'Microsoft 365 & Power Automate',
-      'Power Automate Desktop (RPA)',
-      'Power Apps & SharePoint SPFx',
-      'Dataverse & Power BI Dashboards',
-      'Semantic Modeling & SQL',
-      'ERP / CRM / API Integrations',
-      'Python Forecasting & AI',
-      'Technical Review & Traceability',
-    ];
-
-const features = es
+const pillars = es
   ? [
       {
-        title: 'Sitios web & portales B2B',
-        description:
-          'Plataformas corporativas rápidas en Astro, React y TypeScript con SEO técnico y analítica comercial integrada.',
+        code: 'PILAR 01 · INTELIGENCIA Y DATOS',
+        lead: 'Kevin Arroyo',
+        title: 'Datos confiables para decidir',
+        subtitle:
+          'Indicadores conciliados y visibilidad comercial en tiempo real.',
+        ctaLabel: 'Explorar Datos y Analítica',
+        ctaHref: r.enterprise,
+        items: [
+          {
+            title: 'Dashboards en Dataverse, Power BI y Tableau',
+            description:
+              'Tableros ejecutivos con KPIs conciliados para dirección, finanzas y ventas.',
+          },
+          {
+            title: 'Fuentes unificadas en la nube',
+            description:
+              'Consolidamos ERP, CRM y hojas de cálculo en Snowflake, BigQuery o SQL.',
+          },
+          {
+            title: 'Atribución comercial y modelos predictivos',
+            description:
+              'Medición GA4/GTM de embudos y proyecciones de demanda en Python.',
+          },
+        ],
       },
       {
-        title: 'Aplicaciones en .NET & SQL',
-        description:
-          'Sistemas internos, expedientes digitales y portales transaccionales en .NET, C#, React y SQL Server.',
-      },
-      {
-        title: 'Microsoft 365 & RPA',
-        description:
-          'Flujos con Power Automate, bots de Power Automate Desktop, Power Apps y portales SharePoint SPFx.',
-      },
-      {
-        title: 'Dashboards Dataverse & BI',
-        description:
-          'Modelos gobernados en Dataverse, Snowflake o SQL conectados a tableros ejecutivos en Power BI y Tableau.',
-      },
-      {
-        title: 'Fuentes unificadas',
-        description:
-          'Consolidamos ERP, CRM, hojas de cálculo y APIs en una capa limpia sin duplicidades.',
-      },
-      {
-        title: 'Integración entre sistemas',
-        description:
-          'Sincronización bidireccional confiable entre ventas, finanzas, inventario y servicio.',
-      },
-      {
-        title: 'Modelos predictivos',
-        description:
-          'Proyecciones de demanda, rotación y flujo de caja explicables y auditables en Python y SQL.',
-      },
-      {
-        title: 'Transferencia total',
-        description:
-          'Código, diccionarios de datos y manuales quedan 100% en manos de su organización.',
+        code: 'PILAR 02 · INGENIERÍA Y OPERACIÓN',
+        lead: 'Enrique Cascante',
+        title: 'Software y automatización sin fricción',
+        subtitle:
+          'Sistemas a medida y flujos automáticos que eliminan trabajo manual.',
+        ctaLabel: 'Explorar Desarrollo y Automatización',
+        ctaHref: r.development,
+        items: [
+          {
+            title: 'Aplicaciones a medida en .NET, React y SQL',
+            description:
+              'Sistemas internos, expedientes digitales y portales con roles y auditoría.',
+          },
+          {
+            title: 'Microsoft 365, Power Platform y bots RPA',
+            description:
+              'Flujos con Power Automate, bots RPA Desktop, Power Apps y SharePoint SPFx.',
+          },
+          {
+            title: 'Integraciones y portales B2B',
+            description:
+              'Conexión bidireccional entre CRM/ERP y plataformas web de alto rendimiento.',
+          },
+        ],
       },
     ]
   : [
       {
-        title: 'Websites & B2B portals',
-        description:
-          'High-speed corporate web platforms in Astro, React, and TypeScript with technical SEO and commercial analytics.',
+        code: 'PILLAR 01 · DATA & INTELLIGENCE',
+        lead: 'Kevin Arroyo',
+        title: 'Trusted data for decisions',
+        subtitle:
+          'Reconciled KPIs and real-time commercial visibility.',
+        ctaLabel: 'Explore Data & Analytics',
+        ctaHref: r.enterprise,
+        items: [
+          {
+            title: 'Dataverse, Power BI & Tableau dashboards',
+            description:
+              'Executive dashboards with reconciled KPIs for leadership, finance, and sales.',
+          },
+          {
+            title: 'Unified cloud data sources',
+            description:
+              'Consolidate ERP, CRM, and spreadsheets into Snowflake, BigQuery, or SQL.',
+          },
+          {
+            title: 'Revenue attribution & predictive models',
+            description:
+              'GA4/GTM funnel tracking and demand forecasting models in Python.',
+          },
+        ],
       },
       {
-        title: '.NET & SQL applications',
-        description:
-          'Internal systems, digital case files, and transactional portals built with .NET, C#, React, and SQL Server.',
-      },
-      {
-        title: 'Microsoft 365 & RPA',
-        description:
-          'Workflows in Power Automate, Power Automate Desktop bots, Power Apps, and SharePoint SPFx portals.',
-      },
-      {
-        title: 'Dataverse & BI dashboards',
-        description:
-          'Governed models in Dataverse, Snowflake, or SQL connected to executive dashboards in Power BI and Tableau.',
-      },
-      {
-        title: 'Unified sources',
-        description:
-          'We consolidate ERP, CRM, spreadsheets, and APIs into a clean layer without duplication.',
-      },
-      {
-        title: 'System integrations',
-        description:
-          'Reliable two-way synchronization across sales, finance, inventory, and service.',
-      },
-      {
-        title: 'Predictive models',
-        description:
-          'Explainable, auditable demand, churn, and cash-flow forecasting models in Python and SQL.',
-      },
-      {
-        title: 'Full handoff',
-        description:
-          'Code, data dictionaries, and runbooks remain 100% owned by your organization.',
+        code: 'PILLAR 02 · ENGINEERING & OPERATIONS',
+        lead: 'Enrique Cascante',
+        title: 'Frictionless software and automation',
+        subtitle:
+          'Custom systems and automated workflows that eliminate manual work.',
+        ctaLabel: 'Explore Development & Automation',
+        ctaHref: r.development,
+        items: [
+          {
+            title: 'Custom .NET, React & SQL applications',
+            description:
+              'Internal systems, digital case files, and portals with role-based permissions.',
+          },
+          {
+            title: 'Microsoft 365, Power Platform & RPA bots',
+            description:
+              'Power Automate workflows, Desktop RPA bots, Power Apps, and SharePoint SPFx.',
+          },
+          {
+            title: 'System integrations & B2B portals',
+            description:
+              'Two-way bridges across CRM/ERP and high-speed corporate web platforms.',
+          },
+        ],
       },
     ];
 ---
@@ -127,43 +127,49 @@ const features = es
   <div class="wrap">
     <div class="saas-cap-header">
       <span class="section-label">
-        {es ? 'Arquitectura integral · De extremo a extremo' : 'End-to-end architecture'}
+        {es ? 'Dos disciplinas · Una arquitectura' : 'Two disciplines · One architecture'}
       </span>
       <h2 id="cap-strip-heading">
         {
           es
-            ? 'Ingeniería de datos, software .NET, Microsoft 365 y automatización bajo un mismo estándar'
-            : 'Data engineering, .NET software, Microsoft 365, and automation under one standard'
+            ? '¿Qué necesita resolver hoy?'
+            : 'What do you need to solve today?'
         }
       </h2>
     </div>
 
-    <!-- Horizontal Pill Strip with Edge Fade Gradients -->
-    <div class="saas-pill-marquee-wrap" aria-label={es ? 'Capacidades clave' : 'Core capabilities'}>
-      <div class="saas-pill-fade saas-pill-fade--left" aria-hidden="true"></div>
-      <div class="saas-pill-track">
-        {
-          pills.map((pill) => (
-            <span class="saas-pill-chip">
-              <i aria-hidden="true" />
-              {pill}
-            </span>
-          ))
-        }
-      </div>
-      <div class="saas-pill-fade saas-pill-fade--right" aria-hidden="true"></div>
-    </div>
-
-    <!-- 4x2 Crisp SaaS Feature Grid -->
-    <div class="saas-feature-grid">
+    <!-- 2-Pillar Executive Bifurcation (Miller's Law + Hick's Law) -->
+    <div class="saas-pillars-grid">
       {
-        features.map((feat, idx) => (
-          <article class="saas-feature-item">
-            <div class="saas-feature-head">
-              <span class="saas-feature-num">0{idx + 1}</span>
-              <h3>{feat.title}</h3>
-            </div>
-            <p>{feat.description}</p>
+        pillars.map((pillar) => (
+          <article class="saas-pillar-card">
+            <header class="saas-pillar-top">
+              <div class="saas-pillar-meta">
+                <span class="saas-pillar-code">{pillar.code}</span>
+                <span class="saas-pillar-owner">{pillar.lead}</span>
+              </div>
+              <h3>{pillar.title}</h3>
+              <p class="saas-pillar-sub">{pillar.subtitle}</p>
+            </header>
+
+            <ul class="saas-pillar-list">
+              {pillar.items.map((item, idx) => (
+                <li>
+                  <span class="saas-feature-num">0{idx + 1}</span>
+                  <div>
+                    <h4>{item.title}</h4>
+                    <p>{item.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <footer class="saas-pillar-footer">
+              <a class="saas-pillar-cta" href={pillar.ctaHref}>
+                <span>{pillar.ctaLabel}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </footer>
           </article>
         ))
       }
@@ -174,14 +180,14 @@ const features = es
       <FounderQuote
         quote={
           es
-            ? 'No vendemos horas sueltas ni tableros cosméticos: construimos activos de datos en Dataverse y Power BI, aplicaciones en .NET y automatizaciones en Microsoft 365 que su equipo puede auditar, operar y escalar con total autonomía.'
-            : 'We do not sell disconnected hours or cosmetic dashboards: we build data assets in Dataverse and Power BI, .NET applications, and Microsoft 365 automations that your team can audit, operate, and scale with full autonomy.'
+            ? 'Construimos activos de datos, software en .NET y automatizaciones en Microsoft 365 que su equipo puede auditar y operar con total autonomía.'
+            : 'We build data assets, .NET software, and Microsoft 365 automations that your team can audit and operate with full autonomy.'
         }
-        authorName="Kevin Arroyo"
+        authorName="Kevin Arroyo & Enrique Cascante"
         authorRole={
           es
-            ? 'Socio Fundador · Signum & Co.'
-            : 'Founding Partner · Signum & Co.'
+            ? 'Socios · 100% transferencia de código y modelos'
+            : 'Partners · 100% transfer of code and models'
         }
         avatarImg="/images/avatar-kevin.webp"
       />
@@ -196,7 +202,7 @@ const features = es
   }
 
   .saas-cap-header {
-    max-width: 740px;
+    max-width: 720px;
     margin-inline: auto;
     text-align: center;
     display: flex;
@@ -205,100 +211,100 @@ const features = es
   }
 
   .saas-cap-header h2 {
-    max-width: 30ch;
+    max-width: 24ch;
   }
 
-  .saas-pill-marquee-wrap {
-    position: relative;
-    margin-top: 2.25rem;
-    padding-block: 0.5rem;
-    overflow: hidden;
+  .saas-cap-lead {
+    margin-top: 0.85rem;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 58ch;
   }
 
-  .saas-pill-track {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.65rem;
-  }
-
-  .saas-pill-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 15px;
-    border-radius: 999px;
-    background: var(--surface-elevated);
-    border: 1px solid var(--line);
-    font-family: var(--f-code);
-    font-size: 0.74rem;
-    font-weight: 500;
-    color: var(--fg);
-    white-space: nowrap;
-    box-shadow: 0 1px 2px rgba(12, 25, 49, 0.04);
-    transition:
-      border-color 180ms ease,
-      transform 180ms ease;
-  }
-
-  .saas-pill-chip:hover {
-    border-color: var(--gold);
-    transform: translateY(-1px);
-  }
-
-  .saas-pill-chip i {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
-
-  .saas-pill-fade {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 48px;
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .saas-pill-fade--left {
-    left: 0;
-    background: linear-gradient(90deg, var(--surface), transparent);
-  }
-
-  .saas-pill-fade--right {
-    right: 0;
-    background: linear-gradient(270deg, var(--surface), transparent);
-  }
-
-  .saas-feature-grid {
-    margin-top: 3rem;
+  .saas-pillars-grid {
+    margin-top: 2.75rem;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
   }
 
-  .saas-feature-item {
-    padding: 1.35rem 1.4rem;
-    border-radius: 12px;
-    background: var(--surface-elevated);
-    border: 1px solid var(--line);
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease;
-  }
-
-  .saas-feature-item:hover {
-    border-color: var(--gold);
-    box-shadow: var(--card-shadow);
-  }
-
-  .saas-feature-head {
+  .saas-pillar-card {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(1.5rem, 3vw, 2.1rem);
+    border-radius: 16px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--line-strong);
+    box-shadow: var(--card-shadow);
+    transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .saas-pillar-card:hover {
+    border-color: rgba(201, 162, 39, 0.55);
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  .saas-pillar-top {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .saas-pillar-meta {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .saas-pillar-code {
+    font-family: var(--f-code);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--gold-ink);
+    background: var(--gold-soft);
+    padding: 0.28rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .saas-pillar-owner {
+    font-family: var(--f-code);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .saas-pillar-top h3 {
+    font-family: var(--f-display);
+    font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+    line-height: 1.2;
+    color: var(--fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .saas-pillar-sub {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .saas-pillar-list {
+    list-style: none;
+    padding: 1.25rem 0;
+    margin: 0;
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .saas-pillar-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.85rem;
+    align-items: start;
   }
 
   .saas-feature-num {
@@ -306,35 +312,56 @@ const features = es
     font-size: 0.7rem;
     font-weight: 600;
     color: var(--gold-ink);
-    background: var(--gold-soft);
-    padding: 2px 7px;
-    border-radius: 4px;
+    background: rgba(201, 162, 39, 0.12);
+    border: 1px solid rgba(201, 162, 39, 0.3);
+    padding: 0.2rem 0.48rem;
+    border-radius: 5px;
+    margin-top: 0.12rem;
   }
 
-  .saas-feature-head h3 {
-    font-family: var(--f-display);
-    font-size: 1.12rem;
+  .saas-pillar-list h4 {
+    font-family: var(--f-body);
+    font-size: 0.96rem;
+    font-weight: 600;
     color: var(--fg);
+    margin: 0 0 0.25rem;
   }
 
-  .saas-feature-item p {
-    font-size: 0.86rem;
-    line-height: 1.55;
+  .saas-pillar-list p {
+    font-size: 0.84rem;
+    line-height: 1.5;
     color: var(--muted);
+    margin: 0;
+  }
+
+  .saas-pillar-footer {
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+  }
+
+  .saas-pillar-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--gold-ink);
+    text-decoration: none;
+    transition: color 150ms ease, gap 150ms ease;
+  }
+
+  .saas-pillar-cta:hover {
+    color: var(--fg);
+    gap: 0.75rem;
   }
 
   .saas-founder-quote-card {
-    margin-top: 3.25rem;
+    margin-top: 2.75rem;
   }
 
-  @media (max-width: 1020px) {
-    .saas-feature-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 640px) {
-    .saas-feature-grid {
+  @media (max-width: 900px) {
+    .saas-pillars-grid {
       grid-template-columns: 1fr;
     }
   }

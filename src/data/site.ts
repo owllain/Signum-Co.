@@ -45,8 +45,6 @@ export interface SiteContent {
   locale: Locale;
   htmlLang: string;
   ogLocale: string;
-  alternateLocale: Locale;
-  alternatePath: string;
   canonicalPath: string;
   meta: {
     title: string;
@@ -56,7 +54,6 @@ export interface SiteContent {
   nav: {
     homeHref: string;
     items: NavItem[];
-    langSwitchLabel: string;
     mobileMenuOpenLabel: string;
     mobileMenuCloseLabel: string;
   };

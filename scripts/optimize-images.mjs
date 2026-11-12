@@ -19,7 +19,7 @@ for (const { key, src } of SCENES) {
     const out = `public/images/${key}-${width}.webp`;
     const info = await sharp(src)
       .resize(width, height, { fit: 'cover' })
-      .webp({ quality: width === 640 ? 80 : 82, effort: 6 })
+      .webp({ quality: width === 640 ? 74 : 75, smartSubsample: true, effort: 6 })
       .toFile(out);
     console.log(`Generated ${out} (${(info.size / 1024).toFixed(1)} KB)`);
   }
@@ -45,7 +45,7 @@ for (const size of [128, 256, 512]) {
       fit: 'contain',
       background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
-    .webp({ quality: 88, alphaQuality: 95, effort: 6 })
+    .webp({ quality: 80, alphaQuality: 88, smartSubsample: true, effort: 6 })
     .toFile(out);
   console.log(`Generated ${out} (${(info.size / 1024).toFixed(1)} KB)`);
 }
@@ -101,6 +101,6 @@ const enriqueSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="
   <path d="M188 60l-6 6 6 6M200 60l6 6-6 6" fill="none" stroke="#e6c34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 
-await sharp(Buffer.from(kevinSvg)).webp({ quality: 92 }).toFile('public/images/avatar-kevin.webp');
-await sharp(Buffer.from(enriqueSvg)).webp({ quality: 92 }).toFile('public/images/avatar-enrique.webp');
+await sharp(Buffer.from(kevinSvg)).resize(144, 144).webp({ quality: 82, effort: 6 }).toFile('public/images/avatar-kevin.webp');
+await sharp(Buffer.from(enriqueSvg)).resize(144, 144).webp({ quality: 82, effort: 6 }).toFile('public/images/avatar-enrique.webp');
 console.log('Generated public/images/avatar-kevin.webp and public/images/avatar-enrique.webp');

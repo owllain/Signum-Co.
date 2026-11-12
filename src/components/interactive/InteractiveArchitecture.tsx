@@ -145,7 +145,7 @@ export default function InteractiveArchitecture({ locale }: InteractiveArchitect
       <div className="arch-inspector" role="tabpanel">
         <div className="arch-inspector-main">
           <div className="arch-inspector-header">
-            <span className="arch-layer-pill">
+            <span className="arch-layer-summary">
               {es ? `Capa ${activeStage.step} de 04` : `Layer ${activeStage.step} of 04`} · {activeStage.lead}
             </span>
             <h3>{activeStage.title}</h3>
@@ -163,14 +163,7 @@ export default function InteractiveArchitecture({ locale }: InteractiveArchitect
           <span className="arch-stack-label">
             {es ? 'Tecnologías e instrumentos en esta capa' : 'Technologies & instruments in this layer'}
           </span>
-          <ul className="arch-stack-chips">
-            {activeStage.stack.map((item) => (
-              <li key={item}>
-                <i aria-hidden="true" />
-                {item}
-              </li>
-            ))}
-          </ul>
+          <p className="arch-stack-summary">{activeStage.stack.join(" · ")}</p>
           <p className="arch-footnote">
             {es
               ? 'Esquema interactivo. Diseñamos cada arquitectura sobre sus herramientas actuales sin imponer licencias innecesarias.'

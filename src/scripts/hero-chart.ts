@@ -30,8 +30,8 @@ export function initHeroChart(): void {
 
   const dots: DotRecord[] = dotElements.map((el) => ({
     el,
-    x: Number(el.dataset.x ?? 0),
-    home: Number(el.dataset.home ?? 0),
+    x: Number(el.getAttribute('cx') ?? 0),
+    home: Number(el.getAttribute('cy') ?? 0),
     sig: Number(el.dataset.sig ?? 0),
     isPulled: false,
   }));
@@ -168,22 +168,39 @@ export function initHeroChart(): void {
     releaseDots();
   });
 
-  // Initial trend line draw animation
+  // Trigger trend line draw animation only when scrolled into view (avoids synchronous reflow on initial load)
   if (!prefersReducedMotion && typeof line.getTotalLength === 'function') {
-    try {
-      const len = line.getTotalLength();
-      if (len > 0) {
-        line.style.strokeDasharray = `${len}`;
-        line.style.strokeDashoffset = `${len}`;
-        line.getBoundingClientRect();
-        line.style.transition =
-          'stroke-dashoffset 1.8s cubic-bezier(0.2, 0.7, 0.2, 1)';
-        requestAnimationFrame(() => {
-          line.style.strokeDashoffset = '0';
-        });
+    const animateLine = () => {
+      try {
+        const len = line.getTotalLength();
+        if (len > 0) {
+          line.style.strokeDasharray = `${len}`;
+          line.style.strokeDashoffset = `${len}`;
+          line.getBoundingClientRect();
+          line.style.transition =
+            'stroke-dashoffset 1.8s cubic-bezier(0.2, 0.7, 0.2, 1)';
+          requestAnimationFrame(() => {
+            line.style.strokeDashoffset = '0';
+          });
+        }
+      } catch {
+        // Ignore if SVG is hidden or getTotalLength fails
       }
-    } catch {
-      // Ignore if SVG is hidden or getTotalLength fails in non-standard environments
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            animateLine();
+          }
+        },
+        { rootMargin: '80px' }
+      );
+      io.observe(svg);
+    } else {
+      animateLine();
     }
   }
 }

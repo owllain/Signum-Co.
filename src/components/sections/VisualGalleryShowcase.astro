@@ -1,10 +1,9 @@
 ---
 import type { SiteContent } from '../../data/site';
 import { routes } from '../../data/experience';
-import AccordionGallery, {
-  type AccordionGalleryItem,
-} from '../interactive/AccordionGallery';
-import { SolutionsScrollStack } from '../interactive/ScrollStack';
+import BrandImage from '../ui/BrandImage.astro';
+import Arrow from '../ui/Arrow.astro';
+import type { BrandImageKind } from '../../data/brand-images';
 
 interface Props {
   content: SiteContent;
@@ -16,95 +15,206 @@ const { content, showGallery = true, showStack = true } = Astro.props;
 const es = content.locale === 'es';
 const r = routes[content.locale];
 
-const galleryItems: AccordionGalleryItem[] = es
+interface PillarItem {
+  code: string;
+  image: BrandImageKind;
+  label: string;
+  subtitle: string;
+  badge: string;
+  link: string;
+}
+
+const galleryItems: PillarItem[] = es
   ? [
       {
-        image: '/images/signal-1200.webp',
-        srcset: '/images/signal-640.webp 640w, /images/signal-1200.webp 1200w',
-        label: 'Del ruido a la señal',
-        subtitle: 'Atribución multicanal, UTMs y embudos comerciales',
-        badge: 'Medición & Crecimiento',
+        code: '01',
+        image: 'signal',
+        label: 'Atribución comercial',
+        subtitle: 'GA4, GTM y embudos para medir qué canal genera ventas.',
+        badge: 'Crecimiento',
         link: `${r.services}?tab=growth#service-0`,
       },
       {
-        image: '/images/data-1200.webp',
-        srcset: '/images/data-640.webp 640w, /images/data-1200.webp 1200w',
-        label: 'Ingeniería y almacenes de datos',
-        subtitle: 'Snowflake, BigQuery, Databricks y tableros ejecutivos',
-        badge: 'Kevin Arroyo · Datos',
+        code: '02',
+        image: 'data',
+        label: 'Ingeniería de datos y BI',
+        subtitle: 'Snowflake, Dataverse y Power BI con métricas conciliadas.',
+        badge: 'Kevin Arroyo',
         link: `${r.enterprise}#enterprise-1`,
       },
       {
-        image: '/images/applications-1200.webp',
-        srcset:
-          '/images/applications-640.webp 640w, /images/applications-1200.webp 1200w',
-        label: 'Aplicaciones empresariales',
-        subtitle: 'Portales, expedientes y herramientas internas en .NET y React',
-        badge: 'Enrique Cascante · Apps',
+        code: '03',
+        image: 'applications',
+        label: 'Aplicaciones en .NET y React',
+        subtitle: 'Sistemas internos, portales y expedientes a la medida.',
+        badge: 'Enrique Cascante',
         link: `${r.development}#applications`,
       },
       {
-        image: '/images/automation-1200.webp',
-        srcset:
-          '/images/automation-640.webp 640w, /images/automation-1200.webp 1200w',
+        code: '04',
+        image: 'automation',
         label: 'Automatización de procesos',
-        subtitle: 'Aprobaciones, control documental y alertas con responsables',
-        badge: 'Enrique Cascante · Flujos',
+        subtitle: 'Aprobaciones, alertas y bots RPA en Microsoft 365.',
+        badge: 'Enrique Cascante',
         link: `${r.development}#automation`,
       },
       {
-        image: '/images/integrations-1200.webp',
-        srcset:
-          '/images/integrations-640.webp 640w, /images/integrations-1200.webp 1200w',
-        label: 'Puentes e integraciones',
-        subtitle: 'Sincronización segura entre sistemas y revisión técnica',
-        badge: 'Arquitectura Conectada',
+        code: '05',
+        image: 'integrations',
+        label: 'Integraciones entre sistemas',
+        subtitle: 'Sincronización segura entre ERP, CRM y bases SQL.',
+        badge: 'Arquitectura',
         link: `${r.development}#integrations`,
       },
     ]
   : [
       {
-        image: '/images/signal-1200.webp',
-        srcset: '/images/signal-640.webp 640w, /images/signal-1200.webp 1200w',
-        label: 'From noise to signal',
-        subtitle: 'Multi-channel attribution, UTMs and conversion funnels',
-        badge: 'Measurement & Growth',
+        code: '01',
+        image: 'signal',
+        label: 'Commercial attribution',
+        subtitle: 'GA4, GTM, and funnels to track which channels drive sales.',
+        badge: 'Growth',
         link: `${r.services}?tab=growth#service-0`,
       },
       {
-        image: '/images/data-1200.webp',
-        srcset: '/images/data-640.webp 640w, /images/data-1200.webp 1200w',
-        label: 'Data engineering & warehouses',
-        subtitle: 'Snowflake, BigQuery, Databricks and executive dashboards',
-        badge: 'Kevin Arroyo · Data',
+        code: '02',
+        image: 'data',
+        label: 'Data engineering & BI',
+        subtitle: 'Snowflake, Dataverse, and Power BI with reconciled KPIs.',
+        badge: 'Kevin Arroyo',
         link: `${r.enterprise}#enterprise-1`,
       },
       {
-        image: '/images/applications-1200.webp',
-        srcset:
-          '/images/applications-640.webp 640w, /images/applications-1200.webp 1200w',
-        label: 'Business applications',
-        subtitle: 'Portals, records and internal tools in .NET and React',
-        badge: 'Enrique Cascante · Apps',
+        code: '03',
+        image: 'applications',
+        label: '.NET & React applications',
+        subtitle: 'Custom internal systems, portals, and digital records.',
+        badge: 'Enrique Cascante',
         link: `${r.development}#applications`,
       },
       {
-        image: '/images/automation-1200.webp',
-        srcset:
-          '/images/automation-640.webp 640w, /images/automation-1200.webp 1200w',
+        code: '04',
+        image: 'automation',
         label: 'Process automation',
-        subtitle: 'Approvals, document workflows and alerts with clear owners',
-        badge: 'Enrique Cascante · Workflows',
+        subtitle: 'Approvals, alerts, and RPA bots on Microsoft 365.',
+        badge: 'Enrique Cascante',
         link: `${r.development}#automation`,
       },
       {
-        image: '/images/integrations-1200.webp',
-        srcset:
-          '/images/integrations-640.webp 640w, /images/integrations-1200.webp 1200w',
-        label: 'System bridges & integrations',
-        subtitle: 'Reliable cross-system sync and traceable technical review',
-        badge: 'Connected Architecture',
+        code: '05',
+        image: 'integrations',
+        label: 'System integrations',
+        subtitle: 'Reliable sync across ERP, CRM, and SQL databases.',
+        badge: 'Architecture',
         link: `${r.development}#integrations`,
+      },
+    ];
+
+interface CaseStudyCard {
+  id: string;
+  code: string;
+  owner: string;
+  title: string;
+  problem: string;
+  solution: string;
+  outcomes: string[];
+  image: BrandImageKind;
+  ctaHref: string;
+}
+
+const caseCards: CaseStudyCard[] = es
+  ? [
+      {
+        id: 'enterprise-0',
+        code: 'CASO 01 · DATOS & BI',
+        owner: 'Kevin Arroyo',
+        title: 'De reportes manuales dispersos a un tablero ejecutivo único',
+        problem: 'Horas semanales cruzando hojas de Excel que no concilian entre ventas y finanzas.',
+        solution: 'Modelo centralizado en SQL/Dataverse conectado a Power BI con actualización automática.',
+        outcomes: [
+          'KPIs de ingresos y margen conciliados',
+          'Atribución comercial por canal',
+          'Pronóstico trimestral auditable',
+        ],
+        image: 'data',
+        ctaHref: `${r.contact}?topic=enterprise-0#contacto`,
+      },
+      {
+        id: 'automation',
+        code: 'CASO 02 · AUTOMATIZACIÓN',
+        owner: 'Enrique Cascante',
+        title: 'Aprobaciones y flujos documentales sin cuellos de botella',
+        problem: 'Solicitudes perdidas en correos sin control de estados, tiempos ni responsables.',
+        solution: 'Flujos automatizados en Power Platform y .NET con alertas, reglas y bitácora.',
+        outcomes: [
+          'Trazabilidad de fechas y aprobadores',
+          'Cero reprocesos o doble digitación',
+          'Documentación para operación propia',
+        ],
+        image: 'automation',
+        ctaHref: `${r.contact}?topic=automation#contacto`,
+      },
+      {
+        id: 'integrations',
+        code: 'CASO 03 · INTEGRACIÓN & APPS',
+        owner: 'Enrique Cascante & Kevin Arroyo',
+        title: 'Sistemas conectados y portales operativos a medida',
+        problem: 'Plataformas aisladas que obligan a copiar datos manualmente entre departamentos.',
+        solution: 'Puentes API con validación y aplicaciones modulares en .NET, React y SQL Server.',
+        outcomes: [
+          'Sincronización segura ERP ↔ CRM',
+          'Roles, permisos y auditoría técnica',
+          'Código 100% propiedad de su empresa',
+        ],
+        image: 'integrations',
+        ctaHref: `${r.contact}?topic=integrations#contacto`,
+      },
+    ]
+  : [
+      {
+        id: 'enterprise-0',
+        code: 'CASE 01 · DATA & BI',
+        owner: 'Kevin Arroyo',
+        title: 'From scattered spreadsheets to a single executive dashboard',
+        problem: 'Weekly hours lost cross-checking conflicting sales and finance spreadsheets.',
+        solution: 'Centralized SQL/Dataverse model connected to self-updating Power BI dashboards.',
+        outcomes: [
+          'Reconciled revenue and margin KPIs',
+          'Multi-channel pipeline attribution',
+          'Auditable quarterly forecasting',
+        ],
+        image: 'data',
+        ctaHref: `${r.contact}?topic=enterprise-0#contacto`,
+      },
+      {
+        id: 'automation',
+        code: 'CASE 02 · AUTOMATION',
+        owner: 'Enrique Cascante',
+        title: 'Approval and document workflows without bottlenecks',
+        problem: 'Requests buried in email threads with no status tracking or clear ownership.',
+        solution: 'Automated workflows in Power Platform and .NET with alerts and audit logs.',
+        outcomes: [
+          'Full timestamp and approver traceability',
+          'Zero manual re-entry across tools',
+          'Complete handover for team autonomy',
+        ],
+        image: 'automation',
+        ctaHref: `${r.contact}?topic=automation#contacto`,
+      },
+      {
+        id: 'integrations',
+        code: 'CASE 03 · INTEGRATIONS & APPS',
+        owner: 'Enrique Cascante & Kevin Arroyo',
+        title: 'Connected systems and custom operational portals',
+        problem: 'Siloed tools forcing teams to copy-paste records manually across departments.',
+        solution: 'Validated API bridges and modular applications built in .NET, React, and SQL.',
+        outcomes: [
+          'Reliable two-way ERP ↔ CRM sync',
+          'Role-based access and technical audit',
+          '100% client-owned source code',
+        ],
+        image: 'integrations',
+        ctaHref: `${r.contact}?topic=integrations#contacto`,
       },
     ];
 ---
@@ -116,41 +226,38 @@ const galleryItems: AccordionGalleryItem[] = es
         <div class="section-heading">
           <div>
             <span class="section-label">
-              {es
-                ? 'Galería Interactiva · Ecosistema Visual'
-                : 'Interactive Gallery · Visual Ecosystem'}
+              {es ? 'Cinco Especialidades Conectadas' : 'Five Connected Specialties'}
             </span>
             <h2 id="gallery-title">
               {es
-                ? 'Cinco frentes técnicos conectados en una sola firma.'
-                : 'Five technical disciplines connected in a single firm.'}
+                ? 'Un solo equipo para datos, software y automatización.'
+                : 'One team for data, software, and automation.'}
             </h2>
           </div>
-          <p class="intro">
-            {es
-              ? 'Pase el cursor por cada pilar para inspeccionar cómo unimos analítica de ingresos, ingeniería en la nube, aplicaciones e integraciones.'
-              : 'Hover over each pillar to inspect how we unite revenue analytics, cloud engineering, applications and integrations.'}
-          </p>
         </div>
 
-        <AccordionGallery
-          client:visible
-          items={galleryItems}
-          defaultIndex={1}
-          expandRatio={0.52}
-          trigger="hover"
-          accentColor="#c9a227"
-          overlayColor="#060f20"
-          textColor="#ffffff"
-          showLabels
-          duration={0.55}
-          parallax={0.45}
-          tilt={6}
-          height={420}
-          gap={10}
-          radius={16}
-          orientation="horizontal"
-        />
+        <div class="pillars-conventional-grid">
+          {galleryItems.map((item) => (
+            <a class="pillar-mini-card" href={item.link}>
+              <div class="pillar-mini-thumb">
+                <BrandImage
+                  kind={item.image}
+                  locale={content.locale}
+                  alt=""
+                  sizes="(max-width: 760px) 100vw, 260px"
+                />
+              </div>
+              <div class="pillar-mini-body">
+                <div class="pillar-mini-meta">
+                  <span class="bento-code">{item.code}</span>
+                  <span class="bento-tech-tag">{item.badge}</span>
+                </div>
+                <h3>{item.label}</h3>
+                <p>{item.subtitle}</p>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -163,30 +270,186 @@ const galleryItems: AccordionGalleryItem[] = es
         <div class="section-heading">
           <div>
             <span class="section-label">
-              {es
-                ? 'Scroll Stack · Arquitecturas en Acción'
-                : 'Scroll Stack · Architectures in Action'}
+              {es ? 'Casos de Uso Frecuentes' : 'Common Use Cases'}
             </span>
             <h2 id="stack-title">
               {es
-                ? 'Soluciones reales diseñadas alrededor de su operación.'
-                : 'Real solutions engineered around your operations.'}
+                ? 'Soluciones reales alrededor de su operación.'
+                : 'Real solutions built around your operations.'}
             </h2>
           </div>
           <p class="intro">
             {es
-              ? 'Explore cómo abordamos los tres cuellos de botella más frecuentes en empresas de Costa Rica y Estados Unidos.'
-              : 'Explore how we solve the three most common operational bottlenecks for companies in Costa Rica and the United States.'}
+              ? 'Tres cuellos de botella que resolvemos de extremo a extremo.'
+              : 'Three operational bottlenecks we solve end to end.'}
           </p>
         </div>
 
-        <SolutionsScrollStack
-          client:visible
-          locale={content.locale}
-          contactUrl={r.contact}
-        />
+        <div class="bento-catalog-grid cases-conventional-grid">
+          {caseCards.map((card) => (
+            <article class="bento-service-card case-card-conventional">
+              <div class="bento-card-thumb">
+                <BrandImage
+                  kind={card.image}
+                  locale={content.locale}
+                  alt=""
+                  sizes="(max-width: 760px) 100vw, 380px"
+                />
+              </div>
+              <div class="bento-card-body">
+                <div class="bento-card-meta">
+                  <span class="bento-code">{card.code}</span>
+                  <span class="bento-tech-tag">{card.owner}</span>
+                </div>
+                <h3>{card.title}</h3>
+
+                <div class="case-ps-compact">
+                  <div class="case-ps-row">
+                    <strong>{es ? 'Problema:' : 'Problem:'}</strong>
+                    <span>{card.problem}</span>
+                  </div>
+                  <div class="case-ps-row is-sol">
+                    <strong>{es ? 'Solución:' : 'Solution:'}</strong>
+                    <span>{card.solution}</span>
+                  </div>
+                </div>
+
+                <ul class="bento-deliverables">
+                  {card.outcomes.map((outcome) => (
+                    <li>
+                      <svg
+                        aria-hidden="true"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                      >
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      <span>{outcome}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div class="bento-card-footer">
+                  <span class="bento-owner">{card.owner}</span>
+                  <a
+                    class="bento-cta"
+                    data-contact-topic={card.id}
+                    href={card.ctaHref}
+                  >
+                    <span>{es ? 'Consultar caso' : 'Discuss case'}</span>
+                    <Arrow />
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
+
+<style>
+  .case-ps-compact {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0.35rem 0 1rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 8px;
+    background: var(--surface-elevated);
+    border: 1px solid var(--line);
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .case-ps-row {
+    color: var(--muted);
+  }
+
+  .case-ps-row strong {
+    color: var(--fg);
+    font-weight: 600;
+    margin-right: 0.35rem;
+  }
+
+  .case-ps-row.is-sol strong {
+    color: var(--gold-ink);
+  }
+
+  .pillars-conventional-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .pillar-mini-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--fg);
+    transition: border-color 160ms ease, transform 160ms ease;
+  }
+
+  .pillar-mini-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .pillar-mini-thumb :global(.brand-image) {
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    box-shadow: none;
+    aspect-ratio: 16 / 10;
+  }
+
+  .pillar-mini-body {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .pillar-mini-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .pillar-mini-body h3 {
+    font-family: var(--f-display);
+    font-size: 1.04rem;
+    line-height: 1.22;
+    color: var(--fg);
+    margin: 2px 0 0;
+  }
+
+  .pillar-mini-body p {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  @media (max-width: 1080px) {
+    .pillars-conventional-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .pillars-conventional-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 

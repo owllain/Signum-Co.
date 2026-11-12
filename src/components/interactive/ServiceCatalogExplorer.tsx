@@ -20,46 +20,12 @@ interface ServiceCatalogExplorerProps {
 interface UnifiedCard {
   id: string;
   category: Exclude<ExplorerTab, 'all'>;
-  code: string;
-  badge: string;
   leadName: string;
   title: string;
   description: string;
   bullets: string[];
   image?: BrandImageKind;
 }
-
-const ENTERPRISE_BADGES: Record<Locale, string[]> = {
-  es: [
-    'RevOps · Atribución · Pipeline',
-    'Snowflake · BigQuery · Databricks',
-    'Tableau · Power BI · Looker',
-    'LLM · Copilotos · Automatización',
-    'SQL · Python · Controles AML',
-  ],
-  en: [
-    'RevOps · Attribution · Pipeline',
-    'Snowflake · BigQuery · Databricks',
-    'Tableau · Power BI · Looker',
-    'LLMs · Copilots · Automation',
-    'SQL · Python · AML Controls',
-  ],
-};
-
-const GROWTH_BADGES: Record<Locale, string[]> = {
-  es: [
-    'GA4 · Tag Manager · Looker Studio',
-    'Meta Ads · Google Ads · SEO',
-    'UX Móvil · Conversión · E-commerce',
-    'WhatsApp IA · Atención 24/7',
-  ],
-  en: [
-    'GA4 · Tag Manager · Looker Studio',
-    'Meta Ads · Google Ads · SEO',
-    'Mobile UX · Conversion · E-commerce',
-    'WhatsApp AI · 24/7 Assistants',
-  ],
-};
 
 export default function ServiceCatalogExplorer({
   locale,
@@ -78,19 +44,15 @@ export default function ServiceCatalogExplorer({
     ...enterpriseRows.map((row, index) => ({
       id: `enterprise-${index}`,
       category: 'enterprise' as const,
-      code: `D-0${index + 1}`,
-      badge: ENTERPRISE_BADGES[locale][index] || 'Data & Analytics',
       leadName: 'Kevin Arroyo',
       title: row.title,
       description: row.description,
       bullets: row.bullets,
       image: index === 0 ? ('data' as BrandImageKind) : index === 3 ? ('signal' as BrandImageKind) : undefined,
     })),
-    ...developmentRows.map((service, index) => ({
+    ...developmentRows.map((service) => ({
       id: service.id,
       category: 'development' as const,
-      code: `E-0${index + 1}`,
-      badge: service.tag,
       leadName: 'Enrique Cascante',
       title: service.title,
       description: service.description,
@@ -100,8 +62,6 @@ export default function ServiceCatalogExplorer({
     ...growthRows.map((row, index) => ({
       id: `service-${index}`,
       category: 'growth' as const,
-      code: `C-0${index + 1}`,
-      badge: GROWTH_BADGES[locale][index] || 'Digital & Growth',
       leadName: 'Signum & Co.',
       title: row.title,
       description: row.description,
@@ -242,7 +202,6 @@ export default function ServiceCatalogExplorer({
             >
               <span className="explorer-tab-top">
                 <span className="explorer-tab-title">{tab.label}</span>
-                <span className="explorer-tab-badge">{tab.count}</span>
               </span>
               <span className="explorer-tab-sub">{tab.sublabel}</span>
             </button>
@@ -253,12 +212,7 @@ export default function ServiceCatalogExplorer({
       {/* Discipline Spotlight Header */}
       <div className="explorer-spotlight">
         <div className="explorer-spotlight-copy">
-          <div className="explorer-pill-row">
-            <span className="explorer-lead-pill">
-              <i className="explorer-pulse" aria-hidden="true" />
-              {currentTabMeta.lead}
-            </span>
-          </div>
+          <p className="explorer-lead">{currentTabMeta.lead}</p>
           <h3>{currentTabMeta.label}</h3>
           <p>{currentTabMeta.summary}</p>
           <div className="explorer-spotlight-actions">
@@ -311,10 +265,6 @@ export default function ServiceCatalogExplorer({
                 </div>
               )}
               <div className="bento-card-body">
-                <div className="bento-card-meta">
-                  <span className="bento-code">{card.code}</span>
-                  <span className="bento-tech-tag">{card.badge}</span>
-                </div>
                 <h4>{card.title}</h4>
                 <p className="bento-desc">{card.description}</p>
                 <ul className="bento-deliverables">

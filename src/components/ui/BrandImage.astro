@@ -37,10 +37,8 @@ const resolvedSizes =
     { 'brand-image-transparent': meta.transparent },
     className,
   ]}
-  style={`--img-aspect: ${meta.aspectRatio}; --img-lqip: url("${meta.lqip}");`}
-  data-image-shell
+  style={`--img-aspect: ${meta.aspectRatio};`}
 >
-  <div class="brand-image-skeleton" aria-hidden="true"></div>
   <img
     src={meta.src}
     srcset={meta.srcset}
@@ -61,39 +59,3 @@ const resolvedSizes =
     )
   }
 </div>
-
-<script>
-  function hydrateBrandImages() {
-    document.querySelectorAll<HTMLElement>('[data-image-shell]').forEach((shell) => {
-      if (shell.dataset.loaded === 'true' || shell.dataset.bound === 'true') {
-        const img = shell.querySelector('img');
-        if (img?.complete && img.naturalWidth > 0) {
-          shell.dataset.loaded = 'true';
-        }
-        return;
-      }
-      shell.dataset.bound = 'true';
-      const image = shell.querySelector('img');
-      if (!image) {
-        shell.dataset.loaded = 'true';
-        return;
-      }
-      const markLoaded = () => {
-        shell.dataset.loaded = 'true';
-      };
-      const markError = () => {
-        shell.dataset.loaded = 'error';
-      };
-      if (image.complete) {
-        if (image.naturalWidth > 0) markLoaded();
-        else markError();
-      } else {
-        image.addEventListener('load', markLoaded, { once: true });
-        image.addEventListener('error', markError, { once: true });
-      }
-    });
-  }
-
-  hydrateBrandImages();
-  document.addEventListener('astro:page-load', hydrateBrandImages);
-</script>

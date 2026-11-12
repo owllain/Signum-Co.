@@ -9,9 +9,7 @@ interface Props {
 
 const { content } = Astro.props;
 const es = content.locale === 'es';
-const badges = es
-  ? ['Alcance y fecha cerrados', 'Evolución continua', 'Dirección senior fractional']
-  : ['Fixed scope & timeline', 'Continuous evolution', 'Fractional senior leadership'];
+
 ---
 
 <section class="sec" id={content.pricing.id} aria-labelledby="h-price">
@@ -31,10 +29,6 @@ const badges = es
         content.pricing.rows.map((row, index) => (
           <article class="bento-service-card" id={`engagement-${index}`}>
             <div class="bento-card-body">
-              <div class="bento-card-meta">
-                <span class="bento-code">M-0{index + 1}</span>
-                <span class="bento-tech-tag">{badges[index]}</span>
-              </div>
               <h3>{row.title}</h3>
               <p class="bento-desc">{row.description}</p>
               <ul class="bento-deliverables">

@@ -1,0 +1,563 @@
+---
+import { routes } from '../../data/experience';
+import type { Locale } from '../../data/site';
+
+interface Props {
+  currentPath: string;
+  locale?: Locale;
+}
+
+const { currentPath, locale = 'es' } = Astro.props;
+const es = locale === 'es';
+const r = routes[locale];
+
+const primaryNav = es
+  ? [
+      { label: 'Servicios', href: r.services },
+      { label: 'Datos y BI', href: r.enterprise },
+      { label: 'Desarrollo y RPA', href: r.development },
+      { label: 'Metodología', href: r.method },
+      { label: 'Nosotros', href: r.about },
+    ]
+  : [
+      { label: 'Services', href: r.services },
+      { label: 'Data & BI', href: r.enterprise },
+      { label: 'Dev & RPA', href: r.development },
+      { label: 'Approach', href: r.method },
+      { label: 'About', href: r.about },
+    ];
+
+const groups = es
+  ? [
+      {
+        badge: '01 · Especialidades',
+        title: 'Soluciones',
+        description: 'De fuentes dispersas y procesos manuales a una operación conectada.',
+        links: [
+          { label: 'Catálogo integral de servicios', meta: '13 soluciones', href: r.services },
+          { label: 'Datos, BI e inteligencia comercial', meta: 'Kevin Arroyo', href: r.enterprise },
+          { label: 'Software .NET, M365 y automatización', meta: 'Enrique Cascante', href: r.development },
+        ],
+      },
+      {
+        badge: '02 · Cómo trabajamos',
+        title: 'Firma y método',
+        description: 'Entregas en etapas semanales con validación técnica y código propio.',
+        links: [
+          { label: 'Metodología y precios de referencia', meta: '5 etapas', href: r.method },
+          { label: 'Sobre Signum & Co. y liderazgo', meta: 'Socios', href: r.about },
+          { label: 'Preguntas frecuentes y criterios', meta: 'FAQ', href: r.faq },
+        ],
+      },
+      {
+        badge: '03 · Siguiente paso',
+        title: 'Diagnóstico ejecutivo',
+        description: 'Sesión inicial de 15 minutos sin costo y propuesta cerrada en 48 horas.',
+        links: [
+          { label: 'Agendar conversación o cotizar', meta: 'Respuesta < 24h', href: r.contact },
+          { label: 'Términos y propiedad intelectual', meta: '100% suyo', href: r.terms },
+          { label: 'Privacidad y confidencialidad (NDA)', meta: 'Ley 8968', href: r.privacy },
+        ],
+      },
+    ]
+  : [
+      {
+        badge: '01 · Specialties',
+        title: 'Solutions',
+        description: 'From scattered sources and manual tasks to a connected operation.',
+        links: [
+          { label: 'Full service catalog', meta: '13 solutions', href: r.services },
+          { label: 'Data, BI & revenue intelligence', meta: 'Kevin Arroyo', href: r.enterprise },
+          { label: '.NET software, M365 & automation', meta: 'Enrique Cascante', href: r.development },
+        ],
+      },
+      {
+        badge: '02 · How we work',
+        title: 'Firm & method',
+        description: 'Weekly milestones with technical validation and full code ownership.',
+        links: [
+          { label: 'Methodology & reference pricing', meta: '5 stages', href: r.method },
+          { label: 'About Signum & Co. leadership', meta: 'Partners', href: r.about },
+          { label: 'Frequently asked questions', meta: 'FAQ', href: r.faq },
+        ],
+      },
+      {
+        badge: '03 · Next step',
+        title: 'Executive assessment',
+        description: 'Free 15-minute discovery call and fixed-price proposal within 48 hours.',
+        links: [
+          { label: 'Start a conversation', meta: 'Reply < 24h', href: r.contact },
+          { label: 'Terms & IP ownership', meta: '100% yours', href: r.terms },
+          { label: 'Privacy & NDA standards', meta: 'Legal', href: r.privacy },
+        ],
+      },
+    ];
+
+function isCurrentOrSection(href: string, current: string): boolean {
+  if (href === current) return true;
+  if (href !== r.home && current.startsWith(href)) return true;
+  return false;
+}
+---
+
+<header class="card-nav">
+  <div class="card-nav-bar">
+    <a class="card-nav-brand" href={r.home} aria-label="Signum & Co. — Inicio">
+      <span class="card-nav-brand-name">Signum <b>&amp;</b> Co.</span>
+    </a>
+
+    <nav class="card-nav-inline" aria-label={es ? 'Secciones principales' : 'Main sections'}>
+      {
+        primaryNav.map((item) => {
+          const active = isCurrentOrSection(item.href, currentPath);
+          return (
+            <a
+              href={item.href}
+              class:list={['card-nav-link', active && 'is-active']}
+              aria-current={item.href === currentPath ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <div class="card-nav-actions">
+      <details class="card-nav-disclosure">
+        <summary aria-controls="site-card-panel">
+          <span class="label-open">{es ? 'Explorar' : 'Explore'}</span>
+          <span class="label-close">{es ? 'Cerrar' : 'Close'}</span>
+          <span class="card-nav-plus" aria-hidden="true"></span>
+        </summary>
+        <nav id="site-card-panel" class="card-nav-panel" aria-label={es ? 'Mapa de navegación' : 'Site navigation map'}>
+          {
+            groups.map((group) => (
+              <section class="card-nav-group" aria-label={group.title}>
+                <span class="card-nav-badge">{group.badge}</span>
+                <h2>{group.title}</h2>
+                <p>{group.description}</p>
+                <ul>
+                  {group.links.map((link) => (
+                    <li>
+                      <a
+                        href={link.href}
+                        aria-current={link.href === currentPath ? 'page' : undefined}
+                      >
+                        <span class="card-nav-item-text">
+                          <span class="card-nav-item-label">{link.label}</span>
+                          {link.meta && <span class="card-nav-item-meta">{link.meta}</span>}
+                        </span>
+                        <span class="card-nav-arrow" aria-hidden="true">→</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))
+          }
+        </nav>
+      </details>
+
+      <a
+        class:list={['card-nav-cta', currentPath === r.contact && 'is-active']}
+        href={r.contact}
+      >
+        <span class="card-nav-cta-dot" aria-hidden="true"></span>
+        <span>{es ? 'Conversemos' : 'Let’s talk'}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .card-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(6, 12, 24, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .card-nav-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: var(--max-w);
+    min-height: 78px;
+    margin: auto;
+    padding: 0 clamp(1.1rem, 3.5vw, 2rem);
+  }
+
+  /* Brand Mark — Large, Clean & Commanding */
+  .card-nav-brand {
+    display: inline-flex;
+    align-items: center;
+    color: #ffffff;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: opacity 150ms ease;
+  }
+
+  .card-nav-brand:hover {
+    opacity: 0.92;
+  }
+
+  .card-nav-brand b {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .card-nav-brand-name {
+    font: 700 clamp(1.55rem, 2.3vw, 1.82rem) / 1.08 var(--f-display);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  /* Desktop Exposed Links (Jakob's Law + Low Cognitive Load) */
+  .card-nav-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.28rem;
+    border-radius: 999px;
+    background: rgba(14, 25, 45, 0.68);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .card-nav-link {
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    color: var(--on-navy-muted);
+    text-decoration: none;
+    font: 500 0.85rem/1.2 var(--f-body);
+    white-space: nowrap;
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+
+  .card-nav-link:hover {
+    color: var(--fg);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .card-nav-link.is-active {
+    color: var(--gold-ink);
+    background: rgba(201, 162, 39, 0.13);
+    font-weight: 600;
+  }
+
+  /* Right Actions */
+  .card-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    flex-shrink: 0;
+  }
+
+  /* Von Restorff Primary Conversion CTA */
+  .card-nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 40px;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #161209;
+    border: 1px solid var(--gold);
+    font: 600 0.86rem/1 var(--f-body);
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 6px 20px -6px rgba(201, 162, 39, 0.5);
+    transition: background-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .card-nav-cta:hover {
+    background: var(--gold-hover);
+    border-color: var(--gold-hover);
+    color: #161209;
+    transform: translateY(-1px);
+  }
+
+  .card-nav-cta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #161209;
+    opacity: 0.75;
+  }
+
+  /* Mega-Panel Disclosure Button */
+  .card-nav-disclosure > summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    min-height: 40px;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 999px;
+    color: var(--on-navy-muted);
+    cursor: pointer;
+    font: 500 0.84rem/1 var(--f-body);
+    transition: border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+  }
+
+  .card-nav-disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .card-nav-disclosure > summary:hover,
+  .card-nav-disclosure[open] > summary {
+    border-color: var(--gold);
+    color: var(--fg);
+    background: var(--surface);
+  }
+
+  .label-close {
+    display: none;
+  }
+
+  [open] > summary .label-open {
+    display: none;
+  }
+
+  [open] > summary .label-close {
+    display: inline;
+  }
+
+  .card-nav-plus {
+    position: relative;
+    width: 11px;
+    height: 11px;
+    transition: transform 180ms ease;
+  }
+
+  .card-nav-plus::before,
+  .card-nav-plus::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    top: 4.75px;
+    left: 0;
+    width: 11px;
+    height: 1.5px;
+  }
+
+  .card-nav-plus::after {
+    transform: rotate(90deg);
+  }
+
+  [open] .card-nav-plus {
+    transform: rotate(45deg);
+  }
+
+  /* Architectural Mega-Card Panel */
+  .card-nav-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: clamp(1.1rem, 3.5vw, 2rem);
+    right: clamp(1.1rem, 3.5vw, 2rem);
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(8, 16, 31, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--line-strong);
+    border-radius: 18px;
+    box-shadow: 0 28px 64px rgba(0, 0, 0, 0.55);
+    max-height: calc(100dvh - 100px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  [open] .card-nav-panel {
+    animation: card-nav-enter 180ms ease-out both;
+  }
+
+  .card-nav-group {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.25rem 1.2rem 1rem;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-nav-group:first-child {
+    background: linear-gradient(165deg, #162542 0%, #0e192d 100%);
+    border-color: rgba(201, 162, 39, 0.35);
+  }
+
+  .card-nav-badge {
+    font: 600 0.66rem/1 var(--f-code);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-ink);
+    margin-bottom: 0.45rem;
+  }
+
+  .card-nav-group h2 {
+    margin: 0 0 0.35rem;
+    font: 400 1.32rem/1.2 var(--f-display);
+    color: var(--fg);
+  }
+
+  .card-nav-group p {
+    margin: 0 0 0.9rem;
+    color: var(--muted);
+    font: 400 0.82rem/1.45 var(--f-body);
+  }
+
+  .card-nav-group ul {
+    list-style: none;
+    padding: 0;
+    margin: auto 0 0;
+  }
+
+  .card-nav-group li + li {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .card-nav-group a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 44px;
+    padding: 0.55rem 0.2rem;
+    color: var(--fg);
+    text-decoration: none;
+    font: 400 0.86rem/1.35 var(--f-body);
+    transition: color 140ms ease;
+  }
+
+  .card-nav-item-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .card-nav-item-label {
+    font-weight: 500;
+  }
+
+  .card-nav-item-meta {
+    font: 400 0.68rem/1.2 var(--f-code);
+    color: var(--muted);
+  }
+
+  .card-nav-group a:hover,
+  .card-nav-group a[aria-current='page'] {
+    color: var(--gold-ink);
+  }
+
+  .card-nav-arrow {
+    color: var(--gold-ink);
+    transition: transform 140ms ease;
+    flex-shrink: 0;
+  }
+
+  .card-nav-group a:hover .card-nav-arrow {
+    transform: translateX(3px);
+  }
+
+  a:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  @keyframes card-nav-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 1040px) {
+    .card-nav-inline {
+      display: none;
+    }
+  }
+
+  @media (max-width: 780px) {
+    .card-nav-panel {
+      grid-template-columns: 1fr;
+    }
+    .card-nav-bar {
+      min-height: 70px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card-nav-brand-name {
+      font-size: 1.38rem;
+    }
+    .card-nav-cta {
+      padding: 0.45rem 0.75rem;
+      font-size: 0.8rem;
+    }
+    .card-nav-cta-dot {
+      display: none;
+    }
+    .card-nav-disclosure > summary {
+      padding: 0.45rem 0.7rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  if (location.hash === '#contacto' && !document.getElementById('contacto')) {
+    location.replace('/es/contacto/#contacto');
+  }
+  const disclosures = document.querySelectorAll<HTMLDetailsElement>('.card-nav-disclosure');
+  disclosures.forEach((details) => {
+    const summary = details.querySelector('summary');
+    document.addEventListener('pointerdown', (event) => {
+      if (details.open && event.target instanceof Node && !details.contains(event.target)) {
+        details.open = false;
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && details.open) {
+        details.open = false;
+        summary?.focus();
+      }
+    });
+    details.addEventListener('focusout', () => {
+      requestAnimationFrame(() => {
+        if (!details.contains(document.activeElement)) details.open = false;
+      });
+    });
+    details.querySelectorAll('a').forEach((link) =>
+      link.addEventListener('click', () => {
+        details.open = false;
+      })
+    );
+  });
+</script>

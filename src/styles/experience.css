@@ -276,32 +276,7 @@ body {
   border-top: 1px solid var(--line);
 }
 
-/* Unified Page Intro Headers (Locked Geometry — Zero Dimension Shift) */
-.page-intro-unified {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--navy);
-  color: var(--on-navy);
-  padding: 44px 0 52px;
-  min-height: 360px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.page-intro-unified .wrap {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-}
-
-.page-intro-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 48px;
-  align-items: center;
-}
-
+/* Breadcrumbs */
 .breadcrumbs {
   display: inline-flex;
   align-items: center;
@@ -326,49 +301,10 @@ body {
   color: var(--gold);
 }
 
-.page-intro .section-label {
-  color: var(--gold);
-}
-
-.page-intro h1 {
-  font: clamp(2rem, 3.6vw, 3rem) / 1.14 var(--f-display);
-  max-width: 20ch;
-  letter-spacing: -0.015em;
-  color: #ffffff;
-}
-
-.page-intro p {
-  max-width: 56ch;
-  font-size: 1.02rem;
-  margin: 16px 0 0;
-  color: var(--on-navy-muted);
-}
-
-.page-intro-pills {
-  margin-top: 20px;
-}
-
-.intro-switch-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.84rem;
-  font-weight: 500;
-  color: var(--gold);
-  background: rgba(201, 162, 39, 0.14);
-  border: 1px solid rgba(201, 162, 39, 0.4);
-  padding: 8px 14px;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: background-color 160ms ease;
-}
-
-.intro-switch-pill:hover {
-  background: rgba(201, 162, 39, 0.24);
-}
-
 /* Interactive Signal Chart Showcase Section */
 .signal-chart-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 560px;
   background-color: var(--navy);
   background-image:
     radial-gradient(circle at 80% 20%, rgba(201, 162, 39, 0.14), transparent 45%),
@@ -410,6 +346,8 @@ body {
 
 /* Flow / Interactive Architecture Section */
 .flow-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 560px;
   position: relative;
   background-color: var(--navy);
   background-image:
@@ -540,24 +478,6 @@ body {
 
 #cform {
   scroll-margin-top: 100px;
-}
-
-.theme-toggle {
-  display: grid;
-  place-items: center;
-  height: 38px;
-  width: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--on-navy);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: border-color 150ms ease, color 150ms ease;
-}
-
-.theme-toggle:hover {
-  border-color: var(--gold);
-  color: var(--gold);
 }
 
 /* Legal & Dedicated FAQ Hub Pages */

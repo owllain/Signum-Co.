@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/experience.css';
 import '../styles/navigation-refresh.css';
+import '../styles/baseline.css';
 import bodyFont from '@fontsource/schibsted-grotesk/files/schibsted-grotesk-latin-400-normal.woff2?url';
 import displayFont from '@fontsource/libre-caslon-text/files/libre-caslon-text-latin-400-normal.woff2?url';
 import { SITE_CONFIG, type SiteContent } from '../data/site';
@@ -23,16 +24,6 @@ const {
 } = Astro.props;
 
 const canonicalUrl = new URL(canonicalPath, SITE_CONFIG.domain).toString();
-const esUrl = new URL(
-  content.locale === 'es' ? canonicalPath : content.alternatePath,
-  SITE_CONFIG.domain
-).toString();
-const enUrl = new URL(
-  content.locale === 'en' ? canonicalPath : content.alternatePath,
-  SITE_CONFIG.domain
-).toString();
-const alternateOgLocale = content.locale === 'es' ? 'en_US' : 'es_CR';
-
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -60,13 +51,13 @@ const organizationSchema = {
   ],
   email: SITE_CONFIG.contact.email,
   telephone: SITE_CONFIG.contact.phoneE164,
-  knowsLanguage: ['es', 'en'],
+  knowsLanguage: ['es'],
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: SITE_CONFIG.contact.phoneE164,
     email: SITE_CONFIG.contact.email,
     contactType: 'customer service',
-    availableLanguage: ['Spanish', 'English'],
+    availableLanguage: ['Spanish'],
   },
 };
 ---
@@ -86,15 +77,7 @@ const organizationSchema = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalUrl} />
 
-    {
-      !noindex && (
-        <>
-          <link rel="alternate" hreflang="es" href={esUrl} />
-          <link rel="alternate" hreflang="en" href={enUrl} />
-          <link rel="alternate" hreflang="x-default" href={esUrl} />
-        </>
-      )
-    }
+
 
     <link
       rel="preload"
@@ -113,12 +96,7 @@ const organizationSchema = {
     <meta name="theme-color" content="#0c1931" />
     <script is:inline>
       document.documentElement.classList.add('js');
-      try {
-        const theme = localStorage.getItem('sg-theme');
-        if (theme === 'light' || theme === 'dark') {
-          document.documentElement.dataset.theme = theme;
-        }
-      } catch {}
+
     </script>
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -127,7 +105,6 @@ const organizationSchema = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:locale" content={content.ogLocale} />
-    <meta property="og:locale:alternate" content={alternateOgLocale} />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary" />

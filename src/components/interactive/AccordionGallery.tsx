@@ -137,9 +137,6 @@ export default function AccordionGallery({
               <div className="accordion-gallery-caption">
                 <div className="accordion-gallery-top">
                   <span className="accordion-gallery-index">0{idx + 1}</span>
-                  {item.badge && (
-                    <span className="accordion-gallery-badge">{item.badge}</span>
-                  )}
                 </div>
                 <div className="accordion-gallery-bottom">
                   <strong className="accordion-gallery-title">

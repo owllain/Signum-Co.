@@ -16,14 +16,27 @@
       "source": "/es/empresas/",
       "destination": "/es/datos/",
       "permanent": true
-    },
-    {
-      "source": "/en/enterprise/",
-      "destination": "/en/data-analytics/",
-      "permanent": true
     }
   ],
   "headers": [
+    {
+      "source": "/_astro/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
     {
       "source": "/fonts/(.*)",
       "headers": [

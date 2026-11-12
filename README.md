@@ -1,3 +1,5 @@
+> Estado actual: sitio solo en español, tema oscuro fijo y escala visual compartida. Se retiraron las rutas inglesas y los controles de idioma y tema. Esta decisión sustituye las referencias bilingües históricas de este documento.
+
 # Signum & Co. — Sitio Web Corporativo
 
 Sitio web corporativo bilingüe (`/es/` y `/en/`) para **Signum & Co.**, consultora costarricense de datos, marketing digital, tecnología e inteligencia artificial.

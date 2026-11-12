@@ -75,51 +75,6 @@ export function initNavigation(): void {
     });
   }
 
-  const languageLink = document.querySelector<HTMLAnchorElement>('#lang');
-  if (languageLink) {
-    const updateLanguageLink = (): void => {
-      const url = new URL(languageLink.href);
-      url.hash = location.hash;
-      const params = new URLSearchParams(location.search);
-      const topic = params.get('topic');
-      const tab = params.get('tab');
-      if (topic) url.searchParams.set('topic', topic);
-      else url.searchParams.delete('topic');
-      if (tab) url.searchParams.set('tab', tab);
-      else url.searchParams.delete('tab');
-      languageLink.href = url.toString();
-    };
-    updateLanguageLink();
-    window.addEventListener('hashchange', updateLanguageLink);
-  }
-
-  const themeToggle = document.querySelector<HTMLButtonElement>('#theme-toggle');
-  if (themeToggle && themeToggle.dataset.bound !== 'true') {
-    themeToggle.dataset.bound = 'true';
-    themeToggle.hidden = false;
-    const systemTheme = matchMedia('(prefers-color-scheme: dark)');
-    const isDark = (): boolean =>
-      document.documentElement.dataset.theme
-        ? document.documentElement.dataset.theme === 'dark'
-        : systemTheme.matches;
-    const sync = (): void =>
-      themeToggle.setAttribute('aria-pressed', String(isDark()));
-    sync();
-    systemTheme.addEventListener('change', sync);
-    themeToggle.addEventListener('click', () => {
-      const theme = isDark() ? 'light' : 'dark';
-      document.documentElement.dataset.theme = theme;
-      try {
-        localStorage.setItem('sg-theme', theme);
-      } catch {
-        /* Theme still works for this page. */
-      }
-      sync();
-    });
-  } else if (themeToggle) {
-    themeToggle.hidden = false;
-  }
 }
 
 initNavigation();
-document.addEventListener('astro:page-load', initNavigation);

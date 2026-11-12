@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { BRAND_IMAGES, type BrandImageKind } from '../../data/brand-images';
 import type { Locale } from '../../data/site';
 
@@ -22,16 +22,6 @@ export function SmartPicture({
   priority = false,
 }: SmartPictureProps) {
   const meta = BRAND_IMAGES[kind];
-  const [loaded, setLoaded] = useState(false);
-  const imgRef = useRef<HTMLImageElement | null>(null);
-
-  useEffect(() => {
-    setLoaded(false);
-    const img = imgRef.current;
-    if (img && img.complete && img.naturalWidth > 0) {
-      setLoaded(true);
-    }
-  }, [kind]);
 
   return (
     <div
@@ -39,15 +29,12 @@ export function SmartPicture({
       style={
         {
           '--img-aspect': meta.aspectRatio,
-          '--img-lqip': `url("${meta.lqip}")`,
         } as React.CSSProperties
       }
       data-image-shell
-      data-loaded={loaded ? 'true' : undefined}
+      data-loaded="true"
     >
-      <div className="brand-image-skeleton" aria-hidden="true" />
       <img
-        ref={imgRef}
         src={meta.src}
         srcSet={meta.srcset}
         sizes={sizes}
@@ -56,8 +43,6 @@ export function SmartPicture({
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         alt={alt !== undefined ? alt : meta.alt[locale]}
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
       />
       {showBadge && !meta.transparent && (
         <span className="brand-image-badge" aria-hidden="true">

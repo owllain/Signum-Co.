@@ -5,9 +5,16 @@ import Arrow from '../ui/Arrow.astro';
 interface Props { content: SiteContent; compact?: boolean }
 const { content, compact = false } = Astro.props;
 const text = experience[content.locale];
+const es = content.locale === 'es';
 ---
 <section class="sec sec-alt" id="metodo" aria-labelledby="method-title"><div class="wrap">
-  <div class="section-heading"><h2 id="method-title">{text.methodTitle}</h2><p class="intro">{text.methodLead}</p></div>
-  <ol class:list={['delivery-steps', { compact }]}>{text.steps.map((step, index) => <li><span class="index-number">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p>{!compact && <div class="delivery-output"><span>{text.deliverable}</span><strong>{step.deliverable}</strong></div>}</li>)}</ol>
-  {compact && <a class="text-link section-link" href={routes[content.locale].method}>{text.nav.method} <Arrow /></a>}
+  <div class="section-heading">
+    <div>
+      <span class="section-label">{es ? 'Metodología de Trabajo · 5 Etapas' : 'Working Methodology · 5 Stages'}</span>
+      <h2 id="method-title">{text.methodTitle}</h2>
+    </div>
+    <p class="intro">{text.methodLead}</p>
+  </div>
+  <ol class:list={['delivery-steps', { compact }]}>{text.steps.map((step, index) => <li><span class="index-number">0{index + 1}</span><h3>{step.title}</h3><p>{step.text}</p><div class="delivery-output"><span>{text.deliverable}</span><strong>{step.deliverable}</strong></div></li>)}</ol>
+  {compact && <a class="text-link section-link" href={routes[content.locale].method}>{es ? 'Ver criterios de validación y modalidades de contratación' : 'See validation criteria & engagement models'} <Arrow /></a>}
 </div></section>

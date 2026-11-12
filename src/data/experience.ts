@@ -104,40 +104,40 @@ export const experience: Record<Locale, ExperienceContent> = {
     },
     page: {
       services: {
-        title: 'Soluciones empresariales que conectan datos y operación.',
-        lead: 'La oferta de Signum & Co. combina ingeniería de datos, analítica ejecutiva, desarrollo de aplicaciones y automatización de procesos. Definimos qué necesita su empresa y conectamos las especialidades adecuadas para resolverlo.',
+        title: 'Soluciones que conectan datos y operación.',
+        lead: 'Ingeniería de datos, analítica ejecutiva, desarrollo de software y automatización con alcance y entregables verificables.',
       },
       development: {
-        title: 'Menos tareas repetidas. Más trabajo que avanza.',
-        lead: 'Aplicaciones empresariales, automatización e integraciones construidas alrededor de su operación. Con reglas claras, seguimiento y una entrega que su equipo puede mantener.',
+        title: 'Menos tareas manuales. Más operación conectada.',
+        lead: 'Aplicaciones en .NET, automatización en Microsoft 365 e integraciones construidas alrededor de su operación.',
       },
       contact: {
         title: 'Empecemos por lo que necesita resolver.',
-        lead: 'Cuéntenos el contexto. Definimos juntos si el siguiente paso es una revisión técnica, un piloto o una solución a medida.',
+        lead: 'Cuéntenos su objetivo. En 48 horas definimos alcance, arquitectura e inversión fija.',
       },
       enterprise: {
-        title: 'Gestión de datos y analítica para decidir.',
-        lead: 'Kevin Arroyo lidera esta especialidad: inteligencia de ingresos, ingeniería de datos, tableros ejecutivos y medición comercial. Organizamos sus fuentes y convertimos la información en respuestas para ventas, marketing, finanzas y operaciones.',
+        title: 'Datos confiables y analítica para decidir.',
+        lead: 'Ingeniería de datos, modelos en Dataverse y tableros ejecutivos en Power BI y Tableau liderados por Kevin Arroyo.',
       },
       method: {
         title: 'Claridad en cada etapa. Evidencia en cada entrega.',
-        lead: 'Empezamos por una necesidad concreta. Acordamos qué vamos a resolver, cómo lo comprobaremos y qué recibirá su equipo al terminar.',
+        lead: 'Cinco pasos verificables: desde el diagnóstico inicial hasta la transferencia completa a su equipo.',
       },
       about: {
-        title: 'Dos perspectivas. Un equipo que conecta.',
-        lead: 'Signum & Co. reúne liderazgo en ingeniería de datos, desarrollo de software y automatización para ayudar a las organizaciones a transformar su información y su operación.',
+        title: 'Dos perspectivas. Un equipo que ejecuta.',
+        lead: 'Liderazgo senior en ingeniería de datos, desarrollo de software y automatización empresarial desde Costa Rica.',
       },
       faq: {
-        title: 'Centro de preguntas frecuentes y criterios de trabajo.',
-        lead: 'Todo lo que necesita saber sobre nuestro diagnóstico inicial, arquitectura de datos, desarrollo de aplicaciones, propiedad intelectual y modalidades de contratación.',
+        title: 'Preguntas frecuentes y criterios de trabajo.',
+        lead: 'Respuestas claras sobre diagnóstico inicial, propiedad intelectual, plazos y modalidades de contratación.',
       },
       terms: {
         title: 'Términos de servicio y condiciones comerciales.',
-        lead: 'Marco contractual, propiedad intelectual de entregables, gestión de licencias y alcances de consultoría de Signum & Co.',
+        lead: 'Marco contractual, propiedad intelectual de entregables y alcances de consultoría de Signum & Co.',
       },
       privacy: {
-        title: 'Política de privacidad, confidencialidad y aviso legal.',
-        lead: 'Cómo protegemos su información de contacto, nuestros estándares de confidencialidad (NDA) y cumplimiento con la Ley N.º 8968 de Costa Rica.',
+        title: 'Política de privacidad y confidencialidad.',
+        lead: 'Protección de datos, estándares de confidencialidad (NDA) y cumplimiento con la Ley N.º 8968 de Costa Rica.',
       },
     },
     eyebrow: 'Datos, Desarrollo e IA · Costa Rica',
@@ -472,7 +472,6 @@ export function pageContent(base: SiteContent, page: PageId): SiteContent {
   return {
     ...base,
     canonicalPath: routes[base.locale][page],
-    alternatePath: routes[base.alternateLocale][page],
     meta: {
       ...base.meta,
       ...(page === 'home'

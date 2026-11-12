@@ -4,8 +4,6 @@ export const contentEs: SiteContent = {
   locale: 'es',
   htmlLang: 'es',
   ogLocale: 'es_CR',
-  alternateLocale: 'en',
-  alternatePath: '/en/',
   canonicalPath: '/es/',
   meta: {
     title: 'Signum & Co. — Consultora de datos, marketing, tecnología e IA',
@@ -21,7 +19,6 @@ export const contentEs: SiteContent = {
       { id: 'precios', href: '#precios', label: 'Cómo trabajar juntos' },
       { id: 'contacto', href: '#contacto', label: 'Contacto' },
     ],
-    langSwitchLabel: 'Idioma / Language',
     mobileMenuOpenLabel: 'Abrir menú de navegación',
     mobileMenuCloseLabel: 'Cerrar menú de navegación',
   },

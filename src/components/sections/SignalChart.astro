@@ -18,9 +18,9 @@ const T = 64;
 const B = H - 20;
 const N = 40;
 
-const gridLines: number[] = [];
+const gridLines: string[] = [];
 for (let g = 0; g < 4; g++) {
-  gridLines.push(T + (g * (B - T)) / 3);
+  gridLines.push((T + (g * (B - T)) / 3).toFixed(1));
 }
 
 let seed = 11;
@@ -32,9 +32,7 @@ function nextRandom(): number {
 interface ChartDot {
   cx: string;
   cy: string;
-  home: number;
-  sig: number;
-  x: number;
+  sig: string;
   opacity: string;
 }
 
@@ -46,6 +44,7 @@ for (let i = 0; i < N; i++) {
   const x = L + t * (R - L);
   const yv = B - (0.08 + 0.82 * Math.pow(t, 1.7)) * (B - T);
   points.push([x, yv]);
+  const sig = yv.toFixed(1);
 
   const spread = 150 * (1 - t * 0.75);
   for (let k = 0; k < 3; k++) {
@@ -56,9 +55,7 @@ for (let i = 0; i < N; i++) {
     dots.push({
       cx,
       cy,
-      home,
-      sig: yv,
-      x,
+      sig,
       opacity,
     });
   }
@@ -66,7 +63,10 @@ for (let i = 0; i < N; i++) {
 
 const pathD =
   'M' + points.map((p) => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' L');
-const endPoint = points[points.length - 1];
+const endPoint = [
+  points[points.length - 1][0].toFixed(1),
+  points[points.length - 1][1].toFixed(1),
+];
 ---
 
 <section class="sec signal-chart-section" aria-labelledby="sig-section-title">
@@ -74,7 +74,7 @@ const endPoint = points[points.length - 1];
     <div class="signal-chart-header">
       <div>
         <span class="section-label">
-          {es ? 'Simulador Interactivo · Del Ruido a la Señal' : 'Interactive Simulator · From Noise to Signal'}
+          {es ? 'Claridad Ejecutiva · Del Ruido a la Señal' : 'Executive Clarity · From Noise to Signal'}
         </span>
         <h2 id="sig-section-title">
           {es
@@ -96,33 +96,19 @@ const endPoint = points[points.length - 1];
         tabindex="0"
       >
         <title id="sig-t">{content.hero.chart.svgTitle}</title>
-        <g id="g-grid">
-          {
-            gridLines.map((y) => (
-              <line
-                x1={L}
-                x2={R}
-                y1={y}
-                y2={y}
-                stroke="rgba(255,255,255,.07)"
-              />
-            ))
-          }
+        <g id="g-grid" stroke="rgba(255,255,255,.07)">
+          {gridLines.map((y) => <line x1={L} x2={R} y1={y} y2={y} />)}
         </g>
-        <g id="g-dots">
+        <g id="g-dots" fill="#4a6396">
           {
             dots.map((dot) => (
               <circle
                 class="dot"
                 cx={dot.cx}
                 cy={dot.cy}
-                style={`cy:${dot.cy}px`}
                 r="2.8"
-                fill="#4a6396"
                 opacity={dot.opacity}
-                data-home={dot.home}
                 data-sig={dot.sig}
-                data-x={dot.x}
               />
             ))
           }

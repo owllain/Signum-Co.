@@ -6,13 +6,13 @@ import { contentEs } from '../data/content.es';
 import { routes } from '../data/experience';
 
 const rEs = routes.es;
-const rEn = routes.en;
+
 ---
 
 <BaseLayout
   content={contentEs}
   title="404 — Página no encontrada | Signum & Co."
-  description="La página que busca no existe o cambió de dirección. Regrese al inicio de Signum & Co. en español o inglés."
+  description="La página que busca no existe o cambió de dirección. Regrese al inicio de Signum & Co. en español."
   canonicalPath="/404.html"
   noindex={true}
 >
@@ -37,18 +37,15 @@ const rEn = routes.en;
           </svg>
         </div>
 
-        <span class="notfound-code">ERROR 404 · PAGE NOT FOUND</span>
+        <span class="notfound-code">ERROR 404</span>
 
         <h1 id="h-404" class="notfound-title">
-          Página no encontrada / Page not found
+          Página no encontrada
         </h1>
 
         <p class="notfound-subtitle">
           La página que busca no existe o cambió de dirección. Aquí tiene enlaces directos para continuar:
-          <br />
-          <span lang="en">
-            The page you are looking for doesn’t exist. Here are some helpful links:
-          </span>
+
         </p>
 
         <div class="notfound-actions">
@@ -58,16 +55,14 @@ const rEn = routes.en;
             onclick="if (window.history.length > 1) { window.history.back(); } else { window.location.href = '/es/'; }"
           >
             <span aria-hidden="true">←</span>
-            <span>Volver atrás / Go back</span>
+            <span>Volver atrás</span>
           </button>
 
           <a class="btn btn-gold" href={rEs.home}>
-            Ir al inicio (ES)
+            Ir al inicio
           </a>
 
-          <a class="btn notfound-btn-en" href={rEn.home} lang="en">
-            Take me home (EN)
-          </a>
+
         </div>
 
         <div class="notfound-helpful-grid">
@@ -108,7 +103,7 @@ const rEn = routes.en;
   }
 
   .notfound-inner {
-    max-width: 680px;
+    max-width: var(--max-w);
     margin-inline: auto;
     text-align: center;
     display: flex;

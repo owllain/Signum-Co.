@@ -20,6 +20,7 @@ export function Avatar({
   children,
   className = '',
 }: AvatarProps) {
+  const dim = size === 'xs' ? 34 : size === 'sm' ? 44 : size === 'lg' ? 72 : 56;
   return (
     <div className={`fb-avatar fb-avatar--${size} ${className}`.trim()}>
       <div
@@ -29,6 +30,8 @@ export function Avatar({
           <img
             src={img}
             alt={alt}
+            width={dim}
+            height={dim}
             loading="lazy"
             decoding="async"
             className="fb-avatar-img"

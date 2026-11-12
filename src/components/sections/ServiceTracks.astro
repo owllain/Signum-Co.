@@ -23,8 +23,8 @@ const es = content.locale === 'es';
         <span class="section-label">
           {
             es
-              ? 'Explorador interactivo de capacidades'
-              : 'Interactive capabilities explorer'
+              ? 'Catálogo Integral · 13 Soluciones Empresariales'
+              : 'Complete Catalog · 13 Enterprise Solutions'
           }
         </span>
         <h2 id="tracks-title">
@@ -35,17 +35,10 @@ const es = content.locale === 'es';
           }
         </h2>
       </div>
-      <p class="intro">
-        {
-          es
-            ? 'Explore en tiempo real cómo conectamos ingeniería de datos, desarrollo de software, automatización y medición comercial sin recargar la página.'
-            : 'Explore in real time how we connect data engineering, software development, automation and commercial measurement without page reloads.'
-        }
-      </p>
     </div>
 
     <ServiceCatalogExplorer
-      client:load
+      client:visible
       locale={content.locale}
       initialTab={initialTab}
       enterpriseRows={content.enterprise.rows}

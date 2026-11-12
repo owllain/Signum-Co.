@@ -9,19 +9,7 @@ interface Props {
 
 const { content } = Astro.props;
 const es = content.locale === 'es';
-const badges = es
-  ? [
-      'GA4 · Tag Manager · Looker Studio',
-      'Meta Ads · Google Ads · SEO',
-      'UX Móvil · Conversión · E-commerce',
-      'WhatsApp IA · Atención 24/7',
-    ]
-  : [
-      'GA4 · Tag Manager · Looker Studio',
-      'Meta Ads · Google Ads · SEO',
-      'Mobile UX · Conversion · E-commerce',
-      'WhatsApp AI · 24/7 Assistants',
-    ];
+
 ---
 
 <section class="sec sec-alt" id={content.services.id} aria-labelledby="h-svc">
@@ -41,10 +29,6 @@ const badges = es
         content.services.rows.map((row, index) => (
           <article class="bento-service-card" id={`service-${index}`}>
             <div class="bento-card-body">
-              <div class="bento-card-meta">
-                <span class="bento-code">C-0{index + 1}</span>
-                <span class="bento-tech-tag">{badges[index]}</span>
-              </div>
               <h3>{row.title}</h3>
               <p class="bento-desc">{row.description}</p>
               <ul class="bento-deliverables">

@@ -1,11 +1,10 @@
 ---
 import SitePage from '../../components/SitePage.astro';
 import { contentEs } from '../../data/content.es';
-import { contentEn } from '../../data/content.en';
 import { routes, pageIds, type PageId } from '../../data/experience';
 import type { SiteContent } from '../../data/site';
 export function getStaticPaths() {
-  return [contentEs, contentEn].flatMap(base => pageIds.filter(page => page !== 'home').map(page => ({
+  return [contentEs].flatMap(base => pageIds.filter(page => page !== 'home').map(page => ({
     params: { locale: base.locale, page: routes[base.locale][page].split('/')[2] }, props: { base, page },
   })));
 }

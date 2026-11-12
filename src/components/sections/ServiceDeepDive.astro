@@ -24,29 +24,22 @@ const r = routes[content.locale];
         <span class="section-label">
           {
             es
-              ? 'Especialidades en Detalle · Tabs Interactivos'
-              : 'Specialties in Detail · Interactive Tabs'
+              ? 'Especificaciones Técnicas · Stack y Entregables'
+              : 'Technical Specifications · Stack & Deliverables'
           }
         </span>
         <h2 id="deepdive-heading">
           {
             es
-              ? 'Desarrollo Web, Apps .NET, Microsoft 365 y Dashboards Empresariales'
-              : 'Web Development, .NET Apps, Microsoft 365 & Enterprise Dashboards'
+              ? 'Stack técnico y entregables por especialidad'
+              : 'Technical stack and deliverables by track'
           }
         </h2>
       </div>
-      <p class="intro">
-        {
-          es
-            ? 'Explore cada línea técnica para conocer las tecnologías exactas (.NET, Power Automate Desktop, Power Apps, SharePoint SPFx, Dataverse, Power BI) y los entregables verificables.'
-            : 'Explore each technical track to inspect the exact stack (.NET, Power Automate Desktop, Power Apps, SharePoint SPFx, Dataverse, Power BI) and verifiable deliverables.'
-        }
-      </p>
     </div>
 
     <ServiceDeepDiveTabs
-      client:load
+      client:visible
       locale={content.locale}
       contactPath={r.contact}
       defaultTabId={defaultTabId}

@@ -1,10 +1,8 @@
 ---
-import '../styles/global.css';
 import { SITE_CONFIG } from '../data/site';
 
 const targetUrl = '/es/';
 const canonicalEs = new URL('/es/', SITE_CONFIG.domain).toString();
-const canonicalEn = new URL('/en/', SITE_CONFIG.domain).toString();
 ---
 
 <!doctype html>
@@ -15,26 +13,20 @@ const canonicalEn = new URL('/en/', SITE_CONFIG.domain).toString();
     <title>Signum &amp; Co.</title>
     <meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
     <link rel="canonical" href={canonicalEs} />
-    <link rel="alternate" hreflang="es" href={canonicalEs} />
-    <link rel="alternate" hreflang="en" href={canonicalEn} />
-    <link rel="alternate" hreflang="x-default" href={canonicalEs} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script is:inline>
       window.location.replace('/es/' + window.location.hash);
     </script>
   </head>
-  <body style="background:var(--navy);color:var(--on-navy);min-height:100vh;display:flex;align-items:center;justify-content:center;">
-    <main class="wrap" style="text-align:center;padding-block:64px;">
-      <p style="font-family:var(--f-display);font-size:var(--t-xl);margin-bottom:16px;">
-        Signum <b style="color:var(--gold);">&amp;</b> Co.
+  <body style="margin:0;background:#0c1931;color:#f0ece1;font-family:system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;">
+    <main style="text-align:center;padding:64px 24px;">
+      <p style="font-family:Georgia,serif;font-size:1.375rem;margin:0 0 16px;">
+        Signum <b style="color:#c9a227;">&amp;</b> Co.
       </p>
-      <p style="color:var(--on-navy-muted);margin-bottom:24px;">
-        Redirigiendo a la versión en español… / Redirecting…
+      <p style="color:#b8c0d0;margin:0 0 24px;">
+        Redirigiendo a la versión en español…
       </p>
-      <div class="ctas" style="justify-content:center;">
-        <a class="btn btn-gold" href="/es/">Continuar en Español</a>
-        <a class="btn btn-line" href="/en/" lang="en">Continue in English</a>
-      </div>
+      <a style="display:inline-block;padding:12px 24px;border-radius:6px;background:#c9a227;color:#17120a;font-weight:600;text-decoration:none;" href="/es/">Continuar</a>
     </main>
   </body>
 </html>
